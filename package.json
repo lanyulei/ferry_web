@@ -35,13 +35,6 @@
     "admin-template",
     "management-system"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wenjianzhang/go-admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/wenjianzhang/go-admin/issues"
-  },
   "dependencies": {
     "@riophae/vue-treeselect": "0.4.0",
     "axios": "0.18.1",
