@@ -60,7 +60,7 @@
         </el-col>
       </el-row>
 
-      <el-table v-loading="loading" :data="list" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" border :data="list" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="编号" width="70" align="center" prop="infoId" />
         <el-table-column label="用户名称" width="85" align="center" prop="username" />

@@ -92,6 +92,7 @@
           <el-table
             v-loading="loading"
             :data="userList"
+            border
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="45" align="center" />
@@ -100,7 +101,7 @@
             <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
             <el-table-column label="部门" align="center" prop="deptName" :show-overflow-tooltip="true" />
             <el-table-column label="手机号码" align="center" prop="phone" width="120" />
-            <el-table-column label="状态" width="50" align="center">
+            <el-table-column label="状态" width="60" align="center">
               <template slot-scope="scope">
                 <el-switch
                   v-model="scope.row.status"

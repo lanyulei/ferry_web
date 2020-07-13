@@ -34,6 +34,7 @@
         v-loading="loading"
         :data="deptList"
         row-key="deptId"
+        border
         default-expand-all
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       >
