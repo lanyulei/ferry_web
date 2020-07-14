@@ -97,9 +97,9 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" align="center" prop="createdAt" width="180">
+        <el-table-column label="创建时间" align="center" prop="create_time" width="180">
           <template slot-scope="scope">
-            <span>{{ parseTime(scope.row.createdAt) }}</span>
+            <span>{{ parseTime(scope.row.create_time) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -517,7 +517,7 @@ export default {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
           const tHeader = ['角色编号', '角色名称', '权限字符', '显示顺序', '状态', '创建时间']
-          const filterVal = ['roleId', 'roleName', 'roleKey', 'roleSort', 'status', 'createdAt']
+          const filterVal = ['roleId', 'roleName', 'roleKey', 'roleSort', 'status', 'create_time']
           const list = this.roleList
           const data = formatJson(filterVal, list)
           excel.export_json_to_excel({

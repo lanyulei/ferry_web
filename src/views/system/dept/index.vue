@@ -48,9 +48,9 @@
             >{{ scope.row.status === '1' ? '停用' : '正常' }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" align="center" prop="createdAt" width="200">
+        <el-table-column label="创建时间" align="center" prop="create_time" width="200">
           <template slot-scope="scope">
-            <span>{{ parseTime(scope.row.createdAt) }}</span>
+            <span>{{ parseTime(scope.row.create_time) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">

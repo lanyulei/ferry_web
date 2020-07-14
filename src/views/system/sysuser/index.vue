@@ -111,9 +111,9 @@
                 />
               </template>
             </el-table-column>
-            <el-table-column label="创建时间" align="center" prop="createdAt" width="165">
+            <el-table-column label="创建时间" align="center" prop="create_time" width="165">
               <template slot-scope="scope">
-                <span>{{ parseTime(scope.row.createdAt) }}</span>
+                <span>{{ parseTime(scope.row.create_time) }}</span>
               </template>
             </el-table-column>
             <el-table-column
