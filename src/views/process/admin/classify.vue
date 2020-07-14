@@ -182,12 +182,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           createClassify(this.ruleForm).then(response => {
-            this.getList()
-            this.$message({
-              type: 'success',
-              message: '分类已增加!'
-            })
-            this.open = false
+            if (response !== undefined) {
+              this.getList()
+              this.$message({
+                type: 'success',
+                message: '分类已增加!'
+              })
+              this.open = false
+            }
           })
         }
       })
@@ -196,12 +198,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           updateClassify(this.ruleForm).then(response => {
-            this.getList()
-            this.$message({
-              type: 'success',
-              message: '分类已更新!'
-            })
-            this.open = false
+            if (response !== undefined) {
+              this.getList()
+              this.$message({
+                type: 'success',
+                message: '分类已更新!'
+              })
+              this.open = false
+            }
           })
         }
       })
@@ -219,12 +223,19 @@ export default {
       }).then(() => {
         deleteClassify({
           classifyId: row.id
-        }).then(() => {
-          this.getList()
-          this.$message({
-            type: 'success',
-            message: '分类已删除!'
-          })
+        }).then(response => {
+          if (response !== undefined) {
+            this.getList()
+            this.$message({
+              type: 'success',
+              message: '分类已删除!'
+            })
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
         })
       })
     },
