@@ -66,7 +66,7 @@
               type="text"
               icon="el-icon-edit"
               @click="handleUpdate(scope.row)"
-            >修改</el-button>
+            >编辑</el-button>
             <el-button
               v-permisaction="['system:sysmenu:add']"
               size="mini"
