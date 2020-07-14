@@ -101,7 +101,7 @@
             <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
             <el-table-column label="部门" align="center" prop="deptName" :show-overflow-tooltip="true" />
             <el-table-column label="手机号码" align="center" prop="phone" width="120" />
-            <el-table-column label="状态" width="60" align="center">
+            <el-table-column label="状态" width="68" align="center">
               <template slot-scope="scope">
                 <el-switch
                   v-model="scope.row.status"
@@ -165,18 +165,18 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="12">
+            <el-form-item label="用户名称" prop="username" style="width: 90%">
+              <el-input v-model="form.username" placeholder="请输入用户名称" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="用户昵称" prop="nickName" style="width: 90%">
               <el-input v-model="form.nickName" placeholder="请输入用户昵称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId" style="width: 90%">
-              <treeselect
-                v-model="form.deptId"
-                :options="deptOptions"
-                :normalizer="normalizer"
-                placeholder="请选择归属部门"
-              />
+            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password" style="width: 90%">
+              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -187,30 +187,6 @@
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email" style="width: 90%">
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="用户名称" prop="username" style="width: 90%">
-              <el-input v-model="form.username" placeholder="请输入用户名称" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password" style="width: 90%">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" />
-            </el-form-item>
-          </el-col>
-
-          <el-col :span="12">
-            <el-form-item label="岗位" style="width: 90%">
-              <el-select v-model="form.postId" placeholder="请选择" style="width: 100%" @change="$forceUpdate()">
-                <el-option
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                />
-              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -226,6 +202,30 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="归属部门" prop="deptId" style="width: 90%">
+              <treeselect
+                v-model="form.deptId"
+                :options="deptOptions"
+                :normalizer="normalizer"
+                placeholder="请选择归属部门"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="岗位" style="width: 90%">
+              <el-select v-model="form.postId" placeholder="请选择" style="width: 100%" @change="$forceUpdate()">
+                <el-option
+                  v-for="item in postOptions"
+                  :key="item.postId"
+                  :label="item.postName"
+                  :value="item.postId"
+                  :disabled="item.status == 1"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
+
           <el-col :span="24">
             <el-form-item label="备注" style="width: 95%">
               <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />

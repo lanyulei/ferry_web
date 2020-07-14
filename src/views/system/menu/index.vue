@@ -86,11 +86,11 @@
       </el-table>
     </el-card>
     <!-- 添加或修改菜单对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px">
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="上级菜单">
+            <el-form-item label="上级菜单" style="width: 95%">
               <treeselect
                 v-model="form.parentId"
                 :options="menuOptions"
@@ -101,7 +101,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="菜单标题" prop="title">
+            <el-form-item label="菜单标题" prop="title" style="width: 90%">
               <el-input v-model="form.title" placeholder="请输入菜单标题" />
             </el-form-item>
           </el-col>
@@ -132,7 +132,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="菜单图标">
+            <el-form-item label="菜单图标" style="width: 95%">
               <el-popover
                 placement="bottom-start"
                 width="460"
@@ -154,13 +154,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="form.menuType == 'M' || form.menuType == 'C'" label="路由名称" prop="menuName">
+            <el-form-item v-if="form.menuType == 'M' || form.menuType == 'C'" label="路由名称" prop="menuName" style="width: 90%">
               <el-input v-model="form.menuName" placeholder="请输入路由名称" />
             </el-form-item>
           </el-col>
 
           <el-col v-if="form.menuType == 'M' || form.menuType == 'C'" :span="12">
-            <el-form-item label="组件路径" prop="component">
+            <el-form-item label="组件路径" prop="component" style="width: 90%">
               <el-input v-model="form.component" placeholder="请输入组件路径" />
             </el-form-item>
           </el-col>
@@ -175,7 +175,7 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item v-if="form.menuType != 'F'" label="路由地址" prop="path">
+            <el-form-item v-if="form.menuType != 'F'" label="路由地址" prop="path" style="width: 90%">
               <el-input v-model="form.path" placeholder="请输入路由地址" />
             </el-form-item>
           </el-col>
