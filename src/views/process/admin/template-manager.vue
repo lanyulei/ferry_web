@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form ref="listQuery" :model="listQuery" :inline="true">
-        <el-form-item label="分类名称">
+        <el-form-item label="模版名称">
           <el-input
             v-model="listQuery.name"
-            placeholder="请输入分类名称"
+            placeholder="请输入模版名称"
             clearable
             size="small"
             style="width: 240px"
@@ -49,16 +49,13 @@
         </el-col> -->
       </el-row>
 
-      <el-table v-loading="loading" border :data="classifyList" @selection-change="handleSelectionChange">
+      <el-table v-loading="loading" border :data="tplList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="ID" prop="id" width="120" />
         <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" width="150" />
         <el-table-column label="创建者" prop="create_name" :show-overflow-tooltip="true" width="150" />
-        <el-table-column label="创建时间" align="center" prop="create_time" width="180">
-          <template slot-scope="scope">
-            <span>{{ parseTime(scope.row.create_time) }}</span>
-          </template>
-        </el-table-column>
+        <el-table-column label="创建时间" align="center" prop="create_time" width="180" />
+        <el-table-column label="更新时间" align="center" prop="update_time" width="180" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
@@ -106,7 +103,7 @@
                   upload
                   generate-code
                   generate-json
-                  :advance-fields="['blank', 'editor', 'cascader']"
+                  :advance-fields="['editor', 'cascader']"
                 >
                   <template slot="action" />
                 </fm-making-form>
@@ -127,11 +124,12 @@
 import Vue from 'vue'
 
 import {
-  createClassify,
-  classifyList,
-  updateClassify,
-  deleteClassify
-} from '@/api/process/admin/classify'
+  templateList,
+  createTemplate,
+  templateDetails,
+  editTemplate,
+  deleteTemplate
+} from '@/api/process/admin/template'
 
 // 表单设计
 import {
@@ -165,18 +163,23 @@ export default {
       // 是否显示弹出层
       open: false,
       // 查询参数
-      classifyList: [],
+      tplList: [],
       listQuery: {
         page: 1,
         per_page: 10
       },
       ruleForm: {
         id: undefined,
-        name: ''
+        name: '',
+        remarks: '',
+        form_structure: ''
       },
       rules: {
         name: [
-          { required: true, message: '请输入流程分类', trigger: 'blur' }
+          { required: true, message: '请输入模版名称', trigger: 'blur' }
+        ],
+        form_structure: [
+          { required: true, message: '请设计模版', trigger: 'blur' }
         ]
       }
     }
@@ -190,8 +193,9 @@ export default {
       this.loading = true
       this.listQuery.page = this.queryParams.pageIndex
       this.listQuery.per_page = this.queryParams.pageSize
-      classifyList(this.listQuery).then(response => {
-        this.classifyList = response.data.data
+      templateList(this.listQuery).then(response => {
+        this.tplList = response.data.data
+        console.log(this.tplList)
         this.queryParams.pageIndex = response.data.page
         this.queryParams.pageSize = response.data.per_page
         this.total = response.data.total_count
@@ -201,45 +205,51 @@ export default {
     handleCreate() {
       this.ruleForm = {
         id: undefined,
-        name: ''
+        name: '',
+        remarks: '',
+        form_structure: ''
       }
       this.dialogFormVisibleName = 1
       this.open = true
+      this.$nextTick(() => {
+        this.$refs.makingform.handleClear()
+      })
     },
     handleEdit(row) {
-      this.ruleForm.id = row.id
-      this.ruleForm.name = row.name
-      this.open = true
-      this.dialogFormVisibleName = 2
+      templateDetails({
+        template_id: row.id
+      }).then(response => {
+        this.ruleForm = {
+          id: response.data.id,
+          name: response.data.name,
+          remarks: response.data.remarks,
+          form_structure: response.data.remarks
+        }
+        this.dialogFormVisibleName = 2
+        this.open = true
+        this.$nextTick(() => {
+          this.$refs.makingform.setJSON(response.data.form_structure)
+        })
+      })
     },
     submitForm(formName) {
+      this.handleSave(this.$refs.makingform.getJSON())
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          createClassify(this.ruleForm).then(response => {
-            if (response !== undefined) {
-              this.getList()
-              this.$message({
-                type: 'success',
-                message: '分类已增加!'
-              })
-              this.open = false
-            }
+          createTemplate(this.ruleForm).then(response => {
+            this.getList()
+            this.open = false
           })
         }
       })
     },
     editForm(formName) {
+      this.handleSave(this.$refs.makingform.getJSON())
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          updateClassify(this.ruleForm).then(response => {
-            if (response !== undefined) {
-              this.getList()
-              this.$message({
-                type: 'success',
-                message: '分类已更新!'
-              })
-              this.open = false
-            }
+          editTemplate(this.ruleForm).then(response => {
+            this.getList()
+            this.open = false
           })
         }
       })
@@ -255,14 +265,14 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteClassify({
-          classifyId: row.id
+        deleteTemplate({
+          templateId: row.id
         }).then(response => {
           if (response !== undefined) {
             this.getList()
             this.$message({
               type: 'success',
-              message: '分类已删除!'
+              message: '模版已删除!'
             })
           }
         })
@@ -275,8 +285,7 @@ export default {
     },
     handleSelectionChange() {},
     handleSave(values) {
-      var jsonValue = JSON.parse(values)
-      if (jsonValue.list.length > 0) {
+      if (values.list.length > 0) {
         this.ruleForm.form_structure = values
       } else {
         this.ruleForm.form_structure = ''
