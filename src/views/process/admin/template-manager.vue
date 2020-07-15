@@ -188,7 +188,7 @@ export default {
     this.getList()
   },
   methods: {
-    /** 查询角色列表 */
+    /** 查询模版列表 */
     getList() {
       this.loading = true
       this.listQuery.page = this.queryParams.pageIndex

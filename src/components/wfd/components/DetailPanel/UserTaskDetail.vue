@@ -1,0 +1,155 @@
+<template>
+  <div :data-clazz="model.clazz">
+    <div class="panelTitle">{{ i18n['userTask'] }}</div>
+    <div class="panelBody">
+      <DefaultDetail :model="model" :on-change="onChange" :read-only="readOnly" />
+      <div class="panelRow">
+        <div>之后任务：</div>
+        <el-select
+          style="width:90%; font-size:12px"
+          placeholder="选择任务"
+          :disabled="readOnly"
+          :value="model.task"
+          :multiple="true"
+          :filterable="true"
+          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
+          @change="(e) => onChange('task', e)"
+        >
+          <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />
+        </el-select>
+      </div>
+      <div class="panelRow">
+        <div>{{ i18n['userTask.assignType'] }}：</div>
+        <el-select
+          style="width:90%; font-size: 12px"
+          :placeholder="i18n['userTask.assignType.placeholder']"
+          :value="model.assignType"
+          :disabled="readOnly"
+          @change="(e) => { onChange('assignValue', []);onChange('assignType', e) }"
+        >
+          <el-option key="person" value="person" :label="i18n['userTask.assignType.person']" />
+          <!-- <el-option key="persongroup" value="persongroup" :label="i18n['userTask.assignType.persongroup']"/>
+                    <el-option key="department" value="department" :label="i18n['userTask.assignType.department']"/> -->
+          <el-option key="variable" value="variable" :label="i18n['userTask.assignType.variable']" />
+        </el-select>
+      </div>
+      <div v-if="model.assignType === 'person'" class="panelRow">
+        <div>{{ i18n['userTask.assignType.person.title'] }}：</div>
+        <el-select
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.person.placeholder']"
+          :disabled="readOnly"
+          :value="model.assignValue"
+          :multiple="true"
+          :filterable="true"
+          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
+          @change="(e) => onChange('assignValue', e)"
+        >
+          <el-option v-for="user in users" :key="user.id" :label="user.nickname===''?user.username:user.nickname" :value="user.id" />
+        </el-select>
+      </div>
+      <div v-else-if="model.assignType === 'persongroup'" class="panelRow">
+        <div>{{ i18n['userTask.assignType.persongroup.title'] }}：</div>
+        <el-select
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.persongroup.placeholder']"
+          :value="model.assignValue"
+          :disabled="readOnly"
+          :multiple="true"
+          :filterable="true"
+          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
+          @change="(e) => onChange('assignValue', e)"
+        >
+          <el-option v-for="group in groups" :key="group.id" :label="group.nickname===''?group.name:group.nickname" :value="group.id" />
+        </el-select>
+      </div>
+      <div v-else-if="model.assignType === 'department'" class="panelRow">
+        <div>{{ i18n['userTask.assignType.department.title'] }}：</div>
+        <el-select
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.department.placeholder']"
+          :value="model.assignValue"
+          :disabled="readOnly"
+          :multiple="true"
+          :filterable="true"
+          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
+          @change="(e) => onChange('assignValue', e)"
+        >
+          <el-option v-for="department in departments" :key="department.id" :label="department.name===''?department.nickname:department.name" :value="department.id" />
+        </el-select>
+      </div>
+      <div v-else-if="model.assignType === 'variable'" class="panelRow">
+        <div>{{ i18n['userTask.assignType.variable.title'] }}：</div>
+        <el-select
+          v-model.number="model.assignValue"
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.variable.placeholder']"
+          :disabled="readOnly"
+          :multiple="true"
+          :filterable="true"
+          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
+          @change="(e) => onChange('assignValue', e)"
+        >
+          <el-option v-for="(item, index) in variableOptions" :key="index" :label="item.label" :value="item.value" />
+        </el-select>
+      </div>
+      <div class="panelRow">
+        <el-checkbox
+          :disabled="readOnly"
+          :value="!!model.isCounterSign"
+          @change="(value) => onChange('isCounterSign', value)"
+        >{{ i18n['userTask.counterSign'] }}</el-checkbox>
+        <!-- <el-checkbox @change="(value) => onChange('isEndorsement', value)"
+                             :disabled="readOnly"
+                             :value="!!model.isEndorsement">{{i18n['userTask.endorsement']}}</el-checkbox> -->
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import DefaultDetail from './DefaultDetail'
+export default {
+  inject: ['i18n'],
+  components: {
+    DefaultDetail
+  },
+  props: {
+    model: {
+      type: Object,
+      default: () => ({})
+    },
+    users: {
+      type: Array,
+      default: () => ([])
+    },
+    groups: {
+      type: Array,
+      default: () => ([])
+    },
+    departments: {
+      type: Array,
+      default: () => ([])
+    },
+    tasks: {
+      type: Array,
+      default: () => ([])
+    },
+    onChange: {
+      type: Function,
+      default: () => {}
+    },
+    readOnly: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      variableOptions: [{
+        value: 1,
+        label: '创建人'
+      }]
+    }
+  }
+}
+</script>
