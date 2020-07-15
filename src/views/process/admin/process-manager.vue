@@ -153,7 +153,8 @@ import {
   processList,
   createProcess,
   updateProcess,
-  processDetails
+  processDetails,
+  deleteProcess
 } from '@/api/process/admin/process'
 
 import { classifyList } from '@/api/process/admin/classify'
@@ -301,7 +302,7 @@ export default {
         if (valid) {
           if (this.ruleForm.structure.nodes.length > 0 && this.ruleForm.structure.edges.length > 0) {
             createProcess(this.ruleForm).then(response => {
-              // this.getList()
+              this.getList()
               this.open = false
             })
           } else {
@@ -347,15 +348,14 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // eslint-disable-next-line no-undef
-        deleteTemplate({
-          templateId: row.id
+        deleteProcess({
+          processId: row.id
         }).then(response => {
           if (response !== undefined) {
             this.getList()
             this.$message({
               type: 'success',
-              message: '模版已删除!'
+              message: '流程已删除!'
             })
           }
         })
