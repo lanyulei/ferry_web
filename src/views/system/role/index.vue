@@ -112,13 +112,6 @@
               @click="handleUpdate(scope.row)"
             >编辑</el-button>
             <el-button
-              v-permisaction="['system:sysrole:edit']"
-              size="mini"
-              type="text"
-              icon="el-icon-circle-check"
-              @click="handleDataScope(scope.row)"
-            >数据权限</el-button>
-            <el-button
               v-permisaction="['system:sysrole:remove']"
               size="mini"
               type="text"
@@ -435,16 +428,6 @@ export default {
         this.title = '修改角色'
         this.isEdit = true
         this.getRoleMenuTreeselect(roleId)
-      })
-    },
-    /** 分配数据权限操作 */
-    handleDataScope(row) {
-      this.reset()
-      getRole(row.roleId).then(response => {
-        this.form = response.data
-        this.openDataScope = true
-        this.title = '分配数据权限'
-        this.getRoleDeptTreeselect(row.roleId)
       })
     },
     /** 提交按钮 */
