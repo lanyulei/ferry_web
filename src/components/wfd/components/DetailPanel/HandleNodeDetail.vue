@@ -45,10 +45,10 @@
           :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('assignValue', e)"
         >
-          <el-option v-for="user in users" :key="user.id" :label="user.nickname===''?user.username:user.nickname" :value="user.id" />
+          <el-option v-for="user in users" :key="user.userId" :label="user.nickName===''?user.username:user.nickName" :value="user.userId" />
         </el-select>
       </div>
-      <div v-else-if="model.assignType === 'persongroup'" class="panelRow">
+      <!-- <div v-else-if="model.assignType === 'persongroup'" class="panelRow">
         <div>{{ i18n['handleNode.assignType.persongroup.title'] }}：</div>
         <el-select
           style="width:90%; font-size:12px"
@@ -62,7 +62,7 @@
         >
           <el-option v-for="group in groups" :key="group.id" :label="group.nickname===''?group.name:group.nickname" :value="group.id" />
         </el-select>
-      </div>
+      </div> -->
       <div v-else-if="model.assignType === 'department'" class="panelRow">
         <div>{{ i18n['handleNode.assignType.department.title'] }}：</div>
         <el-select

@@ -52,7 +52,7 @@
       <el-table v-loading="loading" border :data="processValueList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="ID" prop="id" width="120" />
-        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" width="150" />
+        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />
         <el-table-column label="创建者" prop="create_name" :show-overflow-tooltip="true" width="150" />
         <el-table-column label="创建时间" align="center" prop="create_time" width="180" />
         <el-table-column label="更新时间" align="center" prop="update_time" width="180" />
@@ -127,7 +127,6 @@
                     v-if="wfdDesignRefresh"
                     ref="wfd"
                     :users="users"
-                    :groups="groups"
                     :departments="departments"
                     :tasks="taskListData"
                     :data="ruleForm.structure"
@@ -160,8 +159,10 @@ import {
 import { classifyList } from '@/api/process/admin/classify'
 import { templateList } from '@/api/process/admin/template'
 
+import { listUser } from '@/api/system/sysuser'
+
 export default {
-  name: 'Role',
+  name: 'Process',
   components: {
     'WfdDesign': () => import('@/components/wfd/components/Wfd')
   },
@@ -242,6 +243,24 @@ export default {
         this.templates = response.data.data
       })
     },
+    // 获取用户
+    getUsers() {
+      listUser({
+        pageSize: 999999
+      }).then(response => {
+        this.users = response.data.list
+        console.log(this.users)
+      })
+    },
+    // 获取部门
+    // getDepartments() {
+    //   departmentList({
+    //     page: 1,
+    //     per_page: 99999
+    //   }).then(response => {
+    //     this.departments = response.data.data
+    //   })
+    // },
     /** 查询流程列表 */
     getList() {
       this.loading = true
@@ -255,9 +274,13 @@ export default {
         this.loading = false
       })
     },
-    handleCreate() {
+    getProcessInitData() {
       this.getClassifyList()
       this.getTemplates()
+      this.getUsers()
+    },
+    handleCreate() {
+      this.getProcessInitData()
       this.ruleForm = {
         id: undefined,
         name: '',
@@ -274,8 +297,7 @@ export default {
       })
     },
     handleEdit(row) {
-      this.getClassifyList()
-      this.getTemplates()
+      this.getProcessInitData()
       this.wfdDesignRefresh = false
       processDetails({
         processId: row.id

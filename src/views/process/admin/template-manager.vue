@@ -52,7 +52,7 @@
       <el-table v-loading="loading" border :data="tplList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="ID" prop="id" width="120" />
-        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" width="150" />
+        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />
         <el-table-column label="创建者" prop="create_name" :show-overflow-tooltip="true" width="150" />
         <el-table-column label="创建时间" align="center" prop="create_time" width="180" />
         <el-table-column label="更新时间" align="center" prop="update_time" width="180" />
@@ -145,7 +145,7 @@ Vue.use(GenerateForm)
 Vue.use(MakingForm)
 
 export default {
-  name: 'Role',
+  name: 'Template',
   data() {
     return {
       dialogFormVisibleName: 1,

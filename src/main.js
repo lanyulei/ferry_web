@@ -25,6 +25,11 @@ import * as filters from './filters' // global filters
 
 import Pagination from '@/components/Pagination'
 
+// 代码编辑器
+import VueCodeMirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+Vue.use(VueCodeMirror)
+
 // 全局方法挂载
 Vue.prototype.parseTime = parseTime
 Vue.prototype.resetForm = resetForm

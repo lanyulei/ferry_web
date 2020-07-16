@@ -52,7 +52,7 @@
       <el-table v-loading="loading" border :data="classifyList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="ID" prop="id" width="120" />
-        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" width="150" />
+        <el-table-column label="名称" prop="name" :show-overflow-tooltip="true" />
         <el-table-column label="创建者" prop="create_name" :show-overflow-tooltip="true" width="150" />
         <el-table-column label="创建时间" align="center" prop="create_time" width="180">
           <template slot-scope="scope">
@@ -113,7 +113,7 @@ import {
 } from '@/api/process/admin/classify'
 
 export default {
-  name: 'Role',
+  name: 'Classify',
   data() {
     return {
       dialogFormVisibleName: 1,
