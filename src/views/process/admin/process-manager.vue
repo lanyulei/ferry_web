@@ -20,7 +20,7 @@
       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <el-button
-            v-permisaction="['process:admin:classify:add']"
+            v-permisaction="['process:admin:manager:add']"
             type="primary"
             icon="el-icon-plus"
             size="mini"
@@ -59,14 +59,14 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-permisaction="['process:admin:manager:edit']"
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleEdit(scope.row)"
             >编辑</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:delete']"
+              v-permisaction="['process:admin:manager:delete']"
               size="mini"
               type="text"
               icon="el-icon-delete"
@@ -158,7 +158,7 @@ import {
 
 import { classifyList } from '@/api/process/admin/classify'
 import { templateList } from '@/api/process/admin/template'
-
+import { taskList } from '@/api/process/admin/task'
 import { listUser } from '@/api/system/sysuser'
 
 export default {
@@ -225,6 +225,15 @@ export default {
     this.getList()
   },
   methods: {
+    // 获取任务列表
+    getTaskList() {
+      taskList({
+        page: 1,
+        per_page: 99999
+      }).then(response => {
+        this.taskListData = response.data.data
+      })
+    },
     // 获取流程分类列表
     getClassifyList() {
       classifyList({
@@ -249,7 +258,6 @@ export default {
         pageSize: 999999
       }).then(response => {
         this.users = response.data.list
-        console.log(this.users)
       })
     },
     // 获取部门
@@ -278,6 +286,7 @@ export default {
       this.getClassifyList()
       this.getTemplates()
       this.getUsers()
+      this.getTaskList()
     },
     handleCreate() {
       this.getProcessInitData()

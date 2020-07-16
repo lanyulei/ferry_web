@@ -20,7 +20,7 @@
       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <el-button
-            v-permisaction="['process:admin:classify:add']"
+            v-permisaction="['process:admin:task:add']"
             type="primary"
             icon="el-icon-plus"
             size="mini"
@@ -58,14 +58,14 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-permisaction="['process:admin:task:edit']"
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleEdit(scope.row)"
             >编辑</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:delete']"
+              v-permisaction="['process:admin:task:delete']"
               size="mini"
               type="text"
               icon="el-icon-delete"
@@ -123,11 +123,12 @@
 
 <script>
 import {
-  createClassify,
-  classifyList,
-  updateClassify,
-  deleteClassify
-} from '@/api/process/admin/classify'
+  createTask,
+  taskList,
+  taskDetails,
+  updateTask,
+  deleteTask
+} from '@/api/process/admin/task'
 
 // 代码编辑器
 import { codemirror } from 'vue-codemirror'
@@ -223,64 +224,70 @@ export default {
       this.loading = true
       this.listQuery.page = this.queryParams.pageIndex
       this.listQuery.per_page = this.queryParams.pageSize
-      classifyList(this.listQuery).then(response => {
-        this.classifyList = response.data.data
+      taskList(this.listQuery).then(response => {
+        this.taskList = response.data.data
         this.queryParams.pageIndex = response.data.page
         this.queryParams.pageSize = response.data.per_page
         this.total = response.data.total_count
         this.loading = false
       })
     },
+    handleQuery(val) {
+      this.listQuery.name = val.name
+      this.getList()
+    },
     handleCreate() {
       this.ruleForm = {
-        id: undefined,
-        name: ''
+        name: '',
+        classify: '',
+        content: ''
       }
       this.dialogFormVisibleName = 1
       this.open = true
     },
     handleEdit(row) {
-      this.ruleForm.id = row.id
-      this.ruleForm.name = row.name
-      this.open = true
-      this.dialogFormVisibleName = 2
+      taskDetails({
+        file_name: row.full_name
+      }).then(response => {
+        this.ruleForm = {
+          name: row.name,
+          full_name: row.full_name,
+          classify: row.classify,
+          content: response.data
+        }
+        this.dialogFormVisibleName = 2
+        this.open = true
+      })
     },
     submitForm(formName) {
+      this.ruleForm.content = this.$refs.codemirror.content
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          createClassify(this.ruleForm).then(response => {
-            if (response !== undefined) {
-              this.getList()
-              this.$message({
-                type: 'success',
-                message: '分类已增加!'
-              })
-              this.open = false
-            }
+          createTask(this.ruleForm).then(() => {
+            this.getList()
+            this.open = false
+            this.$message({
+              message: '任务脚本创建成功',
+              type: 'success'
+            })
           })
         }
       })
     },
     editForm(formName) {
+      this.ruleForm.content = this.$refs.codemirror.content
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          updateClassify(this.ruleForm).then(response => {
-            if (response !== undefined) {
-              this.getList()
-              this.$message({
-                type: 'success',
-                message: '分类已更新!'
-              })
-              this.open = false
-            }
+          updateTask(this.ruleForm).then(response => {
+            this.getList()
+            this.open = false
+            this.$message({
+              message: '任务脚本更新成功',
+              type: 'success'
+            })
           })
         }
       })
-    },
-    handleQuery() {
-      this.queryParams.pageIndex = 1
-      this.queryParams.pageSize = 10
-      this.getList()
     },
     handleDelete(row) {
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
@@ -288,16 +295,14 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        deleteClassify({
-          classifyId: row.id
-        }).then(response => {
-          if (response !== undefined) {
-            this.getList()
-            this.$message({
-              type: 'success',
-              message: '分类已删除!'
-            })
-          }
+        deleteTask({
+          full_name: row.full_name
+        }).then(() => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
         })
       }).catch(() => {
         this.$message({

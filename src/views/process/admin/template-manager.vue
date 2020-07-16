@@ -20,7 +20,7 @@
       <el-row :gutter="10" class="mb8">
         <el-col :span="1.5">
           <el-button
-            v-permisaction="['process:admin:classify:add']"
+            v-permisaction="['process:admin:template:add']"
             type="primary"
             icon="el-icon-plus"
             size="mini"
@@ -59,14 +59,14 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-permisaction="['process:admin:template:edit']"
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleEdit(scope.row)"
             >编辑</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:delete']"
+              v-permisaction="['process:admin:template:delete']"
               size="mini"
               type="text"
               icon="el-icon-delete"
