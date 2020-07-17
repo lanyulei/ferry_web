@@ -53,7 +53,7 @@
         />
       </div>
       <div v-if="processStructureValue.userAuthority">
-        <hr style="background-color: #d9d9d9; border:0; height:1px;">
+        <!-- <hr style="background-color: #d9d9d9; border:0; height:1px;"> -->
         <div class="text item" style="text-align: center;margin-top:18px">
           <template v-for="(item, index) in processStructureValue.edges">
             <el-button
