@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import GenerateForm from './components/GenerateForm.vue'
 
 import './styles/cover.scss'

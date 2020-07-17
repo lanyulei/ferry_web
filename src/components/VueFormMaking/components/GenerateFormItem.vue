@@ -238,14 +238,14 @@
 </template>
 
 <script>
-  import FmUpload from './Upload'
+import FmUpload from './Upload'
 
-  export default {
-    components: {
-      FmUpload
-    },
-    /* eslint-disable */
-  props: ['widget', 'models', 'rules', 'remote', 'data'],
+export default {
+  components: {
+    FmUpload
+  },
+  /* eslint-disable */
+  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled'],
   data() {
     return {
       dataModel: this.models[this.widget.model]
@@ -282,11 +282,17 @@
         })
       })
     }
-
+    
     if (this.widget.type === 'imgupload' && this.widget.options.isQiniu) {
       this.remote[this.widget.options.tokenFunc]((data) => {
         this.widget.options.token = data
       })
+    }
+
+    if (this.disabled === undefined || this.disabled === null) {
+      this.widget.options.disabled = false
+    } else {
+      this.widget.options.disabled = this.disabled
     }
   },
   methods: {

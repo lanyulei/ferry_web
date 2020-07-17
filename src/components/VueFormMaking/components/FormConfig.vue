@@ -25,8 +25,8 @@
 </template>
 
 <script>
-  export default {
-    /* eslint-disable */
+export default {
+  /* eslint-disable */
     props: ['data']
   }
 </script>

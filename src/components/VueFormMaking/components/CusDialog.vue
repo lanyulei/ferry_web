@@ -30,79 +30,79 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      visible: Boolean,
-      loadingText: {
-        type: String,
-        default: ''
-      },
-      title: {
-        type: String,
-        default: ''
-      },
-      width: {
-        type: String,
-        default: '600px'
-      },
-      form: {
-        type: Boolean,
-        default: true
-      },
-      action: {
-        type: Boolean,
-        default: true
-      }
+export default {
+  props: {
+    visible: Boolean,
+    loadingText: {
+      type: String,
+      default: ''
     },
-    data() {
-      return {
-        loading: false,
-        dialogVisible: this.visible,
-        id: 'dialog_' + new Date().getTime(),
-        showForm: false
-      }
+    title: {
+      type: String,
+      default: ''
     },
-    computed: {
-      show() {
-        if (this.form) {
-          return this.showForm
-        } else {
-          return true
-        }
-      }
+    width: {
+      type: String,
+      default: '600px'
     },
-    watch: {
-      dialogVisible(val) {
-        if (!val) {
-          this.loading = false
-          this.$emit('on-close')
-          setTimeout(() => {
-            this.showForm = false
-          }, 300)
-        } else {
-          this.showForm = true
-        }
-      },
-      visible(val) {
-        this.dialogVisible = val
-      }
+    form: {
+      type: Boolean,
+      default: true
     },
-    mounted() {
-    },
-    methods: {
-      close() {
-        this.dialogVisible = false
-      },
-      submit() {
-        this.loading = true
-
-        this.$emit('on-submit')
-      },
-      end() {
-        this.loading = false
+    action: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      dialogVisible: this.visible,
+      id: 'dialog_' + new Date().getTime(),
+      showForm: false
+    }
+  },
+  computed: {
+    show() {
+      if (this.form) {
+        return this.showForm
+      } else {
+        return true
       }
     }
+  },
+  watch: {
+    dialogVisible(val) {
+      if (!val) {
+        this.loading = false
+        this.$emit('on-close')
+        setTimeout(() => {
+          this.showForm = false
+        }, 300)
+      } else {
+        this.showForm = true
+      }
+    },
+    visible(val) {
+      this.dialogVisible = val
+    }
+  },
+  mounted() {
+  },
+  methods: {
+    close() {
+      this.dialogVisible = false
+    },
+    submit() {
+      this.loading = true
+
+      this.$emit('on-submit')
+    },
+    end() {
+      this.loading = false
+    }
   }
+}
 </script>
 
 <style lang="scss">

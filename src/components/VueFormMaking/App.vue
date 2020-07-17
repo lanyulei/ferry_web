@@ -33,20 +33,19 @@
 </template>
 
 <script>
-  import Vue from 'vue'
 
-  export default {
-    name: 'App',
-    methods: {
-      handleHome() {
-        this.$router.push({ path: '/' })
-      },
+export default {
+  name: 'App',
+  methods: {
+    handleHome() {
+      this.$router.push({ path: '/' })
+    },
 
-      handleLangCommand(command) {
-        this.$router.replace({ name: this.$route.name, params: { lang: command }})
-      }
+    handleLangCommand(command) {
+      this.$router.replace({ name: this.$route.name, params: { lang: command }})
     }
   }
+}
 </script>
 
 <style lang="scss">
@@ -96,10 +95,6 @@
     .action-item{
       display: inline-block;
       margin-left: 15px;
-      .el-dropdown{
-        // font-size: 16px;
-        // font-weight: 500;
-      }
       .el-dropdown-link{
         cursor: pointer;
         color: #fff;

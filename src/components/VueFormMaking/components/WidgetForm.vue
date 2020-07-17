@@ -35,16 +35,18 @@
                     @add="handleWidgetColAdd($event, element, colIndex)"
                   >
                     <transition-group name="fade" tag="div" class="widget-col-list">
-                      <widget-form-item
-                        v-for="(el, i) in col.list"
-                        v-if="el.key"
-                        :key="el.key"
-                        :element="el"
-                        :select.sync="selectWidget"
-                        :index="i"
-                        :data="col"
-                        :data-config="data"
-                      />
+                      <template v-for="(el, i) in col.list">
+                        <widget-form-item
+                          v-if="el.key"
+                          :key="el.key"
+                          :element="el"
+                          :select.sync="selectWidget"
+                          :index="i"
+                          :data="col"
+                          :data-config="data"
+                        />
+                      </template>
+
                     </transition-group>
 
                   </draggable>
@@ -78,15 +80,15 @@
 </template>
 
 <script>
-  import Draggable from 'vuedraggable'
-  import WidgetFormItem from './WidgetFormItem'
+import Draggable from 'vuedraggable'
+import WidgetFormItem from './WidgetFormItem'
 
-  export default {
-    components: {
-      Draggable,
-      WidgetFormItem
-    },
-    /* eslint-disable */
+export default {
+  components: {
+    Draggable,
+    WidgetFormItem
+  },
+  /* eslint-disable */
   props: ['data', 'select'],
   data() {
     return {

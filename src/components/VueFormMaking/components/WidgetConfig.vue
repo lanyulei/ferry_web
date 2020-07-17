@@ -389,13 +389,13 @@
 </template>
 
 <script>
-  import Draggable from 'vuedraggable'
+import Draggable from 'vuedraggable'
 
-  export default {
-    components: {
-      Draggable
-    },
-    /* eslint-disable */
+export default {
+  components: {
+    Draggable
+  },
+  /* eslint-disable */
   props: ['data'],
   data() {
     return {

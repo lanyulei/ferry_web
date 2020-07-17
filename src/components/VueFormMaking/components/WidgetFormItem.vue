@@ -230,12 +230,12 @@
 </template>
 
 <script>
-  import FmUpload from './Upload'
-  export default {
-    components: {
-      FmUpload
-    },
-    /* eslint-disable */
+import FmUpload from './Upload'
+export default {
+  components: {
+    FmUpload
+  },
+  /* eslint-disable */
   props: ['element', 'select', 'index', 'data', 'dataConfig'],
   data() {
     return {

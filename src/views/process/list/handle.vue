@@ -50,10 +50,11 @@
           :remote="remoteFunc"
           :value="tplItem.form_data"
           :data="tplItem.form_structure"
+          :disabled="true"
         />
       </div>
       <div v-if="processStructureValue.userAuthority">
-        <!-- <hr style="background-color: #d9d9d9; border:0; height:1px;"> -->
+        <hr style="background-color: #d9d9d9; border:0; height:1px;">
         <div class="text item" style="text-align: center;margin-top:18px">
           <template v-for="(item, index) in processStructureValue.edges">
             <el-button
@@ -169,10 +170,11 @@ export default {
         // 获取当前展示节点列表
         for (var i = 0; i < this.processStructureValue.nodes.length; i++) {
           if (this.processStructureValue.nodes[i].id === this.processStructureValue.workOrder.current_state) {
+            // 当前节点
             this.nodeStepList.push(this.processStructureValue.nodes[i])
             this.activeIndex = this.nodeStepList.length - 1
-            if (i === this.processStructureValue.nodes.length - 2) {
-              this.activeIndex = i + 1
+            if (i + 1 === this.processStructureValue.nodes.length) {
+              this.activeIndex = this.nodeStepList.length
             }
           } else if (!this.processStructureValue.nodes[i].isHideNode) {
             // 非隐藏节点
@@ -191,7 +193,7 @@ export default {
         flow_properties: item.flowProperties === undefined ? 2 : parseInt(item.flowProperties),
         work_order_id: parseInt(this.$route.query.workOrderId)
       }).then(response => {
-        if (response.code === 100000) {
+        if (response.code === 200) {
           // this.$router.push({ name: 'upcoming' })
           window.location.reload()
         }

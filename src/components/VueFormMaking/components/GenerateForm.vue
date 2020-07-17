@@ -32,8 +32,8 @@
                   :remote="remote"
                   :rules="rules"
                   :widget="citem"
-                  @input-change="onInputChange"
                   :data="data"
+                  @input-change="onInputChange"
                 />
               </template>
             </el-col>
@@ -54,6 +54,7 @@
             :widget="item"
             :remote="remote"
             :data="data"
+            :disabled="disabled"
             @input-change="onInputChange"
           />
         </template>
@@ -64,15 +65,15 @@
 </template>
 
 <script>
-  import GenetateFormItem from './GenerateFormItem'
+import GenetateFormItem from './GenerateFormItem'
 
-  export default {
-    name: 'FmGenerateForm',
-    components: {
-      GenetateFormItem
-    },
-    /* eslint-disable */
-  props: ['data', 'remote', 'value', 'insite'],
+export default {
+  name: 'FmGenerateForm',
+  components: {
+    GenetateFormItem
+  },
+  /* eslint-disable */
+  props: ['data', 'remote', 'value', 'insite', 'disabled'],
   data() {
     return {
       models: {},
