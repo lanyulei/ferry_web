@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form ref="listQuery" :model="listQuery" :inline="true">
-        <el-form-item label="分类名称">
+        <el-form-item label="流程名称">
           <el-input
             v-model="listQuery.name"
-            placeholder="请输入分类名称"
+            placeholder="请输入流程名称"
             clearable
             size="small"
             style="width: 240px"
