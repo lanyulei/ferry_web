@@ -18,7 +18,7 @@
       </el-form>
 
       <el-table v-loading="loading" border :data="ticketList" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="55" align="center" />
+        <!-- <el-table-column type="selection" width="55" align="center" /> -->
         <el-table-column label="ID" prop="id" width="120" />
         <el-table-column label="标题" prop="title" :show-overflow-tooltip="true" />
         <el-table-column label="当前状态" :show-overflow-tooltip="true">
@@ -78,7 +78,7 @@
           </el-form-item>
           <el-form-item label="用户" prop="user_id">
             <el-select v-model="ruleForm.user_id" placeholder="选择用户" size="small" style="width: 100%">
-              <el-option v-for="(item, index) in users" :key="index" :label="item.nickname" :value="item.id" />
+              <el-option v-for="(item, index) in users" :key="index" :label="item.nickName" :value="item.userId" />
             </el-select>
           </el-form-item>
           <el-form-item label="备注">
@@ -145,7 +145,6 @@ export default {
       this.listQuery.per_page = this.queryParams.pageSize
       this.listQuery.classify = 4
       workOrderList(this.listQuery).then(response => {
-        console.log(response)
         this.ticketList = response.data.data
         this.queryParams.pageIndex = response.data.page
         this.queryParams.pageSize = response.data.per_page
@@ -157,7 +156,6 @@ export default {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
     },
     handleUnity(row) {
-      console.log(row)
       this.$confirm('此操作将会结束该工单, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -166,7 +164,7 @@ export default {
         unityWorkOrder({
           work_oroder_id: row.id
         }).then(response => {
-          if (response.code === 100000) {
+          if (response.code === 200) {
             this.getList()
           }
         })
@@ -195,7 +193,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           inversionWorkOrder(this.ruleForm).then(response => {
-            if (response.code === 100000) {
+            if (response.code === 200) {
               this.getList()
               this.dialogVisible = false
             }
