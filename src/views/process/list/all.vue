@@ -41,21 +41,23 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
           <template slot-scope="scope">
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-permisaction="['process:list:all:select']"
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleView(scope.row)"
             >查看</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-if="scope.row.is_end===0"
+              v-permisaction="['process:list:all:inversion']"
               size="mini"
               type="text"
               icon="el-icon-position"
               @click="handleInversion(scope.row)"
             >转交</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-if="scope.row.is_end===0"
+              v-permisaction="['process:list:all:end']"
               size="mini"
               type="text"
               icon="el-icon-switch-button"

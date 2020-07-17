@@ -41,26 +41,20 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
           <template slot-scope="scope">
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-permisaction="['process:list:upcoming:select']"
               size="mini"
               type="text"
               icon="el-icon-edit"
               @click="handleView(scope.row)"
             >查看</el-button>
             <el-button
-              v-permisaction="['process:admin:classify:edit']"
+              v-if="scope.row.is_end===0"
+              v-permisaction="['process:list:upcoming:inversion']"
               size="mini"
               type="text"
               icon="el-icon-position"
               @click="handleInversion(scope.row)"
             >转交</el-button>
-            <el-button
-              v-permisaction="['process:admin:classify:edit']"
-              size="mini"
-              type="text"
-              icon="el-icon-switch-button"
-              @click="handleUnity(scope.row)"
-            >结单</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -103,7 +97,7 @@
 </template>
 
 <script>
-import { workOrderList, unityWorkOrder, inversionWorkOrder } from '@/api/process/work-order'
+import { workOrderList, inversionWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
 export default {
   data() {
@@ -154,26 +148,6 @@ export default {
     },
     handleView(row) {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
-    },
-    handleUnity(row) {
-      this.$confirm('此操作将会结束该工单, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        unityWorkOrder({
-          work_oroder_id: row.id
-        }).then(response => {
-          if (response.code === 200) {
-            this.getList()
-          }
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
-        })
-      })
     },
     handleInversion(row) {
       this.dialogVisible = true

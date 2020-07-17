@@ -188,6 +188,7 @@
     <template v-if="widget.type == 'editor'">
       <vue-editor
         v-model="dataModel"
+        :disabled="widget.options.disabled"
         :style="{width: widget.options.width}"
       />
     </template>

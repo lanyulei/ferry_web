@@ -30,6 +30,10 @@ import VueCodeMirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 Vue.use(VueCodeMirror)
 
+// 富文本编辑器
+import VueEditor from 'vue2-editor'
+Vue.use(VueEditor)
+
 // 全局方法挂载
 Vue.prototype.parseTime = parseTime
 Vue.prototype.resetForm = resetForm
