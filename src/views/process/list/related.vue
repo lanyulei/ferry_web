@@ -26,7 +26,11 @@
             <span>{{ scope.row.state[0].label }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="当前处理人" prop="principals" :show-overflow-tooltip="true" />
+        <el-table-column label="当前处理人" :show-overflow-tooltip="true">
+          <template slot-scope="scope">
+            <span v-if="scope.row.is_end===0">{{ scope.row.principals }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="是否结束" :show-overflow-tooltip="true" width="80" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.is_end===0" size="mini" type="success">否</el-tag>
