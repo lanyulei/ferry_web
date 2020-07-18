@@ -164,7 +164,7 @@ import { listUser } from '@/api/system/sysuser'
 export default {
   name: 'Process',
   components: {
-    'WfdDesign': () => import('@/components/wfd/components/Wfd')
+    WfdDesign: () => import('@/components/wfd/components/Wfd')
   },
   data() {
     return {
