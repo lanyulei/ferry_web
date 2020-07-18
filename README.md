@@ -2,7 +2,6 @@
   <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595066253-ferry_logo_meitu_1.png">
 </p>
 
-
 <p align="center">
   <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067271-badge.png">
@@ -13,10 +12,6 @@
     <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067269-donate.png" alt="donate">
   </a>
-</p>
-
-<p align="center">
-  <h3>开源不易，请尊重作者的成果</h3>
 </p>
 
 ## 基于Gin + Vue + Element UI前后端分离的工单系统
@@ -82,7 +77,6 @@ npm install
 # 4. 启动程序
 npm run dev
 ```
-
 
 #### 上线部署
 
@@ -183,11 +177,12 @@ mv dist web
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
 ## 特别感谢
+
 [go-amdin # 不错的后台开发框架](https://github.com/wenjianzhang/go-admin.git)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
-[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发 ](https://github.com/GavinZhuLei/vue-form-making.git)
+[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发](https://github.com/GavinZhuLei/vue-form-making.git)
 
 [wfd-vue # 流程设计器](https://github.com/guozhaolong/wfd-vue)
 
