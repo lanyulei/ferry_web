@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import G6 from '@/components/wfd/src'
+import G6 from '@antv/g6/src'
 import { getShapeName } from '../util/clazz'
 import Command from '../plugins/command'
 import Toolbar from '../plugins/toolbar'

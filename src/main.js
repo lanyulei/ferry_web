@@ -15,7 +15,7 @@ import store from './store'
 import router from './router'
 import permission from './directive/permission'
 
-import { parseTime, resetForm, addDateRange, selectDictLabel, download } from '@/utils/costum'
+import { parseTime, resetForm, addDateRange, selectDictLabel } from '@/utils/costum'
 
 import './icons' // icon
 import './permission' // permission control
@@ -39,7 +39,6 @@ Vue.prototype.parseTime = parseTime
 Vue.prototype.resetForm = resetForm
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.selectDictLabel = selectDictLabel
-Vue.prototype.download = download
 
 // 全局组件挂载
 Vue.component('Pagination', Pagination)

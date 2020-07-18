@@ -4,7 +4,7 @@
 
       <div class="title-container">
         <h3 class="title">
-          后台管理系统
+          FERRY 管理平台
         </h3>
       </div>
 

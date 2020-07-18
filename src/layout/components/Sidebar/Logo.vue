@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: '后台管理系统',
+      title: 'FERRY 管理平台',
       logo: '@/assets/logo/ferry_logo_white.png'
     }
   }
