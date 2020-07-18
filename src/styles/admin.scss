@@ -125,8 +125,8 @@
 	min-height: 40px;
 }
 
-.el-card__body {
-	padding: 15px 20px 20px 20px;
+.remove-padding-bottom > .el-card__body {
+	padding-bottom: 5px;
 }
 
 .card-box {

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-card class="box-card">
+    <el-card class="box-card remove-padding-bottom">
       <el-form ref="listQuery" :model="listQuery" :inline="true">
         <el-form-item label="流程名称">
           <el-input
@@ -79,5 +79,9 @@ export default {
     margin-left: 0;
     margin-right: 12px;
     margin-top: 12px;
+  }
+
+  .el-card__body {
+    padding-bottom: 0;
   }
 </style>

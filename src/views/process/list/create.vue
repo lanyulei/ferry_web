@@ -79,7 +79,7 @@ export default {
       active: 0,
       processStructureValue: {},
       ruleForm: {
-        title: '123',
+        title: '',
         process: '',
         classify: '',
         state: [],
