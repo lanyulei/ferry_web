@@ -2,6 +2,7 @@
   <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595066253-ferry_logo_meitu_1.png">
 </p>
 
+
 <p align="center">
   <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067271-badge.png">
@@ -42,7 +43,9 @@ npm >= 6.14
 
 ```
 # 1. 获取代码
-git https://github.com/lanyulei/ferry.git
+git clone https://github.com/lanyulei/ferry.git
+or
+git clone https://gitee.com/xiao_lei/ferry.git
 
 # 2. 进入工作路径
 cd ./ferry
@@ -66,7 +69,9 @@ go run main.go server -c=config/settings.dev.yml
 
 ```
 # 1. 获取代码
-git https://github.com/lanyulei/ferry_web.git
+git clone https://github.com/lanyulei/ferry_web.git
+or
+git clone https://gitee.com/xiao_lei/ferry_web.git
 
 # 2. 进入工作路径
 cd ./ferry_web
@@ -77,6 +82,7 @@ npm install
 # 4. 启动程序
 npm run dev
 ```
+
 
 #### 上线部署
 
@@ -177,12 +183,11 @@ mv dist web
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
 ## 特别感谢
-
 [go-amdin # 不错的后台开发框架](https://github.com/wenjianzhang/go-admin.git)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
-[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发](https://github.com/GavinZhuLei/vue-form-making.git)
+[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发 ](https://github.com/GavinZhuLei/vue-form-making.git)
 
 [wfd-vue # 流程设计器](https://github.com/guozhaolong/wfd-vue)
 
