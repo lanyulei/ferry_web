@@ -147,7 +147,10 @@ export default {
     return {
       variableOptions: [{
         value: 1,
-        label: '创建人'
+        label: '创建者'
+      }, {
+        value: 2,
+        label: '创建者负责人'
       }]
     }
   }

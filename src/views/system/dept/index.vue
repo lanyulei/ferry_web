@@ -109,7 +109,14 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="负责人" prop="leader">
-              <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
+              <el-select v-model="form.leader" clearable filterable placeholder="请选择负责人">
+                <el-option
+                  v-for="item in users"
+                  :key="item.userId"
+                  :label="item.nickName"
+                  :value="item.userId"
+                />
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -133,6 +140,7 @@
 </template>
 
 <script>
+import { listUser } from '@/api/system/sysuser'
 import { getDeptList, getDept, delDept, addDept, updateDept } from '@/api/system/dept'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -158,6 +166,7 @@ export default {
         deptName: undefined,
         status: undefined
       },
+      users: [],
       // 表单参数
       form: {},
       // 表单校验
@@ -167,6 +176,9 @@ export default {
         ],
         deptName: [
           { required: true, message: '部门名称不能为空', trigger: 'blur' }
+        ],
+        leader: [
+          { required: true, message: '部门负责人不能为空', trigger: 'blur' }
         ],
         sort: [
           { required: true, message: '菜单顺序不能为空', trigger: 'blur' }
@@ -198,6 +210,14 @@ export default {
       getDeptList(this.queryParams).then(response => {
         this.deptList = response.data
         this.loading = false
+      })
+    },
+    // 查询用户
+    getUsers() {
+      listUser({
+        pageSize: 999999
+      }).then(response => {
+        this.users = response.data.list
       })
     },
     /** 转换部门数据结构 */
@@ -251,6 +271,7 @@ export default {
     },
     /** 新增按钮操作 */
     handleAdd(row) {
+      this.getUsers()
       this.reset()
       this.getTreeselect('add')
       if (row !== undefined) {
@@ -262,11 +283,15 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
+      this.getUsers()
       this.reset()
       this.getTreeselect('update')
 
       getDept(row.deptId).then(response => {
         this.form = response.data
+        if (this.form.leader === 0) {
+          this.form.leader = ''
+        }
         this.open = true
         this.title = '修改部门'
         this.isEdit = true
