@@ -300,8 +300,7 @@ export default {
     // label width
     if (this.widget.options.labelWidthDisabled) {
       this.widgetLabelWidth = this.widget.options.labelWidth
-    } else if (this.widget.type==='divider' || 
-        (this.widget.type==='text' && this.widget.options.textLabelStatus===false)) {
+    } else if (this.widget.type==='divider') {
       this.widgetLabelWidth = 0
     } else {
       this.widgetLabelWidth = this.data.config.labelWidth

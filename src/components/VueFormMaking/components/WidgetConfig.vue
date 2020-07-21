@@ -23,7 +23,7 @@
         :label="$t('fm.config.widget.labelWidth')"
       >
         <el-checkbox v-model="data.options.labelWidthDisabled">自定义</el-checkbox>
-        <el-input-number v-model="data.options.labelWidth" :min="1" :disabled="!data.options.labelWidthDisabled" />
+        <el-input-number v-model="data.options.labelWidth" :min="0" :step="10" :disabled="!data.options.labelWidthDisabled" />
       </el-form-item>
       <!-- 兰玉磊结束添加 -->
 

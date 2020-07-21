@@ -258,6 +258,11 @@ export default {
     },
     'element.options.labelWidthDisabled': function (val) {
       this.setLabelWidth(val)
+    },
+    'dataConfig.config.labelWidth': function (val) {
+      if (!this.element.options.labelWidthDisabled && this.element.type!=='divider') {
+        this.elementLabelWidth = val
+      }
     }
   },
   mounted() {
@@ -270,7 +275,7 @@ export default {
       }
       if (status) {
         this.elementLabelWidth = this.element.options.labelWidth
-      } else if (this.element.type==='divider' || (this.element.type==='text' && element.options.textLabelStatus===false)) {
+      } else if (this.element.type==='divider') {
         this.elementLabelWidth = 0
       } else {
         // 全局
