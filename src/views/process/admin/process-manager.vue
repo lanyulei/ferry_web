@@ -327,8 +327,40 @@ export default {
         })
       })
     },
-    submitForm(formName) {
+    verifyProcess() {
       this.ruleForm.structure = this.$refs.wfd.graph.save()
+      console.log(this.ruleForm.structure)
+      for (var r of this.ruleForm.structure.nodes) {
+        if (r.sort === undefined || r.sort === null || r.sort === '') {
+          return '流程节点顺序不能为空'
+        } else if (r.label === undefined || r.label === null || r.label === '') {
+          return '流程节点标题不能为空'
+        }
+        if (r.clazz === 'userTask' || r.clazz === 'receiveTask') {
+          if (r.assignType === undefined || r.assignType === null || r.assignType === '') {
+            return '审批节点或处理节点的处理人类型不能为空'
+          } else if (r.assignValue === undefined || r.assignValue === null || r.assignValue === '' || r.assignValue.length === 0) {
+            return '审批节点或处理节点的处理人不能为空'
+          }
+        }
+      }
+      for (var e of this.ruleForm.structure.edges) {
+        if (e.sort === undefined || e.sort === null || e.sort === '') {
+          return '流转顺序不能为空'
+        } else if (e.label === undefined || e.label === null || e.label === '') {
+          return '流转标题不能为空'
+        } else if (e.flowProperties === undefined || e.flowProperties === null || e.flowProperties === '') {
+          return '流转属性不能为空'
+        }
+      }
+      return ''
+    },
+    submitForm(formName) {
+      var r = this.verifyProcess()
+      if (r !== '') {
+        this.$message.error(r)
+        return
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.ruleForm.structure.nodes.length > 0 && this.ruleForm.structure.edges.length > 0) {
@@ -343,6 +375,12 @@ export default {
       })
     },
     editForm(formName) {
+      var r = this.verifyProcess()
+      console.log(r)
+      if (r !== '') {
+        this.$message.error(r)
+        return
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var structureValue = this.$refs.wfd.graph.save()

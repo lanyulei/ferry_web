@@ -4,7 +4,7 @@
     <div class="panelBody">
       <DefaultDetail :model="model" :on-change="onChange" :read-only="readOnly" />
       <div class="panelRow">
-        <div>属性：</div>
+        <div><span style="color: red">*</span> 属性：</div>
         <el-select
           style="width:90%; font-size:12px"
           placeholder="选择流转属性"

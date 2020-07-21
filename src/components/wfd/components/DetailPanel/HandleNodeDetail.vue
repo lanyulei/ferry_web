@@ -19,7 +19,7 @@
         </el-select>
       </div>
       <div class="panelRow">
-        <div>{{ i18n['handleNode.assignType'] }}：</div>
+        <div><span style="color: red">*</span> {{ i18n['handleNode.assignType'] }}：</div>
         <el-select
           style="width:90%; font-size: 12px"
           :placeholder="i18n['handleNode.assignType.placeholder']"
@@ -34,7 +34,7 @@
         </el-select>
       </div>
       <div v-if="model.assignType === 'person'" class="panelRow">
-        <div>{{ i18n['handleNode.assignType.person.title'] }}：</div>
+        <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.person.title'] }}：</div>
         <el-select
           style="width:90%; font-size:12px"
           :placeholder="i18n['handleNode.assignType.person.placeholder']"
@@ -64,7 +64,7 @@
         </el-select>
       </div> -->
       <div v-else-if="model.assignType === 'department'" class="panelRow">
-        <div>{{ i18n['handleNode.assignType.department.title'] }}：</div>
+        <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.department.title'] }}：</div>
         <el-select
           style="width:90%; font-size:12px"
           :placeholder="i18n['handleNode.assignType.department.placeholder']"
@@ -84,7 +84,7 @@
         </el-select>
       </div>
       <div v-else-if="model.assignType === 'variable'" class="panelRow">
-        <div>{{ i18n['handleNode.assignType.variable.title'] }}：</div>
+        <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.variable.title'] }}：</div>
         <el-select
           v-model.number="model.assignValue"
           style="width:90%; font-size:12px"

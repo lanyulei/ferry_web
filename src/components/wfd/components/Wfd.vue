@@ -95,6 +95,7 @@ export default {
     return {
       resizeFunc: () => {},
       selectedModel: {},
+      previous: '',
       processModel: {
         id: '',
         name: '',
@@ -179,13 +180,48 @@ export default {
       }
       return data
     },
+    verifyProcess(pv) {
+      if (pv.label === undefined || pv.label === null || pv.label === '') {
+        return '标题不能为空'
+      } else if (pv.sort === undefined || pv.sort === null || pv.sort === '') {
+        return '顺序不能为空'
+      }
+      if (pv.clazz === 'userTask' || pv.clazz === 'receiveTask') {
+        if (pv.assignType === undefined || pv.assignType === null || pv.assignType === '') {
+          return '审批节点或处理节点的处理人类型不能为空'
+        } else if (pv.assignValue === undefined || pv.assignValue === null || pv.assignValue === '' || pv.assignValue.length === 0) {
+          return '审批节点或处理节点的处理人不能为空'
+        }
+      }
+      if (pv.clazz === 'flow') {
+        if (pv.flowProperties === undefined || pv.flowProperties === null || pv.flowProperties === '') {
+          return '流转属性不能为空'
+        }
+      }
+      return ''
+    },
     initEvents() {
       this.graph.on('afteritemselected', (items) => {
         if (items && items.length > 0) {
+          if (this.previous !== '') {
+            // 1. 获取之前的数据
+            var previousValue = ''
+            const item = this.graph.findById(this.previous[0])
+            previousValue = { ...item.getModel() }
+            var err = this.verifyProcess(previousValue)
+            if (err !== '') {
+              this.selectedModel = previousValue
+              this.$message.error(err)
+              return
+            }
+          }
           const item = this.graph.findById(items[0])
           this.selectedModel = { ...item.getModel() }
+          this.previous = items
         } else {
-          this.selectedModel = this.processModel
+          if (this.previous !== '') {
+            this.selectedModel = this.processModel
+          }
         }
       })
       const page = this.$refs['canvas']
@@ -197,7 +233,12 @@ export default {
       window.addEventListener('resize', this.resizeFunc)
     },
     onItemCfgChange(key, value) {
-      const items = this.graph.get('selectedItems')
+      var items = ''
+      if (this.previous.length !== 0) {
+        items = [this.previous[0]]
+      } else {
+        items = this.graph.get('selectedItems')
+      }
       if (items && items.length > 0) {
         const item = this.graph.findById(items[0])
         if (this.graph.executeCommand) {

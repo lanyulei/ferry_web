@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="panelRow">
-      <div>{{ i18n['label'] }}：</div>
+      <div><span style="color: red">*</span> {{ i18n['label'] }}：</div>
       <el-input
         style="width:90%; font-size:12px"
         :disabled="readOnly"
@@ -10,7 +10,7 @@
       />
     </div>
     <div class="panelRow">
-      <div>顺序：</div>
+      <div><span style="color: red">*</span> 顺序：</div>
       <el-input
         style="width:90%; font-size:12px"
         :disabled="readOnly"
