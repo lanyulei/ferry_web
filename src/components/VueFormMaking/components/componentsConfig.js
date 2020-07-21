@@ -12,7 +12,7 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -27,7 +27,7 @@ export const basicComponents = [
       placeholder: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -44,7 +44,7 @@ export const basicComponents = [
       controlsPosition: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -80,7 +80,7 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -113,7 +113,7 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -135,7 +135,7 @@ export const basicComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -157,7 +157,7 @@ export const basicComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -171,7 +171,7 @@ export const basicComponents = [
       required: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -184,7 +184,7 @@ export const basicComponents = [
       required: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -219,7 +219,7 @@ export const basicComponents = [
       remoteFunc: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -231,7 +231,7 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -249,7 +249,7 @@ export const basicComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -261,7 +261,7 @@ export const basicComponents = [
       font_weight: '500', // 粗体
       font_family: '', // 字体属性
       defaultValue: '这是一句话',
-      labelWidthStatus: true,
+      labelWidthStatus: false,
       customClass: '',
       labelWidth: 100,
       labelWidthDisabled: false
@@ -277,7 +277,7 @@ export const advanceComponents = [
       defaultType: 'String',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -303,7 +303,7 @@ export const advanceComponents = [
       action: 'https://jsonplaceholder.typicode.com/photos/',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -314,7 +314,7 @@ export const advanceComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   },
   {
@@ -336,7 +336,7 @@ export const advanceComponents = [
       remoteFunc: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: false
     }
   }
 ]
