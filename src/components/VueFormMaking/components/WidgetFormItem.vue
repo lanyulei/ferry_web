@@ -270,7 +270,7 @@ export default {
       }
       if (status) {
         this.elementLabelWidth = this.element.options.labelWidth
-      } else if (this.element.type==='grid' || this.element.type==='divider' || (this.element.type==='text' && element.options.textLabelStatus===false)) {
+      } else if (this.element.type==='divider' || (this.element.type==='text' && element.options.textLabelStatus===false)) {
         this.elementLabelWidth = 0
       } else {
         // 全局
