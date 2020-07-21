@@ -1,6 +1,6 @@
 <template>
   <el-form-item
-    :label-width="widget.type==='divider' || (widget.type==='text' && widget.options.textLabelStatus===false)?'0px':data.config.labelWidth + 'px'"
+    :label-width="widgetLabelWidth + 'px'"
     :label="widget.type==='divider' || (widget.type==='text' && widget.options.textLabelStatus===false)?'':widget.name"
     :prop="widget.model"
   >
@@ -249,6 +249,7 @@ export default {
   props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled'],
   data() {
     return {
+      widgetLabelWidth: '',
       dataModel: this.models[this.widget.model]
     }
   },
@@ -294,6 +295,17 @@ export default {
       this.widget.options.disabled = false
     } else {
       this.widget.options.disabled = this.disabled
+    }
+
+    // label width
+    if (this.widget.options.labelWidthDisabled) {
+      this.widgetLabelWidth = this.widget.options.labelWidth
+    } else if (this.widget.type==='grid' || 
+        this.widget.type==='divider' || 
+        (this.widget.type==='text' && this.widget.options.textLabelStatus===false)) {
+      this.widgetLabelWidth = 0
+    } else {
+      this.widgetLabelWidth = this.data.config.labelWidth
     }
   },
   methods: {

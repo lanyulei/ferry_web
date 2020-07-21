@@ -59,7 +59,6 @@ export default {
       })
     },
     handleQuery() {
-      console.log(this.listQuery)
       this.getProcessList()
     },
     submitWorkOrder(processId) {

@@ -13,6 +13,7 @@
 
         <transition-group name="fade" tag="div" class="widget-form-list">
           <template v-for="(element, index) in data.list">
+            <!-- 珊格 -->
             <template v-if="element.type == 'grid'">
               <el-row
                 v-if="element && element.key"

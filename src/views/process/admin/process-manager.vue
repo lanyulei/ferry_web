@@ -329,7 +329,6 @@ export default {
     },
     verifyProcess() {
       this.ruleForm.structure = this.$refs.wfd.graph.save()
-      console.log(this.ruleForm.structure)
       for (var r of this.ruleForm.structure.nodes) {
         if (r.sort === undefined || r.sort === null || r.sort === '') {
           return '流程节点顺序不能为空'
@@ -376,7 +375,6 @@ export default {
     },
     editForm(formName) {
       var r = this.verifyProcess()
-      console.log(r)
       if (r !== '') {
         this.$message.error(r)
         return

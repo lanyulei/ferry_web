@@ -464,7 +464,6 @@ export default {
     submitDataScope: function() {
       if (this.form.roleId !== undefined) {
         this.form.deptIds = this.getDeptAllCheckedKeys()
-        console.log(this.getDeptAllCheckedKeys())
         dataScope(this.form).then(response => {
           if (response.code === 200) {
             this.msgSuccess('修改成功')

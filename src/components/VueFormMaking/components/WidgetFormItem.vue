@@ -1,7 +1,7 @@
 <template>
   <el-form-item
     v-if="element && element.key"
-    :label-width="element.type==='divider' || (element.type==='text' && element.options.textLabelStatus===false)?'0px':dataConfig.config.labelWidth + 'px'"
+    :label-width="elementLabelWidth + 'px'"
     class="widget-view "
     :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
     :label="element.type==='divider' || (element.type==='text' && element.options.textLabelStatus===false)?'':element.name"
@@ -239,6 +239,7 @@ export default {
   props: ['element', 'select', 'index', 'data', 'dataConfig'],
   data() {
     return {
+      elementLabelWidth: '',
       selectWidget: this.select
     }
   },
@@ -251,12 +252,31 @@ export default {
         this.$emit('update:select', val)
       },
       deep: true
+    },
+    'element.options.labelWidth': function (val) {
+      this.elementLabelWidth = val
+    },
+    'element.options.labelWidthDisabled': function (val) {
+      this.setLabelWidth(val)
     }
   },
   mounted() {
-
+    this.setLabelWidth()
   },
   methods: {
+    setLabelWidth(status) {
+      if (status === undefined) {
+        status = this.element.options.labelWidthDisabled
+      }
+      if (status) {
+        this.elementLabelWidth = this.element.options.labelWidth
+      } else if (this.element.type==='grid' || this.element.type==='divider' || (this.element.type==='text' && element.options.textLabelStatus===false)) {
+        this.elementLabelWidth = 0
+      } else {
+        // 全局
+        this.elementLabelWidth = this.dataConfig.config.labelWidth
+      }
+    },
     handleSelectWidget(index) {
       this.selectWidget = this.data.list[index]
     },

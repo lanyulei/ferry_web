@@ -195,7 +195,6 @@ export default {
       this.listQuery.per_page = this.queryParams.pageSize
       templateList(this.listQuery).then(response => {
         this.tplList = response.data.data
-        console.log(this.tplList)
         this.queryParams.pageIndex = response.data.page
         this.queryParams.pageSize = response.data.per_page
         this.total = response.data.total_count
