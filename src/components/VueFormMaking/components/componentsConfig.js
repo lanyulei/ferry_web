@@ -11,7 +11,8 @@ export const basicComponents = [
       placeholder: '',
       disabled: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -25,7 +26,8 @@ export const basicComponents = [
       pattern: '',
       placeholder: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -41,7 +43,8 @@ export const basicComponents = [
       disabled: false,
       controlsPosition: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -76,7 +79,8 @@ export const basicComponents = [
       remoteFunc: '',
       disabled: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -108,7 +112,8 @@ export const basicComponents = [
       remoteFunc: '',
       disabled: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -129,7 +134,8 @@ export const basicComponents = [
       required: false,
       width: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -150,7 +156,8 @@ export const basicComponents = [
       required: false,
       width: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -163,7 +170,8 @@ export const basicComponents = [
       allowHalf: false,
       required: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -175,7 +183,8 @@ export const basicComponents = [
       showAlpha: false,
       required: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -209,7 +218,8 @@ export const basicComponents = [
       },
       remoteFunc: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -220,7 +230,8 @@ export const basicComponents = [
       required: false,
       disabled: false,
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -237,7 +248,8 @@ export const basicComponents = [
       range: false,
       width: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -248,8 +260,8 @@ export const basicComponents = [
       font_color: '#606266', // 字体颜色
       font_weight: '500', // 粗体
       font_family: '', // 字体属性
-      defaultValue: 'This is a text',
-      textLabelStatus: true,
+      defaultValue: '这是一句话',
+      labelWidthStatus: true,
       customClass: '',
       labelWidth: 100,
       labelWidthDisabled: false
@@ -264,7 +276,8 @@ export const advanceComponents = [
     options: {
       defaultType: 'String',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -289,7 +302,8 @@ export const advanceComponents = [
       isEdit: false,
       action: 'https://jsonplaceholder.typicode.com/photos/',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -299,7 +313,8 @@ export const advanceComponents = [
       defaultValue: '',
       width: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -320,7 +335,8 @@ export const advanceComponents = [
       },
       remoteFunc: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   }
 ]

@@ -25,6 +25,16 @@
         <el-checkbox v-model="data.options.labelWidthDisabled">自定义</el-checkbox>
         <el-input-number v-model="data.options.labelWidth" :min="0" :step="10" :disabled="!data.options.labelWidthDisabled" />
       </el-form-item>
+      <el-form-item
+        v-if="Object.keys(data.options).indexOf('labelWidthStatus')>=0 &&
+          data.type!=='grid' &&
+          data.type !== 'divider'"
+        label="隐藏标签"
+      >
+        <el-switch
+          v-model="data.options.labelWidthStatus"
+        />
+      </el-form-item>
       <!-- 兰玉磊结束添加 -->
 
       <!-- 高度 -->
@@ -291,12 +301,6 @@
         <el-form-item label="字体属性">
           <el-input v-model="data.options.font_family" placeholder="请输入字体属性" />
         </el-form-item>
-        <el-form-item label="是否显示Label">
-          <el-radio-group v-model="data.options.textLabelStatus">
-            <el-radio-button :label="true">是</el-radio-button>
-            <el-radio-button :label="false">否</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
       </template>
       <!-- 分割符 -->
       <template v-if="data.type==='divider'">
@@ -439,6 +443,7 @@ export default {
   computed: {
     show() {
       if (this.data && Object.keys(this.data).length > 0) {
+        console.log(this.data)
         return true
       }
       return false

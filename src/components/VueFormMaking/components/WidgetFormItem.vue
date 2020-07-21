@@ -1,10 +1,10 @@
 <template>
   <el-form-item
     v-if="element && element.key"
-    :label-width="elementLabelWidth + 'px'"
+    :label-width="element.options.labelWidthStatus?elementLabelWidth + 'px': '0px'"
     class="widget-view "
     :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
-    :label="element.type==='divider' || (element.type==='text' && element.options.textLabelStatus===false)?'':element.name"
+    :label="element.type==='divider' || !element.options.labelWidthStatus?'':element.name"
     @click.native.stop="handleSelectWidget(index)"
   >
     <template v-if="element.type == 'input'">
