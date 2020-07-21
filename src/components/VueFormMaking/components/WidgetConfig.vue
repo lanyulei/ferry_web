@@ -72,7 +72,7 @@
         <el-switch v-model="data.options.filterable" />
       </el-form-item>
       <!-- 允许半选 -->
-      <el-form-item v-if="Object.keys(data.options).indexOf('allowHalf')>=0" label="$t('fm.config.widget.allowHalf')">
+      <el-form-item v-if="Object.keys(data.options).indexOf('allowHalf')>=0" :label="$t('fm.config.widget.allowHalf')">
         <el-switch
           v-model="data.options.allowHalf"
         />
