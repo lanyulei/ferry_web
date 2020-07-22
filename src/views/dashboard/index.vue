@@ -1,28 +1,27 @@
 <template>
-  <div class="dashboard-container" style="text-align: center">
-    <h1 style="margin-top: 60px; font-size: 38px">欢迎访问本系统</h1>
+  <div class="dashboard-container">
+    <adminDashboard v-if="dashboardStatus" :panel-group="panelGroup" />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import adminDashboard from './admin'
+import { initData } from '@/api/dashboard'
 
 export default {
   name: 'Dashboard',
+  components: { adminDashboard },
   data() {
     return {
-
+      dashboardStatus: false
     }
   },
-  computed: {
-    ...mapGetters([
-      'roles'
-    ])
-  },
   created() {
-    // if (!this.roles.includes('admin')) {
-    //   this.currentRole = 'editorDashboard'
-    // }
+    initData().then(response => {
+      this.panelGroup = response.data
+      console.log(this.panelGroup)
+      this.dashboardStatus = true
+    })
   }
 }
 </script>
