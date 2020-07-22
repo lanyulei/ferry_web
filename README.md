@@ -2,6 +2,7 @@
   <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595066253-ferry_logo_meitu_1.png">
 </p>
 
+
 <p align="center">
   <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067271-badge.png">
@@ -81,6 +82,7 @@ npm install
 # 4. 启动程序
 npm run dev
 ```
+
 
 #### 上线部署
 
@@ -174,19 +176,30 @@ mv dist web
   }
 ```
 
-## 联系作者
+## 交流群
 
-目前还有建立聊天群，主要是怕没人加群尴尬，因此如果有问题可以在我的博客给我发私信，或者在问答社区留言，感谢支持。
+加群条件是需给项目一个star，不需要您费多大的功夫与力气，一个小小的star是作者能维护下去的动力。
+
+如果您只是使用本项目的话，您可以在群内提出您使用中需要改进的地方，我会尽快修改。
+
+如果您是想基于此项目二次开发的话，您可以在群里提出您在开发过程中的任何疑问，我会尽快答复并讲解。
+
+群里只要不说骂人、侮辱人之类人身攻击的话，您就可以畅所欲言，有bug我及时修改，使用中有不懂的，我会及时回复，感谢。
+
+<p>
+  <img src="https://www.fdevops.com/wp-content/uploads/2020/07/2020072209114938.png">
+</p>
+
+QQ群：1127401830
 
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
 ## 特别感谢
-
 [go-amdin # 不错的后台开发框架](https://github.com/wenjianzhang/go-admin.git)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
-[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发](https://github.com/GavinZhuLei/vue-form-making.git)
+[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发 ](https://github.com/GavinZhuLei/vue-form-making.git)
 
 [wfd-vue # 流程设计器](https://github.com/guozhaolong/wfd-vue)
 
