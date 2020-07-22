@@ -1,67 +1,105 @@
 <template>
   <div v-if="show">
     <el-form label-position="top">
+      <!-- 字段标识 -->
       <el-form-item v-if="data.type!='grid'" :label="$t('fm.config.widget.model')">
         <el-input v-model="data.model" />
       </el-form-item>
+      <!-- 标题 -->
       <el-form-item v-if="data.type!=='grid' && data.type!=='divider'" :label="$t('fm.config.widget.name')">
         <el-input v-model="data.name" />
       </el-form-item>
+      <!-- 宽度 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('width')>=0" :label="$t('fm.config.widget.width')">
         <el-input v-model="data.options.width" />
       </el-form-item>
 
+      <!-- 兰玉磊开始添加 -->
+      <!-- 标签宽度 -->
+      <el-form-item
+        v-if="Object.keys(data.options).indexOf('labelWidth')>=0 &&
+          data.type!=='grid' &&
+          data.type !== 'divider'"
+        :label="$t('fm.config.widget.labelWidth')"
+      >
+        <el-checkbox v-model="data.options.labelWidthDisabled">自定义</el-checkbox>
+        <el-input-number v-model="data.options.labelWidth" :min="0" :step="10" :disabled="!data.options.labelWidthDisabled" />
+      </el-form-item>
+      <el-form-item
+        v-if="Object.keys(data.options).indexOf('labelWidthStatus')>=0 &&
+          data.type!=='grid' &&
+          data.type !== 'divider'"
+        label="隐藏标签"
+      >
+        <el-switch
+          v-model="data.options.labelWidthStatus"
+        />
+      </el-form-item>
+      <!-- 兰玉磊结束添加 -->
+
+      <!-- 高度 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('height')>=0" :label="$t('fm.config.widget.height')">
         <el-input v-model="data.options.height" />
       </el-form-item>
-
+      <!-- 大小 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('size')>=0" :label="$t('fm.config.widget.size')">
         {{ $t('fm.config.widget.width') }} <el-input v-model.number="data.options.size.width" style="width: 90px;" type="number" />
         {{ $t('fm.config.widget.height') }} <el-input v-model.number="data.options.size.height" style="width: 90px;" type="number" />
       </el-form-item>
-
+      <!-- 占位内容 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('placeholder')>=0 && (data.type!='time' || data.type!='date')" :label="$t('fm.config.widget.placeholder')">
         <el-input v-model="data.options.placeholder" />
       </el-form-item>
+      <!-- 布局方式，块，行 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('inline')>=0" :label="$t('fm.config.widget.layout')">
         <el-radio-group v-model="data.options.inline">
           <el-radio-button :label="false">{{ $t('fm.config.widget.block') }}</el-radio-button>
           <el-radio-button :label="true">{{ $t('fm.config.widget.inline') }}</el-radio-button>
         </el-radio-group>
       </el-form-item>
+      <!-- 显示输入框 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('showInput')>=0" :label="$t('fm.config.widget.showInput')">
         <el-switch v-model="data.options.showInput" />
       </el-form-item>
+      <!-- 最小值 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('min')>=0" :label="$t('fm.config.widget.min')">
         <el-input-number v-model="data.options.min" :min="0" :max="100" :step="1" />
       </el-form-item>
+      <!-- 最大值 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('max')>=0" :label="$t('fm.config.widget.max')">
         <el-input-number v-model="data.options.max" :min="0" :max="100" :step="1" />
       </el-form-item>
+      <!-- 步长 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('step')>=0" :label="$t('fm.config.widget.step')">
         <el-input-number v-model="data.options.step" :min="0" :max="100" :step="1" />
       </el-form-item>
+      <!-- 是否多选 -->
       <el-form-item v-if="data.type=='select' || data.type=='imgupload'" :label="$t('fm.config.widget.multiple')">
         <el-switch v-model="data.options.multiple" @change="handleSelectMuliple" />
       </el-form-item>
+      <!-- 是否可搜索 -->
       <el-form-item v-if="data.type=='select'" :label="$t('fm.config.widget.filterable')">
         <el-switch v-model="data.options.filterable" />
       </el-form-item>
-      <el-form-item v-if="Object.keys(data.options).indexOf('allowHalf')>=0" label="$t('fm.config.widget.allowHalf')">
+      <!-- 允许半选 -->
+      <el-form-item v-if="Object.keys(data.options).indexOf('allowHalf')>=0" :label="$t('fm.config.widget.allowHalf')">
         <el-switch
           v-model="data.options.allowHalf"
         />
       </el-form-item>
+      <!-- 支持透明度选择 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('showAlpha')>=0" :label="$t('fm.config.widget.showAlpha')">
         <el-switch
           v-model="data.options.showAlpha"
         />
       </el-form-item>
+      <!-- 是否显示标签 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('showLabel')>=0" :label="$t('fm.config.widget.showLabel')">
         <el-switch
           v-model="data.options.showLabel"
         />
       </el-form-item>
+      <!-- 选项 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('options')>=0" :label="$t('fm.config.widget.option')">
         <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
           <el-radio-button :label="false">{{ $t('fm.config.widget.staticData') }}</el-radio-button>
@@ -137,7 +175,7 @@
         </template>
 
       </el-form-item>
-
+      <!-- 级联选择器 -->
       <el-form-item v-if="data.type=='cascader'" :label="$t('fm.config.widget.remoteData')">
         <div>
           <el-input v-model="data.options.remoteFunc" size="mini" style="">
@@ -154,7 +192,7 @@
           </el-input>
         </div>
       </el-form-item>
-
+      <!-- 默认值 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')" :label="$t('fm.config.widget.defaultValue')">
         <el-input v-if="data.type=='textarea'" v-model="data.options.defaultValue" type="textarea" :rows="5" />
         <el-input v-if="data.type=='input'" v-model="data.options.defaultValue" />
@@ -167,7 +205,7 @@
         />
         <el-switch v-if="data.type=='switch'" v-model="data.options.defaultValue" />
       </el-form-item>
-
+      <!-- 显示类型 -->
       <template v-if="data.type == 'time' || data.type == 'date'">
         <el-form-item v-if="data.type == 'date'" :label="$t('fm.config.widget.showType')">
           <el-select v-model="data.options.type">
@@ -223,7 +261,7 @@
           />
         </el-form-item>
       </template>
-
+      <!-- 图片上传 -->
       <template v-if="data.type=='imgupload'">
 
         <el-form-item :label="$t('fm.config.widget.limit')">
@@ -246,7 +284,7 @@
           </el-form-item>
         </template>
       </template>
-
+      <!-- 多行文本 -->
       <template v-if="data.type==='text'">
         <el-form-item label="文字内容">
           <el-input v-model="data.options.defaultValue" placeholder="请输入文字内容" />
@@ -263,14 +301,8 @@
         <el-form-item label="字体属性">
           <el-input v-model="data.options.font_family" placeholder="请输入字体属性" />
         </el-form-item>
-        <el-form-item label="是否显示Label">
-          <el-radio-group v-model="data.options.textLabelStatus">
-            <el-radio-button :label="true">是</el-radio-button>
-            <el-radio-button :label="false">否</el-radio-button>
-          </el-radio-group>
-        </el-form-item>
       </template>
-
+      <!-- 分割符 -->
       <template v-if="data.type==='divider'">
         <el-form-item label="文字内容">
           <el-input v-model="data.options.defaultValue" placeholder="请输入文字内容" />
@@ -311,7 +343,7 @@
           </el-select>
         </el-form-item>
       </template>
-
+      <!-- 珊格 -->
       <template v-if="data.type == 'grid'">
         <el-form-item :label="$t('fm.config.widget.gutter')">
           <el-input v-model.number="data.options.gutter" type="number" />
@@ -352,7 +384,7 @@
           </el-select>
         </el-form-item>
       </template>
-
+      <!-- 非珊格 -->
       <template v-if="data.type != 'grid'">
         <el-form-item :label="$t('fm.config.widget.attribute')">
           <el-checkbox v-if="Object.keys(data.options).indexOf('readonly')>=0" v-model="data.options.readonly">{{ $t('fm.config.widget.readonly') }}</el-checkbox>
@@ -411,6 +443,7 @@ export default {
   computed: {
     show() {
       if (this.data && Object.keys(this.data).length > 0) {
+        console.log(this.data)
         return true
       }
       return false

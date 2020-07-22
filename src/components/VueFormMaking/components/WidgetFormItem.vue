@@ -1,10 +1,10 @@
 <template>
   <el-form-item
     v-if="element && element.key"
-    :label-width="element.type==='divider' || (element.type==='text' && element.options.textLabelStatus===false)?'0px':dataConfig.config.labelWidth + 'px'"
+    :label-width="element.options.labelWidthStatus?elementLabelWidth + 'px': '0px'"
     class="widget-view "
     :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
-    :label="element.type==='divider' || (element.type==='text' && element.options.textLabelStatus===false)?'':element.name"
+    :label="element.type==='divider' || !element.options.labelWidthStatus?'':element.name"
     @click.native.stop="handleSelectWidget(index)"
   >
     <template v-if="element.type == 'input'">
@@ -239,6 +239,7 @@ export default {
   props: ['element', 'select', 'index', 'data', 'dataConfig'],
   data() {
     return {
+      elementLabelWidth: '',
       selectWidget: this.select
     }
   },
@@ -251,12 +252,36 @@ export default {
         this.$emit('update:select', val)
       },
       deep: true
+    },
+    'element.options.labelWidth': function (val) {
+      this.elementLabelWidth = val
+    },
+    'element.options.labelWidthDisabled': function (val) {
+      this.setLabelWidth(val)
+    },
+    'dataConfig.config.labelWidth': function (val) {
+      if (!this.element.options.labelWidthDisabled && this.element.type!=='divider') {
+        this.elementLabelWidth = val
+      }
     }
   },
   mounted() {
-
+    this.setLabelWidth()
   },
   methods: {
+    setLabelWidth(status) {
+      if (status === undefined) {
+        status = this.element.options.labelWidthDisabled
+      }
+      if (status) {
+        this.elementLabelWidth = this.element.options.labelWidth
+      } else if (this.element.type==='divider') {
+        this.elementLabelWidth = 0
+      } else {
+        // 全局
+        this.elementLabelWidth = this.dataConfig.config.labelWidth
+      }
+    },
     handleSelectWidget(index) {
       this.selectWidget = this.data.list[index]
     },

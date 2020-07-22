@@ -9,7 +9,10 @@ export const basicComponents = [
       dataType: 'string',
       pattern: '',
       placeholder: '',
-      disabled: false
+      disabled: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -21,7 +24,10 @@ export const basicComponents = [
       required: false,
       disabled: false,
       pattern: '',
-      placeholder: ''
+      placeholder: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -35,7 +41,10 @@ export const basicComponents = [
       max: '',
       step: 1,
       disabled: false,
-      controlsPosition: ''
+      controlsPosition: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -68,7 +77,10 @@ export const basicComponents = [
         label: 'label'
       },
       remoteFunc: '',
-      disabled: false
+      disabled: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -98,7 +110,10 @@ export const basicComponents = [
         label: 'label'
       },
       remoteFunc: '',
-      disabled: false
+      disabled: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -117,7 +132,10 @@ export const basicComponents = [
       arrowControl: true,
       format: 'HH:mm:ss',
       required: false,
-      width: ''
+      width: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -136,7 +154,10 @@ export const basicComponents = [
       format: 'yyyy-MM-dd',
       timestamp: false,
       required: false,
-      width: ''
+      width: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -147,7 +168,10 @@ export const basicComponents = [
       max: 5,
       disabled: false,
       allowHalf: false,
-      required: false
+      required: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -157,7 +181,10 @@ export const basicComponents = [
       defaultValue: '',
       disabled: false,
       showAlpha: false,
-      required: false
+      required: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -189,7 +216,10 @@ export const basicComponents = [
         value: 'value',
         label: 'label'
       },
-      remoteFunc: ''
+      remoteFunc: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -198,7 +228,10 @@ export const basicComponents = [
     options: {
       defaultValue: false,
       required: false,
-      disabled: false
+      disabled: false,
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -213,7 +246,10 @@ export const basicComponents = [
       step: 1,
       showInput: false,
       range: false,
-      width: ''
+      width: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -224,9 +260,11 @@ export const basicComponents = [
       font_color: '#606266', // 字体颜色
       font_weight: '500', // 粗体
       font_family: '', // 字体属性
-      defaultValue: 'This is a text',
-      textLabelStatus: true,
-      customClass: ''
+      defaultValue: '这是一句话',
+      labelWidthStatus: true,
+      customClass: '',
+      labelWidth: 100,
+      labelWidthDisabled: false
     }
   }
 ]
@@ -236,7 +274,10 @@ export const advanceComponents = [
     type: 'blank',
     icon: 'icon-zidingyishuju',
     options: {
-      defaultType: 'String'
+      defaultType: 'String',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -259,7 +300,10 @@ export const advanceComponents = [
       isDelete: false,
       min: 0,
       isEdit: false,
-      action: 'https://jsonplaceholder.typicode.com/photos/'
+      action: 'https://jsonplaceholder.typicode.com/photos/',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -267,7 +311,10 @@ export const advanceComponents = [
     icon: 'icon-fuwenbenkuang',
     options: {
       defaultValue: '',
-      width: ''
+      width: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   },
   {
@@ -286,7 +333,10 @@ export const advanceComponents = [
         label: 'label',
         children: 'children'
       },
-      remoteFunc: ''
+      remoteFunc: '',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
     }
   }
 ]
