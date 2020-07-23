@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             用户总数
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelGroupValue.user_total_count" :duration="2000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             工单总数
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelGroupValue.work_order_total_count" :duration="2200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             待办总数
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelGroupValue.upcoming_total_count" :duration="2400" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             个人待办
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="panelGroupValue.my_upcoming_count" :duration="2800" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -63,10 +63,7 @@ export default {
     CountTo
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['panelGroup'],
-  created() {
-    console.log(this.panelGroup)
-  }
+  props: ['panelGroupValue']
 }
 </script>
 

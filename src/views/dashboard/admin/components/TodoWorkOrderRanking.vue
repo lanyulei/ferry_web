@@ -7,8 +7,6 @@ import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
-const animationDuration = 6000
-
 export default {
   mixins: [resize],
   props: {
@@ -47,54 +45,46 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
 
       this.chart.setOption({
+        title: {
+          text: '待办工单排名',
+          textStyle: {
+            fontSize: 15
+          }
+        },
         tooltip: {
           trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          axisPointer: {
+            type: 'shadow'
           }
         },
         grid: {
-          top: 10,
+          top: 35,
           left: '2%',
           right: '2%',
           bottom: '3%',
           containLabel: true
         },
-        xAxis: [{
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
+        xAxis: {
           type: 'value',
-          axisTick: {
-            show: false
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: ['兰玉磊', '张三', '李四', '王五', '赵六', '马七']
+        },
+        series: [
+          {
+            type: 'bar',
+            barWidth: 20,
+            stack: 'vistors',
+            data: [1, 8, 12, 15, 23, 36],
+            itemStyle: {
+              normal: {
+                color: '#5ab1ef'
+              }
+            }
           }
-        }],
-        series: [{
-          name: 'pageA',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }]
+        ]
       })
     }
   }

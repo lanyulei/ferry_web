@@ -25,11 +25,11 @@ export default {
     autoResize: {
       type: Boolean,
       default: true
-    },
-    chartData: {
-      type: Object,
-      required: true
     }
+    // chartData: {
+    //   type: Object,
+    //   required: true
+    // }
   },
   data() {
     return {
@@ -63,71 +63,65 @@ export default {
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
-        xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
+        title: {
+          text: '本周工单统计',
+          textStyle: {
+            fontSize: 15
           }
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
-          containLabel: true
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          padding: [5, 10]
-        },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
+          trigger: 'axis'
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['运维', '产品研发', '测试', 'UI设计', '前端']
         },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
+        grid: {
+          left: '10',
+          right: '10',
+          bottom: '20',
+          top: '50',
+          containLabel: true
         },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '运维',
+            type: 'line',
+            stack: '总量',
+            data: [120, 132, 101, 134, 90, 4, 7]
           },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
-        }]
+          {
+            name: '产品研发',
+            type: 'line',
+            stack: '总量',
+            data: [220, 182, 191, 234, 290, 8, 3]
+          },
+          {
+            name: '测试',
+            type: 'line',
+            stack: '总量',
+            data: [150, 232, 201, 154, 190, 4, 2]
+          },
+          {
+            name: 'UI设计',
+            type: 'line',
+            stack: '总量',
+            data: [320, 332, 301, 334, 390, 1, 7]
+          },
+          {
+            name: '前端',
+            type: 'line',
+            stack: '总量',
+            data: [150, 376, 256, 289, 179, 5, 12]
+          }
+        ]
       })
     }
   }
