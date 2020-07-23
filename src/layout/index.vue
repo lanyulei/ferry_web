@@ -49,6 +49,9 @@ export default {
       }
     }
   },
+  created() {
+    console.log('\u611f\u8c22\u60a8\u4f7f\u7528\u672c\u7cfb\u7edf\uff0c\u5982\u679c\u53ef\u4ee5\u8bf7\u60a8\u5728github\u4e0a\u70b9\u4e0a\u4e00\u4e2a\u5c0f\u5c0f\u7684star\uff0c\u60a8\u7684\u652f\u6301\uff0c\u6211\u7684\u52a8\u529b\u3002\nhttps://github.com/lanyulei/ferry\n\u6709\u4efb\u4f55\u95ee\u9898\u6b22\u8fce\u52a0\u7fa4\u8be2\u95ee\uff1a1127401830')
+  },
   methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
