@@ -31,8 +31,19 @@
       </div>
       <div class="text item">
         <el-form label-width="100px">
-          <el-form-item label="标题: " style="margin-bottom: 0">
-            <span>{{ workOrderTitle }}</span>
+          <el-form-item label="标题:" style="margin-bottom: 5px">
+            <span>{{ processStructureValue.workOrder.title }}</span>
+          </el-form-item>
+          <el-form-item label="优先级:" style="margin-bottom: 0">
+            <span v-if="processStructureValue.workOrder.priority===2">
+              <el-tag type="warning">紧急</el-tag>
+            </span>
+            <span v-else-if="processStructureValue.workOrder.priority===3">
+              <el-tag type="danger">非常紧急</el-tag>
+            </span>
+            <span v-else>
+              <el-tag type="success">正常</el-tag>
+            </span>
           </el-form-item>
         </el-form>
       </div>
@@ -126,9 +137,10 @@ export default {
       alertMessage: '',
       nodeStepList: [],
       circulationHistoryList: [],
-      workOrderTitle: '',
       activeIndex: 0,
-      processStructureValue: {},
+      processStructureValue: {
+        workOrder: { title: '' }
+      },
       ruleForm: {
         title: '',
         process: '',
@@ -164,7 +176,6 @@ export default {
         workOrderId: this.$route.query.workOrderId
       }).then(response => {
         this.processStructureValue = response.data
-        this.workOrderTitle = this.processStructureValue.workOrder.title
         this.circulationHistoryList = this.processStructureValue.circulationHistory
 
         // 获取当前展示节点列表

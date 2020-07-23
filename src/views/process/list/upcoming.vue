@@ -31,6 +31,19 @@
             <span v-if="scope.row.is_end===0">{{ scope.row.principals }}</span>
           </template>
         </el-table-column>
+        <el-table-column label="优先级" :show-overflow-tooltip="true" width="120" align="center">
+          <template slot-scope="scope">
+            <span v-if="scope.row.priority===2">
+              <el-tag type="warning">紧急</el-tag>
+            </span>
+            <span v-else-if="scope.row.priority===3">
+              <el-tag type="danger">非常紧急</el-tag>
+            </span>
+            <span v-else>
+              <el-tag type="success">正常</el-tag>
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column label="是否结束" :show-overflow-tooltip="true" width="80" align="center">
           <template slot-scope="scope">
             <el-tag v-if="scope.row.is_end===0" size="mini" type="success">否</el-tag>

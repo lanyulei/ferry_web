@@ -22,8 +22,15 @@
       </div>
       <div class="text item">
         <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-          <el-form-item label="标题" prop="title" style="margin-bottom: 0">
+          <el-form-item label="标题:" prop="title" style="margin-bottom: 13px">
             <el-input v-model="ruleForm.title" size="small" />
+          </el-form-item>
+          <el-form-item label="优先级:" prop="priority" style="margin-bottom: 0">
+            <el-radio-group v-model="ruleForm.priority" size="small">
+              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="2">紧急</el-radio>
+              <el-radio :label="3">非常紧急</el-radio>
+            </el-radio-group>
           </el-form-item>
         </el-form>
       </div>
@@ -80,6 +87,7 @@ export default {
       processStructureValue: {},
       ruleForm: {
         title: '',
+        priority: 1,
         process: '',
         classify: '',
         state: [],
@@ -95,6 +103,9 @@ export default {
       rules: {
         title: [
           { required: true, message: '请输入工单标题', trigger: 'blur' }
+        ],
+        priority: [
+          { required: true, message: '请选择工单优先级', trigger: 'blur' }
         ]
       },
       remoteFunc: {
@@ -166,6 +177,7 @@ export default {
           Promise.all(promiseList).then(values => {
             this.ruleForm.source = this.processStructureValue.nodes[this.active].id
             this.ruleForm.tpls.form_data = values
+            console.log(this.ruleForm)
             createWorkOrder(this.ruleForm).then(response => {
               if (response.code === 200) {
                 this.$router.push({ path: '/process/upcoming' })
