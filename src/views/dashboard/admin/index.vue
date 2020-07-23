@@ -2,11 +2,11 @@
   <div class="dashboard-editor-container">
     <panel-group :panel-group-value="panelGroupValue" />
 
-    <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
+    <!-- <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart />
-    </el-row>
+    </el-row> -->
 
-    <el-row :gutter="32">
+    <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <TicketSubmissionRanking />
@@ -22,25 +22,25 @@
           <ProcessingTicketRanking />
         </div>
       </el-col>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
 <script>
 import PanelGroup from './components/PanelGroup'
-import LineChart from './components/LineChart'
-import TicketSubmissionRanking from './components/TicketSubmissionRanking'
-import TodoWorkOrderRanking from './components/TodoWorkOrderRanking'
-import ProcessingTicketRanking from './components/ProcessingTicketRanking'
+// import LineChart from './components/LineChart'
+// import TicketSubmissionRanking from './components/TicketSubmissionRanking'
+// import TodoWorkOrderRanking from './components/TodoWorkOrderRanking'
+// import ProcessingTicketRanking from './components/ProcessingTicketRanking'
 
 export default {
   name: 'DashboardAdmin',
   components: {
-    PanelGroup,
-    LineChart,
-    TicketSubmissionRanking,
-    TodoWorkOrderRanking,
-    ProcessingTicketRanking
+    PanelGroup
+    // LineChart,
+    // TicketSubmissionRanking,
+    // TodoWorkOrderRanking,
+    // ProcessingTicketRanking
   },
   // eslint-disable-next-line vue/require-prop-types
   props: ['panelGroupValue'],
