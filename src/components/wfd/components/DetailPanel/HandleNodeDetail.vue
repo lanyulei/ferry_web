@@ -157,7 +157,7 @@ export default {
         value: 1,
         label: '创建者'
       }, {
-        value: 1,
+        value: 2,
         label: '创建者负责人'
       }]
     }
