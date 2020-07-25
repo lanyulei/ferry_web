@@ -204,7 +204,6 @@ export default {
       this.graph.on('afteritemselected', (items) => {
         if (items && items.length > 0) {
           if (this.previous !== '') {
-            // 1. 获取之前的数据
             var previousValue = ''
             const item = this.graph.findById(this.previous[0])
             previousValue = { ...item.getModel() }

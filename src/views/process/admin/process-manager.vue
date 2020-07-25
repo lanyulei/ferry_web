@@ -199,6 +199,7 @@ export default {
       // 是否显示弹出层
       open: false,
       // 查询参数
+      structureValue: [],
       users: [],
       groups: [],
       departments: [],
@@ -338,9 +339,11 @@ export default {
         })
       })
     },
-    verifyProcess() {
-      this.ruleForm.structure = this.$refs.wfd.graph.save()
-      for (var r of this.ruleForm.structure.nodes) {
+    verifyProcess(structureValue) {
+      if (structureValue === undefined && structureValue === null) {
+        structureValue = this.ruleForm.structure
+      }
+      for (var r of structureValue.nodes) {
         if (r.sort === undefined || r.sort === null || r.sort === '') {
           return '流程节点顺序不能为空'
         } else if (r.label === undefined || r.label === null || r.label === '') {
@@ -354,7 +357,7 @@ export default {
           }
         }
       }
-      for (var e of this.ruleForm.structure.edges) {
+      for (var e of structureValue.edges) {
         if (e.sort === undefined || e.sort === null || e.sort === '') {
           return '流转顺序不能为空'
         } else if (e.label === undefined || e.label === null || e.label === '') {
@@ -385,20 +388,20 @@ export default {
       })
     },
     editForm(formName) {
-      var r = this.verifyProcess()
-      if (r !== '') {
-        this.$message.error(r)
-        return
-      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
           var structureValue = this.$refs.wfd.graph.save()
+          var r = this.verifyProcess(structureValue)
+          if (r !== '') {
+            this.$message.error(r)
+            return
+          }
           if (structureValue.nodes.length > 0 && structureValue.edges.length > 0) {
             updateProcess({
               id: this.ruleForm.id,
               name: this.ruleForm.name,
               tpls: this.ruleForm.tpls,
-              structure: this.$refs.wfd.graph.save(),
+              structure: structureValue,
               classify: this.ruleForm.classify,
               task: this.ruleForm.task,
               notice: this.ruleForm.notice
