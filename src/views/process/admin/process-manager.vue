@@ -84,42 +84,59 @@
         @pagination="getList"
       />
 
-      <el-dialog :title="dialogFormVisibleName===1?'新建模版':'编辑模版'" :visible.sync="open" :fullscreen="true" style="margin-top: 0">
+      <el-dialog :title="dialogProcessVisibleName===1?'新建流程':'编辑流程'" :visible.sync="open" :fullscreen="true" style="margin-top: 0">
         <div class="tpl-create-content">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
             <el-form-item label="名称" prop="name">
               <el-input v-model="ruleForm.name" placeholder="请输入流程名称" style="width: 100%" />
             </el-form-item>
-            <el-form-item label="分类" prop="classify">
-              <el-select v-model="ruleForm.classify" filterable placeholder="请选择流程分类" style="width: 100%">
-                <el-option
-                  v-for="item in classifyListData"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="模版" prop="tpls">
-              <el-select v-model="ruleForm.tpls" filterable multiple placeholder="请选择模版" style="width: 100%">
-                <el-option
-                  v-for="item in templates"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="任务">
-              <el-select v-model="ruleForm.task" multiple filterable placeholder="请选择流程任务" style="width: 100%">
-                <el-option
-                  v-for="(item, index) in taskListData"
-                  :key="index"
-                  :label="item.name"
-                  :value="item.full_name"
-                />
-              </el-select>
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="分类" prop="classify">
+                  <el-select v-model="ruleForm.classify" filterable placeholder="请选择流程分类" style="width: 100%">
+                    <el-option
+                      v-for="item in classifyListData"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="模版" prop="tpls">
+                  <el-select v-model="ruleForm.tpls" filterable multiple placeholder="请选择模版" style="width: 100%">
+                    <el-option
+                      v-for="item in templates"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="通知">
+                  <el-select v-model="ruleForm.notice" multiple filterable clearable placeholder="请选择流程任务" style="width: 100%">
+                    <el-option label="邮件" :value="1" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="任务">
+                  <el-select v-model="ruleForm.task" multiple filterable clearable placeholder="请选择流程任务" style="width: 100%">
+                    <el-option
+                      v-for="(item, index) in taskListData"
+                      :key="index"
+                      :label="item.name"
+                      :value="item.full_name"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-form-item label="流程" prop="structure">
               <div style="border-radius: 4px; overflow:hidden">
                 <div>
@@ -168,7 +185,6 @@ export default {
   },
   data() {
     return {
-      dialogFormVisibleName: 1,
       queryParams: {},
       // 遮罩层
       loading: true,
@@ -197,14 +213,7 @@ export default {
         per_page: 10
       },
       lang: 'zh',
-      ruleForm: {
-        id: undefined,
-        name: '',
-        structure: '',
-        tpls: [],
-        classify: '',
-        task: []
-      },
+      ruleForm: {},
       rules: {
         name: [
           { required: true, message: '请输入流程名称', trigger: 'blur' }
@@ -296,7 +305,8 @@ export default {
         tpls: [],
         structure: { 'edges': [], 'nodes': [], 'groups': [] },
         classify: '',
-        task: []
+        task: [],
+        notice: [1]
       }
       this.dialogProcessVisibleName = 1
       this.open = true
@@ -306,6 +316,7 @@ export default {
       })
     },
     handleEdit(row) {
+      this.dialogProcessVisibleName = 2
       this.getProcessInitData()
       this.wfdDesignRefresh = false
       processDetails({
@@ -317,9 +328,9 @@ export default {
           tpls: response.data.tpls,
           structure: response.data.structure,
           classify: response.data.classify,
-          task: response.data.task
+          task: response.data.task,
+          notice: response.data.notice
         }
-        this.dialogProcessVisibleName = 2
         this.open = true
         this.wfdDesignRefresh = false
         this.$nextTick(() => {
@@ -389,7 +400,8 @@ export default {
               tpls: this.ruleForm.tpls,
               structure: this.$refs.wfd.graph.save(),
               classify: this.ruleForm.classify,
-              task: this.ruleForm.task
+              task: this.ruleForm.task,
+              notice: this.ruleForm.notice
             }).then(response => {
               this.getList()
               this.open = false

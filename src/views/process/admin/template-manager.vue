@@ -215,6 +215,7 @@ export default {
       })
     },
     handleEdit(row) {
+      this.dialogFormVisibleName = 2
       templateDetails({
         template_id: row.id
       }).then(response => {
@@ -224,7 +225,6 @@ export default {
           remarks: response.data.remarks,
           form_structure: response.data.remarks
         }
-        this.dialogFormVisibleName = 2
         this.open = true
         this.$nextTick(() => {
           this.$refs.makingform.setJSON(response.data.form_structure)

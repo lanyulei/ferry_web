@@ -246,6 +246,7 @@ export default {
       this.open = true
     },
     handleEdit(row) {
+      this.dialogFormVisibleName = 2
       taskDetails({
         file_name: row.full_name
       }).then(response => {
@@ -255,7 +256,6 @@ export default {
           classify: row.classify,
           content: response.data
         }
-        this.dialogFormVisibleName = 2
         this.open = true
       })
     },

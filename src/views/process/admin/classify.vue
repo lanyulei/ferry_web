@@ -173,10 +173,10 @@ export default {
       this.open = true
     },
     handleEdit(row) {
+      this.dialogFormVisibleName = 2
       this.ruleForm.id = row.id
       this.ruleForm.name = row.name
       this.open = true
-      this.dialogFormVisibleName = 2
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
