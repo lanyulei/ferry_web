@@ -340,9 +340,6 @@ export default {
       })
     },
     verifyProcess(structureValue) {
-      if (structureValue === undefined && structureValue === null) {
-        structureValue = this.ruleForm.structure
-      }
       for (var r of structureValue.nodes) {
         if (r.sort === undefined || r.sort === null || r.sort === '') {
           return '流程节点顺序不能为空'
@@ -369,14 +366,16 @@ export default {
       return ''
     },
     submitForm(formName) {
-      var r = this.verifyProcess()
-      if (r !== '') {
-        this.$message.error(r)
-        return
-      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          if (this.ruleForm.structure.nodes.length > 0 && this.ruleForm.structure.edges.length > 0) {
+          var structureValue = this.$refs.wfd.graph.save()
+          var r = this.verifyProcess(structureValue)
+          if (r !== '') {
+            this.$message.error(r)
+            return
+          }
+          if (structureValue.nodes.length > 0 && structureValue.edges.length > 0) {
+            this.ruleForm.structure = structureValue
             createProcess(this.ruleForm).then(response => {
               this.getList()
               this.open = false
