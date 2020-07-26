@@ -42,7 +42,7 @@
               <el-tag type="danger">非常紧急</el-tag>
             </span>
             <span v-else>
-              <el-tag type="success">正常</el-tag>
+              <el-tag type="success">一般</el-tag>
             </span>
           </el-form-item>
         </el-form>

@@ -27,7 +27,7 @@
           </el-form-item>
           <el-form-item label="优先级:" prop="priority" style="margin-bottom: 0">
             <el-radio-group v-model="ruleForm.priority" size="small">
-              <el-radio :label="1">正常</el-radio>
+              <el-radio :label="1">一般</el-radio>
               <el-radio :label="2">紧急</el-radio>
               <el-radio :label="3">非常紧急</el-radio>
             </el-radio-group>
