@@ -53,3 +53,12 @@ export function inversionWorkOrder(data) {
     data
   })
 }
+
+// 催办工单
+export function urgeWorkOrder(params) {
+  return request({
+    url: '/api/v1/work-order/urge',
+    method: 'get',
+    params
+  })
+}

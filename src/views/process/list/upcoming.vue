@@ -65,6 +65,13 @@
               @click="handleView(scope.row)"
             >查看</el-button>
             <el-button
+              v-permisaction="['process:list:upcoming:urge']"
+              size="mini"
+              type="text"
+              icon="el-icon-alarm-clock"
+              @click="handleUrge(scope.row)"
+            >催办</el-button>
+            <el-button
               v-if="scope.row.is_end===0"
               v-permisaction="['process:list:upcoming:inversion']"
               size="mini"
@@ -114,7 +121,7 @@
 </template>
 
 <script>
-import { workOrderList, inversionWorkOrder } from '@/api/process/work-order'
+import { workOrderList, inversionWorkOrder, urgeWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
 export default {
   data() {
@@ -190,6 +197,29 @@ export default {
             }
           })
         }
+      })
+    },
+    handleUrge(row) {
+      this.$confirm('<span style="font-size:15px ">对此工单处理人进行催办通知提醒, 是否继续?</span><br><span style="color: #c33; font-size: 10px">注意：十分钟内只能催办一次。</span>', '催办', {
+        dangerouslyUseHTMLString: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        urgeWorkOrder({
+          workOrderId: row.id
+        }).then(response => {
+          console.log(response)
+          this.$message({
+            type: 'success',
+            message: '已进行催办通知!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
       })
     }
   }
