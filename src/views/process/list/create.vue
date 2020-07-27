@@ -56,6 +56,7 @@
           v-show="item.source===processStructureValue.nodes[active].id"
           :key="index"
           type="primary"
+          :disabled="submitDisabled"
           @click="submitAction(item.target)"
         >
           {{ item.label }}
@@ -83,6 +84,7 @@ export default {
   name: 'Create',
   data() {
     return {
+      submitDisabled: false,
       active: 0,
       processStructureValue: {},
       ruleForm: {
@@ -135,6 +137,7 @@ export default {
     submitAction(target) {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
+          this.submitDisabled = true
           var stateMap = {}
           this.ruleForm.process = parseInt(this.$route.query.processId)
           this.ruleForm.classify = this.processStructureValue.process.classify
