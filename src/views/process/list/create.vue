@@ -180,12 +180,15 @@ export default {
           Promise.all(promiseList).then(values => {
             this.ruleForm.source = this.processStructureValue.nodes[this.active].id
             this.ruleForm.tpls.form_data = values
-            console.log(this.ruleForm)
             createWorkOrder(this.ruleForm).then(response => {
               if (response.code === 200) {
                 this.$router.push({ path: '/process/upcoming' })
               }
+            }).catch(() => {
+              this.submitDisabled = false
             })
+          }).catch(() => {
+            this.submitDisabled = false
           })
         }
       })
