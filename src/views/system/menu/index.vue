@@ -181,7 +181,7 @@
           </el-col>
 
           <el-col :span="12">
-            <el-form-item v-if="form.menuType == 'F' || form.menuType == 'C'" label="权限标识">
+            <el-form-item v-if="form.menuType == 'F' || form.menuType == 'C'" label="权限标识" style="width: 90%">
               <el-input v-model="form.permission" placeholder="请权限标识" maxlength="50" />
             </el-form-item>
           </el-col>
