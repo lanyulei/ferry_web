@@ -58,6 +58,7 @@
           v-for="(tplItem, tplIndex) in processStructureValue.tpls"
           :key="tplIndex"
           :ref="'generateForm-'+tplItem.id"
+          :preview="true"
           :remote="remoteFunc"
           :value="tplItem.form_data"
           :data="tplItem.form_structure"

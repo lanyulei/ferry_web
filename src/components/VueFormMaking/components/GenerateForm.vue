@@ -28,6 +28,7 @@
                 <genetate-form-item
                   v-else
                   :key="citem.key"
+                  :preview="preview"
                   :models.sync="models"
                   :remote="remote"
                   :rules="rules"
@@ -49,6 +50,7 @@
         <template v-else>
           <genetate-form-item
             :key="item.key"
+            :preview="preview"
             :models.sync="models"
             :rules="rules"
             :widget="item"
@@ -73,7 +75,7 @@ export default {
     GenetateFormItem
   },
   /* eslint-disable */
-  props: ['data', 'remote', 'value', 'insite', 'disabled'],
+  props: ['data', 'remote', 'value', 'insite', 'disabled', 'preview'],
   data() {
     return {
       models: {},
