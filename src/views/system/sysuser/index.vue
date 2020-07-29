@@ -131,7 +131,7 @@
                   @click="handleUpdate(scope.row)"
                 >编辑</el-button>
                 <el-button
-                  v-if="scope.row.userId !== 1"
+                  v-if="scope.row.username !== 'admin'"
                   v-permisaction="['system:sysuser:remove']"
                   size="mini"
                   type="text"
