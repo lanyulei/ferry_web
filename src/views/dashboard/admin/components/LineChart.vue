@@ -25,11 +25,11 @@ export default {
     autoResize: {
       type: Boolean,
       default: true
+    },
+    statisticsData: {
+      type: Object,
+      required: true
     }
-    // chartData: {
-    //   type: Object,
-    //   required: true
-    // }
   },
   data() {
     return {
@@ -37,7 +37,7 @@ export default {
     }
   },
   watch: {
-    chartData: {
+    statisticsData: {
       deep: true,
       handler(val) {
         this.setOptions(val)
@@ -59,12 +59,12 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions(this.statisticsData)
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         title: {
-          text: '本周工单统计',
+          text: '最近7天工单统计',
           textStyle: {
             fontSize: 15
           }
@@ -73,11 +73,11 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: ['运维', '产品研发', '测试', 'UI设计', '前端']
+          data: ['工单总数', '待办工单', '已完成工单']
         },
         grid: {
-          left: '10',
-          right: '10',
+          left: '25',
+          right: '45',
           bottom: '20',
           top: '50',
           containLabel: true
@@ -85,41 +85,26 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          data: this.statisticsData.datetime
         },
         yAxis: {
           type: 'value'
         },
         series: [
           {
-            name: '运维',
+            name: '工单总数',
             type: 'line',
-            stack: '总量',
-            data: [120, 132, 101, 134, 90, 4, 7]
+            data: this.statisticsData.total
           },
           {
-            name: '产品研发',
+            name: '待办工单',
             type: 'line',
-            stack: '总量',
-            data: [220, 182, 191, 234, 290, 8, 3]
+            data: this.statisticsData.processing
           },
           {
-            name: '测试',
+            name: '已完成工单',
             type: 'line',
-            stack: '总量',
-            data: [150, 232, 201, 154, 190, 4, 2]
-          },
-          {
-            name: 'UI设计',
-            type: 'line',
-            stack: '总量',
-            data: [320, 332, 301, 334, 390, 1, 7]
-          },
-          {
-            name: '前端',
-            type: 'line',
-            stack: '总量',
-            data: [150, 376, 256, 289, 179, 5, 12]
+            data: this.statisticsData.over
           }
         ]
       })

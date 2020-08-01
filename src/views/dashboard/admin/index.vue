@@ -1,27 +1,27 @@
 <template>
   <div class="dashboard-editor-container">
-    <panel-group :panel-group-value="panelGroupValue" />
+    <panel-group :panel-group-value="dashboardValue.panelGroup" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-      <line-chart />
+      <line-chart :statistics-data="dashboardValue.statisticsData" />
     </el-row>
 
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <TicketSubmissionRanking />
+          <TicketSubmissionRanking :submit-ranking-data="dashboardValue.submitRankingData" />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="16">
         <div class="chart-wrapper">
-          <TodoWorkOrderRanking />
+          <processOrderList :process-order-list="dashboardValue.processOrderList" />
         </div>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <!-- <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
           <ProcessingTicketRanking />
         </div>
-      </el-col>
+      </el-col> -->
     </el-row>
   </div>
 </template>
@@ -30,8 +30,9 @@
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
 import TicketSubmissionRanking from './components/TicketSubmissionRanking'
-import TodoWorkOrderRanking from './components/TodoWorkOrderRanking'
-import ProcessingTicketRanking from './components/ProcessingTicketRanking'
+import processOrderList from './components/processOrderList'
+// import TodoWorkOrderRanking from './components/TodoWorkOrderRanking'
+// import ProcessingTicketRanking from './components/ProcessingTicketRanking'
 
 export default {
   name: 'DashboardAdmin',
@@ -39,11 +40,12 @@ export default {
     PanelGroup,
     LineChart,
     TicketSubmissionRanking,
-    TodoWorkOrderRanking,
-    ProcessingTicketRanking
+    processOrderList
+    // TodoWorkOrderRanking,
+    // ProcessingTicketRanking
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['panelGroupValue'],
+  props: ['dashboardValue'],
   data() {
     return {
 

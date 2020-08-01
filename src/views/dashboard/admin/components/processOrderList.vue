@@ -22,7 +22,7 @@ export default {
       type: String,
       default: '300px'
     },
-    submitRankingData: {
+    processOrderList: {
       type: Object,
       required: true
     }
@@ -49,39 +49,34 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.chart.setOption({
         title: {
-          text: '工单提交排名',
+          text: '最受欢迎的流程',
           textStyle: {
             fontSize: 15
           }
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'shadow'
-          }
+          trigger: 'axis'
         },
         grid: {
           top: 45,
-          left: '3%',
+          left: 10,
           right: '5%',
-          bottom: '20',
+          bottom: 20,
           containLabel: true
         },
         xAxis: {
-          type: 'value',
-          boundaryGap: [0, 0.01]
+          type: 'category',
+          boundaryGap: false,
+          data: this.processOrderList.title
         },
         yAxis: {
-          type: 'category',
-          data: this.submitRankingData.nickname
+          type: 'value'
         },
-        series: [
-          {
-            type: 'bar',
-            barWidth: 20,
-            data: this.submitRankingData.rankingCount
-          }
-        ]
+        series: [{
+          data: this.processOrderList.submit_count,
+          type: 'line',
+          areaStyle: {}
+        }]
       })
     }
   }

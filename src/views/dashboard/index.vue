@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    <adminDashboard v-if="dashboardStatus" :panel-group-value="panelGroupValue" />
+    <adminDashboard v-if="dashboardStatus" :dashboard-value="dashboardValue" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   },
   created() {
     initData().then(response => {
-      this.panelGroupValue = response.data
+      this.dashboardValue = response.data
       this.dashboardStatus = true
     })
   }
