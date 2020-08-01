@@ -49,7 +49,7 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.chart.setOption({
         title: {
-          text: '最受欢迎的流程',
+          text: '最受欢迎的流程 TOP10',
           textStyle: {
             fontSize: 15
           }
@@ -59,7 +59,7 @@ export default {
         },
         grid: {
           top: 45,
-          left: 10,
+          left: 30,
           right: '5%',
           bottom: 20,
           containLabel: true
