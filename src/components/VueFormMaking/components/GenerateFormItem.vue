@@ -320,7 +320,6 @@ export default {
     }
   },
   created() {
-    console.log(this.preview)
     if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
       this.remote[this.widget.options.remoteFunc]((data) => {
         this.widget.options.remoteOptions = data.map(item => {
