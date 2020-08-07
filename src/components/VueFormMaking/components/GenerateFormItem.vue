@@ -1,7 +1,7 @@
 <template>
   <el-form-item
-    :label-width="!widget.options.labelWidthStatus?widgetLabelWidth + 'px': '0px'"
-    :label="widget.type==='divider' || widget.options.labelWidthStatus?'':widget.name"
+    :label-width="widget.options.labelWidthStatus?widgetLabelWidth + 'px': '0px'"
+    :label="widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
     :prop="widget.model"
   >
     <template v-if="preview">
