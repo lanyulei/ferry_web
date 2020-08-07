@@ -19,6 +19,7 @@
       <el-form-item
         v-if="Object.keys(data.options).indexOf('labelWidth')>=0 &&
           data.type!=='grid' &&
+          data.type!=='subform' &&
           data.type !== 'divider'"
         :label="$t('fm.config.widget.labelWidth')"
       >

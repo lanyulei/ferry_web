@@ -68,9 +68,9 @@
                 v-if="element && element.key"
                 :key="element.key"
                 class="widget-col widget-view"
-                :label-width="!element.options.labelWidthStatus?data.config.labelWidth + 'px': '0px'"
+                :label-width="element.options.labelWidthStatus?data.config.labelWidth + 'px': '0px'"
                 :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
-                :label="element.type==='divider' || element.options.labelWidthStatus?'':element.name"
+                :label="element.options.labelWidthStatus?element.name:''"
                 @click.native="handleSelectWidget(index)"
               >
                 <div
@@ -79,33 +79,42 @@
                   :gutter="element.options.gutter ? element.options.gutter : 0"
                   :justify="element.options.justify"
                   :align="element.options.align"
-                  @click.native="handleSelectWidget(index)"
                 >
 
                   <draggable
                     v-model="element.columns.list"
-                    class="widget-col widget-view"
                     :no-transition-on-drag="true"
                     v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}"
                     @end="handleMoveEnd"
-                    @add="handleSubformWidgetColAdd($event, element)"
+                    @add="handleSubformWidgetAdd($event, element)"
                   >
-                    <transition-group name="fade" tag="div" class="widget-col-list" style="min-height: 100px">
+                    <transition-group
+                      name="fade"
+                      tag="div"
+                      class="widget-col-list"
+                      style="min-height: 131px;overflow-x: auto; white-space: nowrap;"
+                    >
                       <template v-for="(el, i) in element.columns.list">
-                        <widget-form-item
-                          v-if="el.key"
+                        <div
+                          v-if="el && el.key"
                           :key="el.key"
-                          :element="el"
-                          :select.sync="selectWidget"
-                          :index="i"
-                          :data="element.columns"
-                          :data-config="data"
-                        />
+                          :style="{minWidth: el.width ? `${el.width}px`: '33.3%', width: el.width ? `${el.width}px`: '33.3%', 'display': 'inline-block', 'vertical-align': 'top'}"
+                          @click.native="handleSelectWidget(i)"
+                        >
+                          <widget-form-item
+                            :element="el"
+                            :select.sync="selectWidget"
+                            :index="i"
+                            :data="element.columns"
+                            :data-config="data"
+                            :is-label="true"
+                            :is-table="true"
+                          />
+                        </div>
                       </template>
-
                     </transition-group>
-
                   </draggable>
+
                   <div v-if="selectWidget.key == element.key" class="widget-view-action widget-col-action">
 
                     <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)" />
@@ -214,9 +223,19 @@ export default {
         })
       }
 
+      if (this.data.list[newIndex].type === 'subform') {
+        this.$set(this.data.list, newIndex, {
+          ...this.data.list[newIndex],
+          columns: this.data.list[newIndex].columns = {
+            span: 24,
+            list: []
+          }
+        })
+      }
+
       this.selectWidget = this.data.list[newIndex]
     },
-    handleSubformWidgetColAdd($event, row) {
+    handleSubformWidgetAdd($event, row) {
       const newIndex = $event.newIndex
       const oldIndex = $event.oldIndex
       const item = $event.item
