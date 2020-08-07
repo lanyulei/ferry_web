@@ -21,6 +21,7 @@ export default {
         editor: '编辑器',
         cascader: '级联选择器',
         table: '子表单',
+        subform: '子表单',
         grid: '栅格布局',
         tabs: '标签页',
         divider: '分割线'

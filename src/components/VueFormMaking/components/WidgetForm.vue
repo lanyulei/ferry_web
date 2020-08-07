@@ -62,6 +62,61 @@
                 </div>
               </el-row>
             </template>
+            <!-- 子表单 -->
+            <template v-if="element.type == 'subform'">
+              <el-form-item
+                v-if="element && element.key"
+                :key="element.key"
+                class="widget-col widget-view"
+                :label-width="!element.options.labelWidthStatus?data.config.labelWidth + 'px': '0px'"
+                :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
+                :label="element.type==='divider' || element.options.labelWidthStatus?'':element.name"
+                @click.native="handleSelectWidget(index)"
+              >
+                <div
+                  type="flex"
+                  :class="{active: selectWidget.key == element.key}"
+                  :gutter="element.options.gutter ? element.options.gutter : 0"
+                  :justify="element.options.justify"
+                  :align="element.options.align"
+                  @click.native="handleSelectWidget(index)"
+                >
+
+                  <draggable
+                    v-model="element.columns.list"
+                    class="widget-col widget-view"
+                    :no-transition-on-drag="true"
+                    v-bind="{group:'people', ghostClass: 'ghost',animation: 200, handle: '.drag-widget'}"
+                    @end="handleMoveEnd"
+                    @add="handleSubformWidgetColAdd($event, element)"
+                  >
+                    <transition-group name="fade" tag="div" class="widget-col-list" style="min-height: 100px">
+                      <template v-for="(el, i) in element.columns.list">
+                        <widget-form-item
+                          v-if="el.key"
+                          :key="el.key"
+                          :element="el"
+                          :select.sync="selectWidget"
+                          :index="i"
+                          :data="element.columns"
+                          :data-config="data"
+                        />
+                      </template>
+
+                    </transition-group>
+
+                  </draggable>
+                  <div v-if="selectWidget.key == element.key" class="widget-view-action widget-col-action">
+
+                    <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)" />
+                  </div>
+
+                  <div v-if="selectWidget.key == element.key" class="widget-view-drag widget-col-drag">
+                    <i class="iconfont icon-drag drag-widget" />
+                  </div>
+                </div>
+              </el-form-item>
+            </template>
             <template v-else>
               <widget-form-item
                 v-if="element && element.key"
@@ -161,6 +216,49 @@ export default {
 
       this.selectWidget = this.data.list[newIndex]
     },
+    handleSubformWidgetColAdd($event, row) {
+      const newIndex = $event.newIndex
+      const oldIndex = $event.oldIndex
+      const item = $event.item
+
+      // 防止布局元素的嵌套拖拽
+      if (item.className.indexOf('data-grid') >= 0) {
+        // 如果是列表中拖拽的元素需要还原到原来位置
+        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns.list[newIndex])
+
+        row.columns.list.splice(newIndex, 1)
+
+        return false
+      }
+
+      const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
+
+      this.$set(row.columns.list, newIndex, {
+        ...row.columns.list[newIndex],
+        options: {
+          ...row.columns.list[newIndex].options,
+          remoteFunc: 'func_' + key
+        },
+        key,
+        // 绑定键值
+        model: row.columns.list[newIndex].type + '_' + key,
+        rules: []
+      })
+
+      if (row.columns.list[newIndex].type === 'radio' || row.columns.list[newIndex].type === 'checkbox' || row.columns.list[newIndex].type === 'select') {
+        this.$set(row.columns.list, newIndex, {
+          ...row.columns.list[newIndex],
+          options: {
+            ...row.columns.list[newIndex].options,
+            options: row.columns.list[newIndex].options.options.map(item => ({
+              ...item
+            }))
+          }
+        })
+      }
+
+      this.selectWidget = row.columns.list[newIndex]
+    },
     handleWidgetColAdd($event, row, colIndex) {
       const newIndex = $event.newIndex
       const oldIndex = $event.oldIndex
@@ -169,40 +267,40 @@ export default {
       // 防止布局元素的嵌套拖拽
       if (item.className.indexOf('data-grid') >= 0) {
         // 如果是列表中拖拽的元素需要还原到原来位置
-        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns[colIndex].list[newIndex])
+        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns.list[newIndex])
 
-        row.columns[colIndex].list.splice(newIndex, 1)
+        row.columns.list.splice(newIndex, 1)
 
         return false
       }
 
       const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
 
-      this.$set(row.columns[colIndex].list, newIndex, {
-        ...row.columns[colIndex].list[newIndex],
+      this.$set(row.columns.list, newIndex, {
+        ...row.columns.list[newIndex],
         options: {
-          ...row.columns[colIndex].list[newIndex].options,
+          ...row.columns.list[newIndex].options,
           remoteFunc: 'func_' + key
         },
         key,
         // 绑定键值
-        model: row.columns[colIndex].list[newIndex].type + '_' + key,
+        model: row.columns.list[newIndex].type + '_' + key,
         rules: []
       })
 
-      if (row.columns[colIndex].list[newIndex].type === 'radio' || row.columns[colIndex].list[newIndex].type === 'checkbox' || row.columns[colIndex].list[newIndex].type === 'select') {
-        this.$set(row.columns[colIndex].list, newIndex, {
-          ...row.columns[colIndex].list[newIndex],
+      if (row.columns.list[newIndex].type === 'radio' || row.columns.list[newIndex].type === 'checkbox' || row.columns.list[newIndex].type === 'select') {
+        this.$set(row.columns.list, newIndex, {
+          ...row.columns.list[newIndex],
           options: {
-            ...row.columns[colIndex].list[newIndex].options,
-            options: row.columns[colIndex].list[newIndex].options.options.map(item => ({
+            ...row.columns.list[newIndex].options,
+            options: row.columns.list[newIndex].options.options.map(item => ({
               ...item
             }))
           }
         })
       }
 
-      this.selectWidget = row.columns[colIndex].list[newIndex]
+      this.selectWidget = row.columns.list[newIndex]
     },
     handleWidgetDelete(index) {
       if (this.data.list.length - 1 === index) {

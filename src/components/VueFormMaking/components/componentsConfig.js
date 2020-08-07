@@ -338,6 +338,22 @@ export const advanceComponents = [
       labelWidthDisabled: false,
       labelWidthStatus: false
     }
+  },
+  {
+    type: 'subform',
+    icon: 'icon-table',
+    columns: {
+      span: 24,
+      list: []
+    },
+    options: {
+      gutter: 0,
+      justify: 'start',
+      align: 'top',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: false
+    }
   }
 ]
 
