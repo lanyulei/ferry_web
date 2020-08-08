@@ -46,6 +46,56 @@
             <slot :name="item.model" :model="models" />
           </el-form-item>
         </template>
+        <!-- 子表单 -->
+        <template v-if="item.type === 'subform'">
+          <el-form-item
+            :key="item.key"
+            :label-width="!item.options.labelWidthStatus?'0px': item.options.labelWidth + 'px'"
+            :label="!item.options.labelWidthStatus?'':item.name"
+            :prop="item.model"
+          >
+            <el-table
+              :data="tableData"
+              border
+              style="width: 100%"
+            >
+              <el-table-column
+                width="50"
+                align="center"
+                header-align="center"
+              >
+                <template slot="header">
+                  <i style="font-size: 25px; color: #409EFF;cursor:pointer;" class="el-icon-circle-plus" @click="addCol(item)" />
+                </template>
+                <template>
+                  <i style="font-size: 25px; color: red" class="el-icon-remove" />
+                </template>
+
+              </el-table-column>
+              <el-table-column
+                v-for="v in item.columns.list"
+                :key="v.key"
+                :prop="v.key"
+                :label="v.name"
+                width="250"
+              >
+                <template>
+                  <genetate-form-item
+                    :preview="preview"
+                    :models.sync="models"
+                    :rules="rules"
+                    :widget="v"
+                    :remote="remote"
+                    :data="data"
+                    :disabled="disabled"
+                    :is-label="false"
+                    @input-change="onInputChange"
+                  />
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-form-item>
+        </template>
 
         <template v-else>
           <genetate-form-item
@@ -78,6 +128,7 @@ export default {
   props: ['data', 'remote', 'value', 'insite', 'disabled', 'preview'],
   data() {
     return {
+      tableData: [],
       models: {},
       rules: {}
     }
@@ -102,12 +153,19 @@ export default {
   mounted() {
   },
   methods: {
+    addCol(item) {
+      var j = {}
+      j["id"] = this.tableData.length + 1
+      this.tableData.push(j)
+    },
     generateModle(genList) {
       for (let i = 0; i < genList.length; i++) {
         if (genList[i].type === 'grid') {
           genList[i].columns.forEach(item => {
             this.generateModle(item.list)
           })
+        } else if (genList[i].type === 'subform') {
+          this.generateModle(genList[i].columns.list)
         } else {
           if (this.value && Object.keys(this.value).indexOf(genList[i].model) >= 0) {
             this.models[genList[i].model] = this.value[genList[i].model]

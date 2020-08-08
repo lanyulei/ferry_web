@@ -30,7 +30,7 @@
         v-if="Object.keys(data.options).indexOf('labelWidthStatus')>=0 &&
           data.type!=='grid' &&
           data.type !== 'divider'"
-        label="隐藏标签"
+        label="显示标签"
       >
         <el-switch
           v-model="data.options.labelWidthStatus"

@@ -1,11 +1,11 @@
 <template>
   <el-form-item
-    :label-width="widget.options.labelWidthStatus?widgetLabelWidth + 'px': '0px'"
-    :label="widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
+    :label-width="isLabel===false||!widget.options.labelWidthStatus?'0px': widgetLabelWidth + 'px'"
+    :label="isLabel===false||widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
     :prop="widget.model"
   >
     <template v-if="preview">
-      <template v-if="widget.type == 'color'">
+      <template v-if="widget.type === 'color'">
         <div style="width: 32px; height: 20px; margin-top: 6px; border-radius: 3px" :style="{'background-color': dataModel}" />
       </template>
       <template v-else-if="widget.type=='switch'">
@@ -14,7 +14,7 @@
           :disabled="true"
         />
       </template>
-      <template v-else-if="widget.type == 'editor'">
+      <template v-else-if="widget.type === 'editor'">
         <div class="previewEditorDiv" v-html="dataModel" />
       </template>
       <template v-else-if="widget.type=='imgupload'">
@@ -50,9 +50,9 @@
       </template>
     </template>
     <template v-else>
-      <template v-if="widget.type == 'input'">
+      <template v-if="widget.type === 'input'">
         <el-input
-          v-if="widget.options.dataType == 'number' || widget.options.dataType == 'integer' || widget.options.dataType == 'float'"
+          v-if="widget.options.dataType === 'number' || widget.options.dataType === 'integer' || widget.options.dataType === 'float'"
           v-model.number="dataModel"
           :type="widget.options.dataType"
           :placeholder="widget.options.placeholder"
@@ -69,7 +69,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'textarea'">
+      <template v-if="widget.type === 'textarea'">
         <el-input
           v-model="dataModel"
           type="textarea"
@@ -80,7 +80,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'number'">
+      <template v-if="widget.type === 'number'">
         <el-input-number
           v-model="dataModel"
           :style="{width: widget.options.width}"
@@ -90,7 +90,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'radio'">
+      <template v-if="widget.type === 'radio'">
         <el-radio-group
           v-model="dataModel"
           :style="{width: widget.options.width}"
@@ -108,7 +108,7 @@
         </el-radio-group>
       </template>
 
-      <template v-if="widget.type == 'checkbox'">
+      <template v-if="widget.type === 'checkbox'">
         <el-checkbox-group
           v-model="dataModel"
           :style="{width: widget.options.width}"
@@ -127,7 +127,7 @@
         </el-checkbox-group>
       </template>
 
-      <template v-if="widget.type == 'time'">
+      <template v-if="widget.type === 'time'">
         <el-time-picker
           v-model="dataModel"
           :is-range="widget.options.isRange"
@@ -170,7 +170,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'color'">
+      <template v-if="widget.type === 'color'">
         <el-color-picker
           v-model="dataModel"
           :disabled="widget.options.disabled"
@@ -178,7 +178,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'select'">
+      <template v-if="widget.type === 'select'">
         <el-select
           v-model="dataModel"
           :disabled="widget.options.disabled"
@@ -231,7 +231,7 @@
         />
       </template>
 
-      <template v-if="widget.type == 'editor'">
+      <template v-if="widget.type === 'editor'">
         <vue-editor
           v-model="dataModel"
           :disabled="widget.options.disabled"
@@ -289,15 +289,17 @@
 import FmUpload from './Upload'
 
 export default {
+  name: 'GenetateFormItem',
   components: {
     FmUpload
   },
   /* eslint-disable */
-  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview'],
+  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel'],
   data() {
     return {
       widgetLabelWidth: '',
-      dataModel: this.models[this.widget.model]
+      dataModel: this.models[this.widget.model],
+      tableData: []
     }
   },
   watch: {

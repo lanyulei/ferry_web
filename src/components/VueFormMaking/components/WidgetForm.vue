@@ -98,7 +98,7 @@
                         <div
                           v-if="el && el.key"
                           :key="el.key"
-                          :style="{minWidth: el.width ? `${el.width}px`: '33.3%', width: el.width ? `${el.width}px`: '33.3%', 'display': 'inline-block', 'vertical-align': 'top'}"
+                          :style="{width: '249px', 'display': 'inline-block', 'vertical-align': 'top'}"
                           @click.native="handleSelectWidget(i)"
                         >
                           <widget-form-item
