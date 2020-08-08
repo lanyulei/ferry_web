@@ -61,8 +61,6 @@
             >
               <el-table-column
                 width="50"
-                align="center"
-                header-align="center"
               >
                 <template slot="header">
                   <i style="font-size: 25px; color: #409EFF;cursor:pointer;" class="el-icon-circle-plus" @click="addCol(item)" />
@@ -89,7 +87,7 @@
                     :data="data"
                     :disabled="disabled"
                     :is-label="false"
-                    @input-change="onInputChange"
+                    @input-change="onSubformInputChange"
                   />
                 </template>
               </el-table-column>
@@ -165,7 +163,8 @@ export default {
             this.generateModle(item.list)
           })
         } else if (genList[i].type === 'subform') {
-          this.generateModle(genList[i].columns.list)
+          // this.generateModle(genList[i].columns.list)
+          console.log(genList[i].columns)
         } else {
           if (this.value && Object.keys(this.value).indexOf(genList[i].model) >= 0) {
             this.models[genList[i].model] = this.value[genList[i].model]
@@ -210,6 +209,9 @@ export default {
     },
     reset() {
       this.$refs.generateForm.resetFields()
+    },
+    onSubformInputChange(value, field) {
+      this.$emit('on-change', field, value, this.models)
     },
     onInputChange(value, field) {
       this.$emit('on-change', field, value, this.models)
