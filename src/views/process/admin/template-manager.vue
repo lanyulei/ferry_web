@@ -103,7 +103,7 @@
                   upload
                   generate-code
                   generate-json
-                  :advance-fields="['editor', 'cascader']"
+                  :advance-fields="['editor', 'cascader', 'imgupload']"
                 >
                   <template slot="action" />
                 </fm-making-form>
