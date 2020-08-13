@@ -226,8 +226,7 @@ export default {
       }).then(response => {
         if (response.code === 200) {
           // this.$router.push({ name: 'upcoming' })
-          // window.location.reload()
-          this.getProcessNodeList()
+          window.location.reload()
         }
       })
     },
