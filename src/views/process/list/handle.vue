@@ -55,7 +55,7 @@
       </div>
     </el-card>
 
-    <el-card class="box-card handle-workOrder-form-info-body" style="margin-top: 15px;">
+    <el-card class="box-card" style="margin-top: 15px;">
       <div slot="header" class="clearfix">
         <span>表单信息</span>
       </div>
@@ -240,9 +240,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .handle-workOrder-form-info-body > .el-card__body {
-    padding-bottom: 0;
-  }
-</style>
