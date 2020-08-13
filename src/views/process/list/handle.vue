@@ -31,25 +31,31 @@
       </div>
       <div class="text item">
         <el-form label-width="100px">
-          <el-form-item label="标题:" style="margin-bottom: 5px">
-            <span>{{ processStructureValue.workOrder.title }}</span>
-          </el-form-item>
-          <el-form-item label="优先级:" style="margin-bottom: 0">
-            <span v-if="processStructureValue.workOrder.priority===2">
-              <el-tag type="warning">紧急</el-tag>
-            </span>
-            <span v-else-if="processStructureValue.workOrder.priority===3">
-              <el-tag type="danger">非常紧急</el-tag>
-            </span>
-            <span v-else>
-              <el-tag type="success">一般</el-tag>
-            </span>
-          </el-form-item>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="标题:" style="margin-bottom: 5px">
+                <span>{{ processStructureValue.workOrder.title }}</span>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="优先级:" style="margin-bottom: 0">
+                <span v-if="processStructureValue.workOrder.priority===2">
+                  <el-tag type="warning">紧急</el-tag>
+                </span>
+                <span v-else-if="processStructureValue.workOrder.priority===3">
+                  <el-tag type="danger">非常紧急</el-tag>
+                </span>
+                <span v-else>
+                  <el-tag type="success">一般</el-tag>
+                </span>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
       </div>
     </el-card>
 
-    <el-card class="box-card" style="margin-top: 15px">
+    <el-card class="box-card handle-workOrder-form-info-body" style="margin-top: 15px;">
       <div slot="header" class="clearfix">
         <span>表单信息</span>
       </div>
@@ -66,7 +72,17 @@
         />
       </div>
       <div v-if="processStructureValue.userAuthority">
-        <hr style="background-color: #d9d9d9; border:0; height:1px;">
+        <hr style="background-color: #d9d9d9; border:0; height:1px; margin-bottom: 15px">
+        <div>
+          <el-input
+            v-model="remarks"
+            type="textarea"
+            placeholder="请输入备注信息"
+            maxlength="200"
+            :autosize="{ minRows: 3, maxRows: 99}"
+            show-word-limit
+          />
+        </div>
         <div class="text item" style="text-align: center;margin-top:18px">
           <template v-for="(item, index) in processStructureValue.edges">
             <el-button
@@ -135,6 +151,7 @@ import { listUser } from '@/api/system/sysuser'
 export default {
   data() {
     return {
+      remarks: '', // 备注信息
       alertMessage: '',
       nodeStepList: [],
       circulationHistoryList: [],
@@ -180,6 +197,7 @@ export default {
         this.circulationHistoryList = this.processStructureValue.circulationHistory
 
         // 获取当前展示节点列表
+        this.nodeStepList = []
         for (var i = 0; i < this.processStructureValue.nodes.length; i++) {
           if (this.processStructureValue.nodes[i].id === this.processStructureValue.workOrder.current_state) {
             // 当前节点
@@ -203,11 +221,13 @@ export default {
         target_state: item.target,
         circulation: item.label,
         flow_properties: item.flowProperties === undefined ? 2 : parseInt(item.flowProperties),
-        work_order_id: parseInt(this.$route.query.workOrderId)
+        work_order_id: parseInt(this.$route.query.workOrderId),
+        remarks: this.remarks
       }).then(response => {
         if (response.code === 200) {
           // this.$router.push({ name: 'upcoming' })
-          window.location.reload()
+          // window.location.reload()
+          this.getProcessNodeList()
         }
       })
     },
@@ -220,3 +240,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  .handle-workOrder-form-info-body > .el-card__body {
+    padding-bottom: 0;
+  }
+</style>
