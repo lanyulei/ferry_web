@@ -63,7 +63,7 @@
               </el-row>
             </template>
             <!-- 子表单 -->
-            <template v-if="element.type == 'subform'">
+            <template v-else-if="element.type == 'subform'">
               <el-form-item
                 v-if="element && element.key"
                 :key="element.key"
