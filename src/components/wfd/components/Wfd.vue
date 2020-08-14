@@ -206,12 +206,14 @@ export default {
           if (this.previous !== '') {
             var previousValue = ''
             const item = this.graph.findById(this.previous[0])
-            previousValue = { ...item.getModel() }
-            var err = this.verifyProcess(previousValue)
-            if (err !== '') {
-              this.selectedModel = previousValue
-              this.$message.error(err)
-              return
+            if (item !== undefined) {
+              previousValue = { ...item.getModel() }
+              var err = this.verifyProcess(previousValue)
+              if (err !== '') {
+                this.selectedModel = previousValue
+                this.$message.error(err)
+                return
+              }
             }
           }
           const item = this.graph.findById(items[0])
