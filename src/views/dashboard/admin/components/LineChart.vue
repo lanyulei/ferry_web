@@ -104,7 +104,7 @@ export default {
           {
             name: '已完成工单',
             type: 'line',
-            data: this.statisticsData.over
+            data: this.statisticsData.overs
           }
         ]
       })
