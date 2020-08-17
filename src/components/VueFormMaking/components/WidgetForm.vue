@@ -286,40 +286,40 @@ export default {
       // 防止布局元素的嵌套拖拽
       if (item.className.indexOf('data-grid') >= 0) {
         // 如果是列表中拖拽的元素需要还原到原来位置
-        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns.list[newIndex])
+        item.tagName === 'DIV' && this.data.list.splice(oldIndex, 0, row.columns[colIndex].list[newIndex])
 
-        row.columns.list.splice(newIndex, 1)
+        row.columns[colIndex].list.splice(newIndex, 1)
 
         return false
       }
 
       const key = Date.parse(new Date()) + '_' + Math.ceil(Math.random() * 99999)
 
-      this.$set(row.columns.list, newIndex, {
-        ...row.columns.list[newIndex],
+      this.$set(row.columns[colIndex].list, newIndex, {
+        ...row.columns[colIndex].list[newIndex],
         options: {
-          ...row.columns.list[newIndex].options,
+          ...row.columns[colIndex].list[newIndex].options,
           remoteFunc: 'func_' + key
         },
         key,
         // 绑定键值
-        model: row.columns.list[newIndex].type + '_' + key,
+        model: row.columns[colIndex].list[newIndex].type + '_' + key,
         rules: []
       })
 
-      if (row.columns.list[newIndex].type === 'radio' || row.columns.list[newIndex].type === 'checkbox' || row.columns.list[newIndex].type === 'select') {
-        this.$set(row.columns.list, newIndex, {
-          ...row.columns.list[newIndex],
+      if (row.columns[colIndex].list[newIndex].type === 'radio' || row.columns[colIndex].list[newIndex].type === 'checkbox' || row.columns[colIndex].list[newIndex].type === 'select') {
+        this.$set(row.columns[colIndex].list, newIndex, {
+          ...row.columns[colIndex].list[newIndex],
           options: {
-            ...row.columns.list[newIndex].options,
-            options: row.columns.list[newIndex].options.options.map(item => ({
+            ...row.columns[colIndex].list[newIndex].options,
+            options: row.columns[colIndex].list[newIndex].options.options.map(item => ({
               ...item
             }))
           }
         })
       }
 
-      this.selectWidget = row.columns.list[newIndex]
+      this.selectWidget = row.columns[colIndex].list[newIndex]
     },
     handleWidgetDelete(index) {
       if (this.data.list.length - 1 === index) {
