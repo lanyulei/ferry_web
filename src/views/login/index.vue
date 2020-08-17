@@ -68,7 +68,7 @@
                 </span>
               </el-form-item>
             </el-tooltip>
-            <el-form-item prop="code" style="width: 66%;float: left;">
+            <el-form-item prop="code" style="width: 66%;float: left; margin-bottom: 13px">
               <span class="svg-container">
                 <svg-icon icon-class="validCode" />
               </span>
@@ -88,7 +88,9 @@
             <div class="login-code" style="cursor:pointer; width: 30%;height: 48px;float: right;background-color: #f0f1f5;">
               <img style="height: 48px;width: 100%;border: 1px solid rgba(0,0,0, 0.1);border-radius:5px;" :src="codeUrl" @click="getCode">
             </div>
-
+            <div prop="code" style="width: 100%;float: left;margin-bottom: 13px">
+              <el-checkbox v-model="loginForm.loginType">LDAP登陆</el-checkbox>
+            </div>
             <el-button :loading="loading" type="primary" style="width:100%;padding:12px 20px;margin-bottom:30px;" @click.native.prevent="handleLogin">
               <span v-if="!loading">登 录</span>
               <span v-else>登 录 中...</span>
@@ -127,7 +129,8 @@ export default {
         password: '123456',
         rememberMe: false,
         code: '',
-        uuid: ''
+        uuid: '',
+        loginType: true
       },
       loginRules: {
         username: [

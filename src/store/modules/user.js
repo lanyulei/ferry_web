@@ -40,8 +40,12 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
+    var loginType = 0
+    if (userInfo.loginType === true) {
+      loginType = 1
+    }
     return new Promise((resolve, reject) => {
-      login(userInfo).then(response => {
+      login(userInfo, loginType).then(response => {
         const { token } = response
         commit('SET_TOKEN', token)
         setToken(token)

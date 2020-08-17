@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function login(data) {
+export function login(data, loginType) {
   return request({
-    url: '/login',
+    url: `/login?login_type=${loginType}`,
     method: 'post',
     data
   })
