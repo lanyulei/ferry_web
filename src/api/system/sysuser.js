@@ -103,10 +103,11 @@ export function updateUserProfile(data) {
 }
 
 // 用户密码重置
-export function updateUserPwd(oldPassword, newPassword) {
+export function updateUserPwd(oldPassword, newPassword, passwordType) {
   const data = {
     oldPassword,
-    newPassword
+    newPassword,
+    passwordType
   }
   return request({
     url: '/api/v1/user/pwd',
