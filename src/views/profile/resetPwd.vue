@@ -6,9 +6,12 @@
     <el-form-item label="新密码" prop="newPassword">
       <el-input v-model="user.newPassword" placeholder="请输入新密码" type="password" />
     </el-form-item>
-    <el-form-item label="确认密码" prop="confirmPassword">
+    <el-form-item label="确认密码" prop="confirmPassword" style="/* margin-bottom: 10px */">
       <el-input v-model="user.confirmPassword" placeholder="请确认密码" type="password" />
     </el-form-item>
+    <!-- <el-form-item style="margin-bottom: 5px">
+      <el-checkbox v-model="passwordTyleStatus">LDAP密码</el-checkbox>
+    </el-form-item> -->
     <el-form-item>
       <el-button type="primary" size="mini" @click="submit">保存</el-button>
       <el-button type="danger" size="mini" @click="close">关闭</el-button>
@@ -29,11 +32,12 @@ export default {
       }
     }
     return {
-      test: '1test',
+      passwordTyleStatus: true,
       user: {
         oldPassword: undefined,
         newPassword: undefined,
-        confirmPassword: undefined
+        confirmPassword: undefined,
+        passwordType: 1
       },
       // 表单校验
       rules: {
@@ -55,7 +59,11 @@ export default {
     submit() {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          updateUserPwd(this.user.oldPassword, this.user.newPassword).then(
+          if (!this.passwordTyleStatus) {
+            this.user.passwordType = 0
+          }
+          this.user.passwordType = 0
+          updateUserPwd(this.user.oldPassword, this.user.newPassword, this.user.passwordType).then(
             response => {
               if (response.code === 200) {
                 this.msgSuccess('修改成功')
