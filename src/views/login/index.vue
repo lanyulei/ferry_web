@@ -114,6 +114,7 @@
 <script>
 
 import { getCodeImg } from '@/api/login'
+import { getSettings } from '@/api/system/settings'
 import moment from 'moment'
 import SocialSign from './components/SocialSignin'
 
@@ -171,6 +172,7 @@ export default {
     this.getCode()
     // window.addEventListener('storage', this.afterQRScan)
     this.getCurrentTime()
+    this.getSystemSetting()
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -184,6 +186,13 @@ export default {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    getSystemSetting() {
+      getSettings({
+        classify: 1
+      }).then(response => {
+        this.sysInfo = response.data[0].content
+      })
+    },
     getCurrentTime() {
       this.timer = setInterval(_ => {
         this.currentTime = moment().format('YYYY-MM-DD HH时mm分ss秒')

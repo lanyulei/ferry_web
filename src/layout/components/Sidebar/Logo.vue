@@ -2,18 +2,19 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" src="@/assets/logo/ferry_logo_white.png" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+        <img v-if="sysInfo.logo" :src="sysInfo.logo" class="sidebar-logo">
+        <h1 v-else class="sidebar-title">{{ sysInfo.name }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" src="@/assets/logo/ferry_logo_white.png" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <img v-if="sysInfo.logo" :src="sysInfo.logo" class="sidebar-logo">
+        <h1 class="sidebar-title">{{ sysInfo.name }} </h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
+import { getSettings } from '@/api/system/settings'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,9 +25,18 @@ export default {
   },
   data() {
     return {
-      title: 'FERRY 管理平台',
-      logo: '@/assets/logo/ferry_logo_white.png'
+      sysInfo: {
+        name: '',
+        logo: ''
+      }
     }
+  },
+  created() {
+    getSettings({
+      classify: 1
+    }).then(response => {
+      this.sysInfo = response.data[0].content
+    })
   }
 }
 </script>

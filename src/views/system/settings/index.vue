@@ -23,7 +23,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item style="margin-bottom: 0">
-            <el-button type="primary" @click="submitForm('ruleForm', 1)">确定</el-button>
+            <el-button v-permisaction="['system:settings:index:config']" type="primary" @click="submitForm('ruleForm', 1)">确定</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -46,12 +46,12 @@
           <el-table-column
             prop="local_field_name"
             label="字段名称"
-            width="180"
+            width="150"
           />
           <el-table-column
             prop="local_field_nick"
             label="字段昵称"
-            width="180"
+            width="150"
           />
           <el-table-column
             prop="ldap_field_name"
@@ -66,7 +66,7 @@
           </el-table-column>
         </el-table>
         <div style="margin-top: 20px">
-          <el-button type="primary" @click="submitForm('ruleForm', 2)">确定</el-button>
+          <el-button v-permisaction="['system:settings:index:ldap']" type="primary" @click="submitForm('ruleForm', 2)">确定</el-button>
         </div>
       </div>
     </el-card>
@@ -90,7 +90,7 @@ export default {
       rules: {
         name: [
           { required: true, message: '请输入系统名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 6 个字符', trigger: 'blur' }
+          { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
         ],
         logo: [
           { required: true, message: '请设置Logo', trigger: 'blur' }
@@ -107,33 +107,49 @@ export default {
       getSettings().then(response => {
         for (var v of response.data) {
           if (v.classify === 1) {
-            this.ruleForm = v.content
+            if (v.content === undefined || v.content === null) {
+              this.ruleForm = {
+                name: '',
+                logo: ''
+              }
+            } else {
+              this.ruleForm = v.content
+            }
           } else if (v.classify === 2) {
-            this.tableData = v.content
+            if (v.content === undefined || v.content === null) {
+              this.tableData = []
+            } else {
+              this.tableData = v.content
+            }
           }
         }
       })
     },
     // 提交配置信息
     submitForm(formName, classify) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          var jsonValue = {
-            classify: classify
-          }
-          if (classify === 1) {
+      var requestStatus = false
+      var jsonValue = {
+        classify: classify
+      }
+      if (classify === 1) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
             jsonValue.content = this.ruleForm
-          } else if (classify === 2) {
-            jsonValue.content = this.tableData
+            requestStatus = true
           }
-          setSettings(jsonValue).then(response => {
-            this.$message({
-              message: '设置成功',
-              type: 'success'
-            })
+        })
+      } else if (classify === 2) {
+        jsonValue.content = this.tableData
+        requestStatus = true
+      }
+      if (requestStatus) {
+        setSettings(jsonValue).then(response => {
+          this.$message({
+            message: '设置成功',
+            type: 'success'
           })
-        }
-      })
+        })
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields()
