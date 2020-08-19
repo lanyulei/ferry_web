@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-row :gutter="20">
       <!--部门数据-->
-      <el-col :span="4" :xs="24">
+      <el-col :span="4" :xs="24" style="padding-right: 0;">
         <el-card class="box-card">
           <div class="head-container">
             <el-input

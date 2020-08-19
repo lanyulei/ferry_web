@@ -62,10 +62,10 @@
 
       <el-table v-loading="loading" border :data="list" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="编号" width="70" align="center" prop="infoId" />
-        <el-table-column label="用户名称" width="85" align="center" prop="username" />
-        <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
-        <el-table-column label="登录地点" align="center" prop="loginLocation" />
+        <el-table-column label="编号" width="100" align="center" prop="infoId" />
+        <el-table-column label="用户名称" width="150" align="center" prop="username" />
+        <!-- <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
+        <el-table-column label="登录地点" align="center" prop="loginLocation" /> -->
         <el-table-column label="浏览器" align="center" prop="browser" />
         <el-table-column label="操作系统" align="center" prop="os" />
         <el-table-column label="操作信息" width="120" align="center" prop="msg" />
