@@ -12,7 +12,6 @@
           :value="model.task"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('task', e)"
         >
           <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />
@@ -42,7 +41,6 @@
           :value="model.assignValue"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('assignValue', e)"
         >
           <el-option v-for="user in users" :key="user.userId" :label="user.nickName===''?user.username:user.nickName" :value="user.userId" />
@@ -57,7 +55,6 @@
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('assignValue', e)"
         >
           <el-option v-for="group in groups" :key="group.id" :label="group.nickname===''?group.name:group.nickname" :value="group.id" />
@@ -72,7 +69,6 @@
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('assignValue', e)"
         >
           <el-option v-for="department in departments" :key="department.id" :label="department.name===''?department.nickname:department.name" :value="department.id" />
@@ -86,8 +82,6 @@
           :placeholder="i18n['userTask.assignType.variable.placeholder']"
           :disabled="readOnly"
           :multiple="true"
-          :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('assignValue', e)"
         >
           <el-option v-for="(item, index) in variableOptions" :key="index" :label="item.label" :value="item.value" />

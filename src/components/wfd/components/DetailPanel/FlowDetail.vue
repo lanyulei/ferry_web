@@ -10,7 +10,6 @@
           placeholder="选择流转属性"
           :disabled="readOnly"
           :value="model.flowProperties"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('flowProperties', e)"
         >
           <el-option label="同意" value="1" />

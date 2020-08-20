@@ -10,7 +10,6 @@
           placeholder="选择任务类型"
           :disabled="readOnly"
           :value="model.taskType"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('taskType', e)"
         >
           <el-option label="任务" value="task" />
@@ -38,7 +37,6 @@
           :value="model.task"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('task', e)"
         >
           <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />

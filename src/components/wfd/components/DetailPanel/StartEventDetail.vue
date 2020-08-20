@@ -12,7 +12,6 @@
           :value="model.task"
           :multiple="true"
           :filterable="true"
-          :filter-method="(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0"
           @change="(e) => onChange('task', e)"
         >
           <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />
