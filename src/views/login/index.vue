@@ -23,8 +23,8 @@
     <div class="login-weaper animated bounceInDown">
       <div class="login-left">
         <div class="login-time" v-text="currentTime" />
-        <img src="../../assets/logo/ferry_logo_white.png" alt="" class="img">
-        <p class="title" v-text="sysInfo.name" />
+        <img :src="sysInfo.logo!==''?sysInfo.logo:'https://www.fdevops.com/wp-content/uploads/2020/08/1597815294-ferry_logo_white.png'" alt="" class="img">
+        <p class="title" v-text="sysInfo.name!==''?sysInfo.name:'ferry 管理平台'" />
       </div>
       <div class="login-border">
         <div class="login-main">
@@ -100,14 +100,6 @@
       </div>
 
     </div>
-
-    <el-dialog title="Or connect with" :visible.sync="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
@@ -116,19 +108,17 @@
 import { getCodeImg } from '@/api/login'
 import { getSettings } from '@/api/system/settings'
 import moment from 'moment'
-import SocialSign from './components/SocialSignin'
 
 export default {
   name: 'Login',
-  components: { SocialSign },
   data() {
     return {
       loginTypeStatus: true,
       codeUrl: '',
       cookiePassword: '',
       loginForm: {
-        username: 'admin',
-        password: '123456',
+        username: '',
+        password: '',
         rememberMe: false,
         code: '',
         uuid: '',
@@ -146,13 +136,12 @@ export default {
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {},
       currentTime: null,
       sysInfo: {
-        logo: '@/assets/logo/ferry_logo_white.png',
-        name: 'ferry管理平台'
+        logo: '',
+        name: ''
       }
     }
   },
