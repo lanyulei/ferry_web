@@ -17,7 +17,8 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <span style="font-size: 14px; position: relative; bottom: 15px">{{ name }}</span>
+          <i class="el-icon-caret-bottom" style="position: absolute; top: 13px" />
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
@@ -52,7 +53,8 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'device'
+      'device',
+      'name'
     ])
   },
   methods: {
