@@ -42,7 +42,7 @@
         </el-col>
         <el-col :span="1.5">
           <el-button
-            v-permisaction="['system:sysloginlog:remove']"
+            v-permisaction="['system:sysloginlog:clean']"
             type="danger"
             icon="el-icon-delete"
             size="mini"

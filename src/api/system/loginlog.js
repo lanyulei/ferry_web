@@ -20,7 +20,7 @@ export function delLogininfor(infoId) {
 // 清空登录日志
 export function cleanLogininfor() {
   return request({
-    url: '/api/v1/loginlog/clean',
+    url: '/api/v1/loginlog',
     method: 'delete'
   })
 }
