@@ -169,9 +169,11 @@ export default {
         type: 'warning'
       }).then(function() {
         return cleanLogininfor()
-      }).then(() => {
-        this.getList()
-        this.msgSuccess('清空成功')
+      }).then(response => {
+        if (response.code === 200) {
+          this.getList()
+          this.msgSuccess('清空成功')
+        }
       }).catch(function() {})
     },
     /** 导出按钮操作 */
