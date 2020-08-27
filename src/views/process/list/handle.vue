@@ -60,16 +60,21 @@
         <span>表单信息</span>
       </div>
       <div class="text item">
-        <fm-generate-form
-          v-for="(tplItem, tplIndex) in processStructureValue.tpls"
-          :key="tplIndex"
-          :ref="'generateForm-'+tplItem.id"
-          :preview="true"
-          :remote="remoteFunc"
-          :value="tplItem.form_data"
-          :data="tplItem.form_structure"
-          :disabled="true"
-        />
+        <template v-for="(tplItem, tplIndex) in processStructureValue.tpls">
+          <fm-generate-form
+            v-show="currentNode.hideTpls===undefined ||
+              currentNode.hideTpls===null ||
+              currentNode.hideTpls.indexOf(tplItem.id)===-1"
+            :key="tplIndex"
+            :ref="'generateForm-'+tplItem.id"
+            :preview="currentNode.writeTpls===undefined ||
+              currentNode.writeTpls===null ||
+              currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1?true:false"
+            :remote="remoteFunc"
+            :value="tplItem.form_data"
+            :data="tplItem.form_structure"
+          />
+        </template>
       </div>
       <div v-if="processStructureValue.userAuthority">
         <hr style="background-color: #d9d9d9; border:0; height:1px; margin-bottom: 15px">
@@ -151,6 +156,7 @@ import { listUser } from '@/api/system/sysuser'
 export default {
   data() {
     return {
+      tpls: [],
       remarks: '', // 备注信息
       alertMessage: '',
       nodeStepList: [],
@@ -206,6 +212,7 @@ export default {
             if (i + 1 === this.processStructureValue.nodes.length) {
               this.activeIndex = this.nodeStepList.length
             }
+            this.currentNode = this.processStructureValue.nodes[i]
           } else if (!this.processStructureValue.nodes[i].isHideNode) {
             // 非隐藏节点
             this.nodeStepList.push(this.processStructureValue.nodes[i])
@@ -215,20 +222,34 @@ export default {
       })
     },
     submitAction(item) {
-      handleWorkOrder({
-        tasks: this.processStructureValue.process.task,
-        source_state: this.processStructureValue.workOrder.current_state,
-        target_state: item.target,
-        circulation: item.label,
-        flow_properties: item.flowProperties === undefined ? 2 : parseInt(item.flowProperties),
-        work_order_id: parseInt(this.$route.query.workOrderId),
-        remarks: this.remarks
-      }).then(response => {
-        if (response.code === 200) {
+      var promiseList = []
+      for (var tpl of this.processStructureValue.tpls) {
+        this.tpls.push({
+          tplDataId: tpl.id
+        })
+        promiseList.push(this.$refs['generateForm-' + tpl.id][0].getData())
+      }
+      Promise.all(promiseList).then(values => {
+        for (var tplDataIndex in this.tpls) {
+          this.tpls[tplDataIndex].tplValue = values[tplDataIndex]
+        }
+        console.log(this.tpls)
+        handleWorkOrder({
+          tasks: this.processStructureValue.process.task,
+          source_state: this.processStructureValue.workOrder.current_state,
+          target_state: item.target,
+          circulation: item.label,
+          flow_properties: item.flowProperties === undefined ? 2 : parseInt(item.flowProperties),
+          work_order_id: parseInt(this.$route.query.workOrderId),
+          remarks: this.remarks,
+          tpls: this.tpls
+        }).then(response => {
+          if (response.code === 200) {
           // this.$router.push({ name: 'upcoming' })
           // window.location.reload()
-          this.getProcessNodeList()
-        }
+            this.getProcessNodeList()
+          }
+        })
       })
     },
     // 获取提示消息

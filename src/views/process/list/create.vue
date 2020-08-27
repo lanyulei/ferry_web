@@ -41,13 +41,20 @@
         <span>表单信息</span>
       </div>
       <div class="text item">
-        <fm-generate-form
-          v-for="(tplItem, tplIndex) in processStructureValue.tpls"
-          :key="tplIndex"
-          :ref="'generateForm-'+tplItem.id"
-          :remote="remoteFunc"
-          :data="tplItem.form_structure"
-        />
+        <template v-for="(tplItem, tplIndex) in processStructureValue.tpls">
+          <fm-generate-form
+            v-show="currentNode.hideTpls===undefined ||
+              currentNode.hideTpls===null ||
+              currentNode.hideTpls.indexOf(tplItem.id)===-1"
+            :key="tplIndex"
+            :ref="'generateForm-'+tplItem.id"
+            :remote="remoteFunc"
+            :data="tplItem.form_structure"
+            :disabled="currentNode.readonlyTpls===undefined ||
+              currentNode.readonlyTpls===null ||
+              currentNode.readonlyTpls.indexOf(tplItem.id)===-1?false:true"
+          />
+        </template>
       </div>
       <hr style="background-color: #d9d9d9; border:0; height:1px;">
       <div class="text item" style="text-align: center;margin-top:18px">
@@ -132,6 +139,7 @@ export default {
         processId: this.$route.query.processId
       }).then(response => {
         this.processStructureValue = response.data
+        this.currentNode = this.processStructureValue.nodes[0]
       })
     },
     submitAction(target) {
@@ -174,6 +182,7 @@ export default {
 
           var promiseList = []
           for (var tpl of this.processStructureValue.tpls) {
+            tpl.form_structure.id = tpl.id
             this.ruleForm.tpls.form_structure.push(tpl.form_structure)
             promiseList.push(this.$refs['generateForm-' + tpl.id][0].getData())
           }

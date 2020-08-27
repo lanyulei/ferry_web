@@ -14,6 +14,8 @@
         :groups="groups"
         :departments="departments"
         :tasks="tasks"
+        :templates="templates"
+        :templates-base="templatesBase"
         :signal-defs="processModel.signalDefs"
         :message-defs="processModel.messageDefs"
         :on-change="(key,val)=>{onItemCfgChange(key,val)}"
@@ -87,6 +89,14 @@ export default {
     },
     // 任务
     tasks: {
+      type: Array,
+      default: () => ([])
+    },
+    templates: {
+      type: Array,
+      default: () => ([])
+    },
+    templatesBase: {
       type: Array,
       default: () => ([])
     }
