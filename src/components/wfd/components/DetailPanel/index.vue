@@ -9,6 +9,8 @@
       :groups="groups"
       :departments="departments"
       :tasks="tasks"
+      :templates="templates"
+      :templates-base="templatesBase"
     />
     <ScriptTaskDetail
       v-else-if="model.clazz === 'scriptTask'"
@@ -26,11 +28,42 @@
       :groups="groups"
       :departments="departments"
       :tasks="tasks"
+      :templates="templates"
+      :templates-base="templatesBase"
     />
-    <GatewayDetail v-else-if="model.clazz === 'gateway' || model.clazz === 'exclusiveGateway' || model.clazz === 'parallelGateway' || model.clazz === 'inclusiveGateway'" :model="model" :on-change="onChange" :read-only="readOnly" />
-    <StartEventDetail v-else-if="model.clazz === 'start'" :model="model" :on-change="onChange" :read-only="readOnly" :tasks="tasks" />
-    <EndEventDetail v-else-if="model.clazz === 'end'" :model="model" :on-change="onChange" :read-only="readOnly" :tasks="tasks" />
-    <FlowDetail v-else-if="model.clazz === 'flow'" :model="model" :on-change="onChange" :read-only="readOnly" />
+    <GatewayDetail
+      v-else-if="model.clazz === 'gateway' ||
+        model.clazz === 'exclusiveGateway' ||
+        model.clazz === 'parallelGateway' ||
+        model.clazz === 'inclusiveGateway'"
+      :model="model"
+      :on-change="onChange"
+      :read-only="readOnly"
+    />
+    <StartEventDetail
+      v-else-if="model.clazz === 'start'"
+      :model="model"
+      :on-change="onChange"
+      :read-only="readOnly"
+      :tasks="tasks"
+      :templates="templates"
+      :templates-base="templatesBase"
+    />
+    <EndEventDetail
+      v-else-if="model.clazz === 'end'"
+      :model="model"
+      :on-change="onChange"
+      :read-only="readOnly"
+      :tasks="tasks"
+      :templates="templates"
+      :templates-base="templatesBase"
+    />
+    <FlowDetail
+      v-else-if="model.clazz === 'flow'"
+      :model="model"
+      :on-change="onChange"
+      :read-only="readOnly"
+    />
   </div>
 </template>
 <script>
@@ -90,6 +123,14 @@ export default {
       default: () => ([])
     },
     tasks: {
+      type: Array,
+      default: () => ([])
+    },
+    templates: {
+      type: Array,
+      default: () => ([])
+    },
+    templatesBase: {
       type: Array,
       default: () => ([])
     }

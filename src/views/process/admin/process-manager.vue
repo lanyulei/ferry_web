@@ -146,6 +146,8 @@
                     :users="users"
                     :departments="departments"
                     :tasks="taskListData"
+                    :templates="ruleForm.tpls"
+                    :templates-base="templates"
                     :data="ruleForm.structure"
                     :height="600"
                     :lang="lang"
