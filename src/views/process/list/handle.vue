@@ -225,7 +225,8 @@ export default {
       var promiseList = []
       for (var tpl of this.processStructureValue.tpls) {
         this.tpls.push({
-          tplDataId: tpl.id
+          tplDataId: tpl.id,
+          tplId: tpl.form_structure.id
         })
         promiseList.push(this.$refs['generateForm-' + tpl.id][0].getData())
       }
