@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
-        <el-form-item label="登录地址" prop="ipaddr">
+        <el-form-item label="登录地址">
           <el-input
             v-model="queryParams.ipaddr"
             placeholder="请输入登录地址"
@@ -12,9 +12,9 @@
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="用户名称" prop="userName">
+        <el-form-item label="用户名称">
           <el-input
-            v-model="queryParams.userName"
+            v-model="queryParams.username"
             placeholder="请输入用户名称"
             clearable
             style="width: 240px;"
@@ -64,8 +64,8 @@
         <el-table-column type="selection" width="55" align="center" />
         <el-table-column label="编号" width="100" align="center" prop="infoId" />
         <el-table-column label="用户名称" width="150" align="center" prop="username" />
-        <!-- <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
-        <el-table-column label="登录地点" align="center" prop="loginLocation" /> -->
+        <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
+        <el-table-column label="登录地点" align="center" prop="loginLocation" />
         <el-table-column label="浏览器" align="center" prop="browser" />
         <el-table-column label="操作系统" align="center" prop="os" />
         <el-table-column label="操作信息" width="120" align="center" prop="msg" />
@@ -112,7 +112,7 @@ export default {
         pageIndex: 1,
         pageSize: 10,
         ipaddr: undefined,
-        userName: undefined,
+        username: undefined,
         status: undefined
       }
     }
