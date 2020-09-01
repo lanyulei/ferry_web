@@ -90,10 +90,18 @@
         </div>
         <div class="text item" style="text-align: center;margin-top:18px">
           <div
-            v-if="
-              !nodeStepList[activeIndex].activeOrder ||
-                processStructureValue.workOrder.state.length <= 1"
+            v-if="nodeStepList[activeIndex].activeOrder &&
+              processStructureValue.workOrder.state.length > 1"
           >
+            <el-button
+              v-permisaction="['process:list:handle:active']"
+              type="primary"
+              @click="activeOrderActive"
+            >
+              主动接单
+            </el-button>
+          </div>
+          <div v-else>
             <template v-for="(item, index) in processStructureValue.edges">
               <el-button
                 v-if="item.source===nodeStepList[activeIndex].id && processStructureValue.workOrder.is_end===0"
@@ -104,15 +112,6 @@
                 {{ item.label }}
               </el-button>
             </template>
-          </div>
-          <div v-else>
-            <el-button
-              v-permisaction="['process:list:handle:active']"
-              type="primary"
-              @click="activeOrderActive"
-            >
-              主动接单
-            </el-button>
           </div>
         </div>
       </div>
@@ -231,6 +230,7 @@ export default {
             // 当前节点
             this.nodeStepList.push(this.processStructureValue.nodes[i])
             this.activeIndex = this.nodeStepList.length - 1
+            console.log(this.processStructureValue.workOrder.state.length, this.processStructureValue.workOrder.state.length <= 1)
             if (i + 1 === this.processStructureValue.nodes.length) {
               this.activeIndex = this.nodeStepList.length
             }
