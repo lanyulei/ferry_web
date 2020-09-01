@@ -156,7 +156,6 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.ruleForm.logo = res.data
-      console.log(this.ruleForm.logo)
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 2

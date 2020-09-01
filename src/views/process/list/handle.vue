@@ -230,7 +230,6 @@ export default {
             // 当前节点
             this.nodeStepList.push(this.processStructureValue.nodes[i])
             this.activeIndex = this.nodeStepList.length - 1
-            console.log(this.processStructureValue.workOrder.state.length, this.processStructureValue.workOrder.state.length <= 1)
             if (i + 1 === this.processStructureValue.nodes.length) {
               this.activeIndex = this.nodeStepList.length
             }

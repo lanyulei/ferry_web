@@ -444,7 +444,6 @@ export default {
   computed: {
     show() {
       if (this.data && Object.keys(this.data).length > 0) {
-        console.log(this.data)
         return true
       }
       return false
