@@ -41,7 +41,7 @@
           :value="model.assignValue"
           :multiple="true"
           :filterable="true"
-          @change="(e) => onChange('assignValue', e)"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="user in users" :key="user.userId" :label="user.nickName===''?user.username:user.nickName" :value="user.userId" />
         </el-select>
@@ -55,7 +55,7 @@
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
-          @change="(e) => onChange('assignValue', e)"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="group in groups" :key="group.id" :label="group.nickname===''?group.name:group.nickname" :value="group.id" />
         </el-select>
@@ -69,7 +69,7 @@
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
-          @change="(e) => onChange('assignValue', e)"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option
             v-for="department in departments"
@@ -88,17 +88,32 @@
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
-          @change="(e) => onChange('assignValue', e)"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="(item, index) in variableOptions" :key="index" :label="item.label" :value="item.value" />
         </el-select>
       </div>
       <div class="panelRow">
         <el-checkbox
-          :disabled="readOnly"
+          :disabled="
+            model.assignValue===undefined||
+              model.assignValue===null||
+              model.assignValue.length <= 1||
+              model.activeOrder||
+              readOnly"
           :value="!!model.isCounterSign"
           @change="(value) => onChange('isCounterSign', value)"
         >{{ i18n['handleNode.counterSign'] }}</el-checkbox>
+        <el-checkbox
+          :disabled="
+            model.assignValue===undefined||
+              model.assignValue===null||
+              model.assignValue.length <= 1||
+              model.isCounterSign||
+              readOnly"
+          :value="!!model.activeOrder"
+          @change="(value) => onChange('activeOrder', value)"
+        >{{ i18n['handleNode.activeOrder'] }}</el-checkbox>
         <!-- <el-checkbox @change="(value) => onChange('isEndorsement', value)"
                              :disabled="readOnly"
                              :value="!!model.isEndorsement">{{i18n['handleNode.endorsement']}}</el-checkbox>
@@ -173,6 +188,14 @@ export default {
         value: 2,
         label: '创建者负责人'
       }]
+    }
+  },
+  methods: {
+    getPersons(e) {
+      if (e === undefined || e === null || e.length <= 1) {
+        this.onChange('activeOrder', false)
+        this.onChange('isCounterSign', false)
+      }
     }
   }
 }
