@@ -235,7 +235,6 @@ export default {
               this.getCode()
             })
         } else {
-          console.log('error submit!!')
           return false
         }
       })

@@ -209,7 +209,6 @@ export default {
         urgeWorkOrder({
           workOrderId: row.id
         }).then(response => {
-          console.log(response)
           this.$message({
             type: 'success',
             message: '已进行催办通知!'
