@@ -62,3 +62,12 @@ export function urgeWorkOrder(params) {
     params
   })
 }
+
+// 主动接单
+export function activeOrder(data, workOrderId) {
+  return request({
+    url: `/api/v1/work-order/active-order/${workOrderId}`,
+    method: 'put',
+    data
+  })
+}

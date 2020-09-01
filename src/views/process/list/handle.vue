@@ -89,16 +89,31 @@
           />
         </div>
         <div class="text item" style="text-align: center;margin-top:18px">
-          <template v-for="(item, index) in processStructureValue.edges">
+          <div
+            v-if="
+              !nodeStepList[activeIndex].activeOrder ||
+                processStructureValue.workOrder.state.length <= 1"
+          >
+            <template v-for="(item, index) in processStructureValue.edges">
+              <el-button
+                v-if="item.source===nodeStepList[activeIndex].id && processStructureValue.workOrder.is_end===0"
+                :key="index"
+                type="primary"
+                @click="submitAction(item)"
+              >
+                {{ item.label }}
+              </el-button>
+            </template>
+          </div>
+          <div v-else>
             <el-button
-              v-if="item.source===nodeStepList[activeIndex].id && processStructureValue.workOrder.is_end===0"
-              :key="index"
+              v-permisaction="['process:list:handle:active']"
               type="primary"
-              @click="submitAction(item)"
+              @click="activeOrderActive"
             >
-              {{ item.label }}
+              主动接单
             </el-button>
-          </template>
+          </div>
         </div>
       </div>
     </el-card>
@@ -149,10 +164,13 @@ Vue.component(GenerateForm.name, GenerateForm)
 
 import {
   processStructure,
-  handleWorkOrder
+  handleWorkOrder,
+  activeOrder
 } from '@/api/process/work-order'
 
 import { listUser } from '@/api/system/sysuser'
+
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -190,6 +208,11 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
+  },
   created() {
     this.getProcessNodeList()
   },
@@ -201,7 +224,6 @@ export default {
       }).then(response => {
         this.processStructureValue = response.data
         this.circulationHistoryList = this.processStructureValue.circulationHistory
-
         // 获取当前展示节点列表
         this.nodeStepList = []
         for (var i = 0; i < this.processStructureValue.nodes.length; i++) {
@@ -234,7 +256,6 @@ export default {
         for (var tplDataIndex in this.tpls) {
           this.tpls[tplDataIndex].tplValue = values[tplDataIndex]
         }
-        console.log(this.tpls)
         handleWorkOrder({
           tasks: this.processStructureValue.process.task,
           source_state: this.processStructureValue.workOrder.current_state,
@@ -258,6 +279,17 @@ export default {
       if (this.processStructureValue.workOrder.is_end === 1) {
         this.alertMessage = '当前工单已结束。'
       }
+    },
+    activeOrderActive() {
+      var jsonData = [{
+        id: this.nodeStepList[this.activeIndex].id,
+        label: this.nodeStepList[this.activeIndex].label,
+        process_method: 'person',
+        processor: [this.userId]
+      }]
+      activeOrder(jsonData, this.$route.query.workOrderId).then(response => {
+        this.getProcessNodeList()
+      })
     }
   }
 }
