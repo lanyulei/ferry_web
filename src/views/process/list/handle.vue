@@ -90,8 +90,9 @@
         </div>
         <div class="text item" style="text-align: center;margin-top:18px">
           <div
-            v-if="nodeStepList[activeIndex].activeOrder &&
-              processStructureValue.workOrder.state.length > 1"
+            v-if="
+              processStructureValue.workOrder.state.length > 1 &&
+                nodeStepList[activeIndex].activeOrder"
           >
             <el-button
               v-permisaction="['process:list:handle:active']"
@@ -104,7 +105,7 @@
           <div v-else>
             <template v-for="(item, index) in processStructureValue.edges">
               <el-button
-                v-if="item.source===nodeStepList[activeIndex].id && processStructureValue.workOrder.is_end===0"
+                v-if="processStructureValue.workOrder.is_end===0 && item.source===nodeStepList[activeIndex].id"
                 :key="index"
                 type="primary"
                 @click="submitAction(item)"
