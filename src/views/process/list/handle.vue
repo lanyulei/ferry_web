@@ -92,7 +92,7 @@
           <div
             v-if="
               processStructureValue.workOrder.state.length > 1 &&
-                nodeStepList[activeIndex].activeOrder"
+                currentNode.activeOrder"
           >
             <el-button
               v-permisaction="['process:list:handle:active']"
@@ -105,7 +105,7 @@
           <div v-else>
             <template v-for="(item, index) in processStructureValue.edges">
               <el-button
-                v-if="processStructureValue.workOrder.is_end===0 && item.source===nodeStepList[activeIndex].id"
+                v-if="processStructureValue.workOrder.is_end===0 && item.source===currentNode.id"
                 :key="index"
                 type="primary"
                 @click="submitAction(item)"
