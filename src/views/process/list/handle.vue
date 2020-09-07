@@ -64,7 +64,7 @@
           <fm-generate-form
             v-show="currentNode.hideTpls===undefined ||
               currentNode.hideTpls===null ||
-              currentNode.hideTpls.indexOf(tplItem.id)===-1"
+              currentNode.hideTpls.indexOf(tplItem.form_structure.id)===-1"
             :key="tplIndex"
             :ref="'generateForm-'+tplItem.id"
             :preview="currentNode.writeTpls===undefined ||
