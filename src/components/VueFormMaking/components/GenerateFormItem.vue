@@ -362,9 +362,7 @@ export default {
       })
     }
 
-    if (this.disabled === undefined || this.disabled === null) {
-      this.widget.options.disabled = false
-    } else {
+    if (this.disabled !== undefined && this.disabled !== null) {
       this.widget.options.disabled = this.disabled
     }
 
