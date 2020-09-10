@@ -10,6 +10,7 @@ export const basicComponents = [
       pattern: '',
       placeholder: '',
       disabled: false,
+      showPassword: false,
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true

@@ -166,7 +166,7 @@ export default {
         arrowControl: '使用箭头进行时间选择',
         isDelete: '删除',
         isEdit: '编辑',
-        showPassword: '显示密码',
+        showPassword: '密码',
         validate: '校验',
         required: '必填',
         patternPlaceholder: '填写正则表达式',

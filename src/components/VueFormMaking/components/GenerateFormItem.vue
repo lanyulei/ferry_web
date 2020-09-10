@@ -60,6 +60,9 @@
           </span>
         </el-divider>
       </template>
+      <template v-if="widget.type === 'input' && widget.options.showPassword">
+        <input :value="dataModel" type="password" style="border: none; background-color: #ffffff; color: #303133" disabled="disabled">
+      </template>
       <template v-else>
         <div>
           {{ dataModel }}
@@ -75,6 +78,7 @@
           :placeholder="widget.options.placeholder"
           :style="{width: widget.options.width}"
           :disabled="widget.options.disabled"
+          :show-password="widget.options.showPassword"
         />
         <el-input
           v-else
@@ -83,6 +87,7 @@
           :disabled="widget.options.disabled"
           :placeholder="widget.options.placeholder"
           :style="{width: widget.options.width}"
+          :show-password="widget.options.showPassword"
         />
       </template>
 
