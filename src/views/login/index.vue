@@ -220,7 +220,9 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (!this.loginTypeStatus) {
+          if (this.loginTypeStatus) {
+            this.loginForm.loginType = 1
+          } else {
             this.loginForm.loginType = 0
           }
 
