@@ -20,7 +20,7 @@
       <template v-else-if="widget.type=='imgupload'">
         <fm-upload
           v-model="dataModel"
-          :disabled="widget.options.disabled"
+          :disabled="true"
           :style="{'width': widget.options.width}"
           :width="widget.options.size.width"
           :height="widget.options.size.height"
@@ -60,7 +60,7 @@
           </span>
         </el-divider>
       </template>
-      <template v-if="widget.type === 'input' && widget.options.showPassword">
+      <template v-else-if="widget.type === 'input' && widget.options.showPassword">
         <input :value="dataModel" type="password" style="border: none; background-color: #ffffff; color: #303133" disabled="disabled">
       </template>
       <template v-else>
