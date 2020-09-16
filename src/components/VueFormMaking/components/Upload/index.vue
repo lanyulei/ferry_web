@@ -34,6 +34,7 @@
     </draggable>
 
     <div
+      v-if="!preview"
       v-show="(!isQiniu || (isQiniu && token)) && fileList.length < length"
       class="el-upload el-upload--picture-card"
       :class="{'is-disabled': disabled}"
@@ -124,6 +125,10 @@ export default {
       default: ''
     },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    preview: {
       type: Boolean,
       default: false
     }
@@ -228,7 +233,7 @@ export default {
           if (resData && uploadUrl) {
             this.$set(this.fileList, this.fileList.findIndex(item => item.key === key), {
               ...this.fileList[this.fileList.findIndex(item => item.key === key)],
-              url: resData.url,
+              url: uploadUrl,
               percent: 100
             })
             setTimeout(() => {
