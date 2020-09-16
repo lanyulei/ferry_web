@@ -20,19 +20,10 @@
       <template v-else-if="widget.type=='imgupload'">
         <fm-upload
           v-model="dataModel"
-          :disabled="true"
           :style="{'width': widget.options.width}"
           :width="widget.options.size.width"
           :height="widget.options.size.height"
-          :token="widget.options.token"
-          :domain="widget.options.domain"
-          :multiple="widget.options.multiple"
-          :length="widget.options.length"
-          :is-qiniu="widget.options.isQiniu"
-          :is-delete="widget.options.isDelete"
-          :min="widget.options.min"
-          :is-edit="widget.options.isEdit"
-          :action="widget.options.action"
+          :preview="preview"
         />
       </template>
       <template v-else-if="widget.type =='rate'">
