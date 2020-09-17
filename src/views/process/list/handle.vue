@@ -197,7 +197,7 @@ export default {
       },
       remoteFunc: {
         // 获取用户列表
-        getUserListFunc(resolve) {
+        userList(resolve) {
           listUser({
             pageSize: 999999
           }).then(response => {
