@@ -122,7 +122,7 @@ export default {
 
   .process-div-title {
     font-size: 15px;
-    margin-top: 8px;
+    margin-top: 10px;
     color: #606266;
   }
 
