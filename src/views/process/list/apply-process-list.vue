@@ -128,7 +128,8 @@ export default {
 
   .process-div-remarks {
     color: #999999;
-    margin-top: 3px;
+    margin-top: 6px;
+    font-size: 12px;
   }
 
   .ellipsis {
