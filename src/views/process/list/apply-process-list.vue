@@ -25,11 +25,22 @@
               v-for="buttonItem in item.process_list"
               :key="buttonItem.id"
               class="workflow-classify-button"
-              type="primary"
               plain
               @click="submitWorkOrder(buttonItem.id)"
             >
-              {{ buttonItem.name }}
+              <div class="process-button-div">
+                <div class="process-div-icon">
+                  <e-icon class="process-div-el-icon" :icon-name="buttonItem.icon" />
+                </div>
+                <div class="process-div-body">
+                  <div class="process-div-title ellipsis">
+                    {{ buttonItem.name }}
+                  </div>
+                  <div class="process-div-remarks ellipsis">
+                    {{ buttonItem.remarks }}
+                  </div>
+                </div>
+              </div>
             </el-button>
           </div>
         </div>
@@ -82,5 +93,47 @@ export default {
 
   .el-card__body {
     padding-bottom: 0;
+  }
+
+  .process-button-div {
+    width: 180px;
+    height: 50px;
+  }
+
+  .process-div-icon {
+    float: left;
+    width: 50px;
+    height: 100%;
+    margin-right: 10px;
+  }
+
+  .process-div-el-icon {
+    font-size: 32px;
+    line-height: 50px;
+    color: #606266;
+  }
+
+  .process-div-body {
+    float: left;
+    width: 120px;
+    height: 100%;
+    text-align: left;
+  }
+
+  .process-div-title {
+    font-size: 15px;
+    margin-top: 8px;
+    color: #606266;
+  }
+
+  .process-div-remarks {
+    color: #999999;
+    margin-top: 3px;
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

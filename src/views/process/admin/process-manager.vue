@@ -87,9 +87,18 @@
       <el-dialog :title="dialogProcessVisibleName===1?'新建流程':'编辑流程'" :visible.sync="open" :fullscreen="true" style="margin-top: 0">
         <div class="tpl-create-content">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-            <el-form-item label="名称" prop="name">
-              <el-input v-model="ruleForm.name" placeholder="请输入流程名称" style="width: 100%" />
-            </el-form-item>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="名称" prop="name">
+                  <el-input v-model="ruleForm.name" placeholder="请输入流程名称" style="width: 100%" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="图标" prop="icon">
+                  <e-icon-picker v-model="ruleForm.icon" style="width: 100%" />
+                </el-form-item>
+              </el-col>
+            </el-row>
             <el-row>
               <el-col :span="12">
                 <el-form-item label="分类" prop="classify">
@@ -137,6 +146,15 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-form-item label="描述" prop="remarks">
+              <el-input
+                v-model="ruleForm.remarks"
+                placeholder="请输入流程描述"
+                type="textarea"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                style="width: 100%"
+              />
+            </el-form-item>
             <el-form-item label="流程" prop="structure">
               <div style="border-radius: 4px; overflow:hidden">
                 <div>
@@ -218,6 +236,9 @@ export default {
       lang: 'zh',
       ruleForm: {},
       rules: {
+        icon: [
+          { required: true, message: '请输入流程图标', trigger: 'blur' }
+        ],
         name: [
           { required: true, message: '请输入流程名称', trigger: 'blur' }
         ],
@@ -229,6 +250,9 @@ export default {
         ],
         structure: [
           { required: true, message: '请设计流程', trigger: 'blur' }
+        ],
+        remarks: [
+          { required: true, message: '请输入流程描述', trigger: 'blur' }
         ]
       }
     }
@@ -309,7 +333,9 @@ export default {
         structure: { 'edges': [], 'nodes': [], 'groups': [] },
         classify: '',
         task: [],
-        notice: [1]
+        notice: [1],
+        icon: '',
+        remarks: ''
       }
       this.dialogProcessVisibleName = 1
       this.open = true
@@ -332,7 +358,9 @@ export default {
           structure: response.data.structure,
           classify: response.data.classify,
           task: response.data.task,
-          notice: response.data.notice
+          notice: response.data.notice,
+          icon: response.data.icon,
+          remarks: response.data.remarks
         }
         this.open = true
         this.wfdDesignRefresh = false
@@ -405,7 +433,9 @@ export default {
               structure: structureValue,
               classify: this.ruleForm.classify,
               task: this.ruleForm.task,
-              notice: this.ruleForm.notice
+              notice: this.ruleForm.notice,
+              icon: this.ruleForm.icon,
+              remarks: this.ruleForm.remarks
             }).then(response => {
               this.getList()
               this.open = false
