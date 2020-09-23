@@ -122,13 +122,14 @@ export default {
 
   .process-div-title {
     font-size: 15px;
-    margin-top: 8px;
+    margin-top: 10px;
     color: #606266;
   }
 
   .process-div-remarks {
     color: #999999;
-    margin-top: 3px;
+    margin-top: 6px;
+    font-size: 12px;
   }
 
   .ellipsis {

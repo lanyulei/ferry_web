@@ -64,35 +64,17 @@
               icon="el-icon-edit"
               @click="handleView(scope.row)"
             >查看</el-button>
+            <el-button
+              v-if="scope.row.is_end===0"
+              v-permisaction="['process:list:upcoming:urge']"
+              size="mini"
+              type="text"
+              icon="el-icon-alarm-clock"
+              @click="handleUrge(scope.row)"
+            >催办</el-button>
           </template>
         </el-table-column>
       </el-table>
-
-      <el-dialog
-        title="转交工单"
-        :visible.sync="dialogVisible"
-        width="30%"
-      >
-        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="60px" class="demo-ruleForm">
-          <el-form-item label="节点" prop="node_id">
-            <el-select v-model="ruleForm.node_id" placeholder="选择节点" size="small" style="width: 100%">
-              <el-option v-for="(item, index) in nodeList" :key="index" :label="item.label" :value="item.id" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="用户" prop="user_id">
-            <el-select v-model="ruleForm.user_id" placeholder="选择用户" size="small" style="width: 100%">
-              <el-option v-for="(item, index) in users" :key="index" :label="item.nickName" :value="item.userId" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-input v-model="ruleForm.remarks" type="textarea" size="small" />
-          </el-form-item>
-          <el-form-item style="text-align: right">
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-            <el-button @click="dialogVisible = false">关闭</el-button>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
 
       <pagination
         v-show="total>0"
@@ -106,13 +88,12 @@
 </template>
 
 <script>
-import { workOrderList } from '@/api/process/work-order'
+import { workOrderList, urgeWorkOrder } from '@/api/process/work-order'
 export default {
   data() {
     return {
       users: [],
       nodeList: [],
-      dialogVisible: false,
       queryParams: {},
       total: 0,
       loading: false,
@@ -157,7 +138,29 @@ export default {
     handleView(row) {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
     },
-    handleSelectionChange() {}
+    handleSelectionChange() {},
+    handleUrge(row) {
+      this.$confirm('<span style="font-size:15px ">对此工单处理人进行催办通知提醒, 是否继续?</span><br><span style="color: #c33; font-size: 10px">注意：十分钟内只能催办一次。</span>', '催办', {
+        dangerouslyUseHTMLString: true,
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        urgeWorkOrder({
+          workOrderId: row.id
+        }).then(response => {
+          this.$message({
+            type: 'success',
+            message: '已进行催办通知!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    }
   }
 }
 </script>
