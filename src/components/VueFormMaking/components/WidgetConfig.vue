@@ -396,7 +396,6 @@
           <el-checkbox v-if="Object.keys(data.options).indexOf('arrowControl')>=0" v-model="data.options.arrowControl">{{ $t('fm.config.widget.arrowControl') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('isDelete')>=0" v-model="data.options.isDelete">{{ $t('fm.config.widget.isDelete') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('isEdit')>=0" v-model="data.options.isEdit">{{ $t('fm.config.widget.isEdit') }}</el-checkbox>
-
         </el-form-item>
         <el-form-item :label="$t('fm.config.widget.validate')">
           <div v-if="Object.keys(data.options).indexOf('required')>=0">

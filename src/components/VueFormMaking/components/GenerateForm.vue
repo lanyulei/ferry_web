@@ -164,7 +164,6 @@ export default {
           })
         } else if (genList[i].type === 'subform') {
           // this.generateModle(genList[i].columns.list)
-          console.log(genList[i].columns)
         } else {
           if (this.value && Object.keys(this.value).indexOf(genList[i].model) >= 0) {
             this.models[genList[i].model] = this.value[genList[i].model]

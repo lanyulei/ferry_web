@@ -109,7 +109,15 @@
           form
           @on-close="previewVisible = false"
         >
-          <generate-form v-if="previewVisible" ref="generateForm" insite="true" :data="widgetForm" :value="widgetModels" :remote="remoteFuncs" @on-change="handleDataChange">
+          <generate-form
+            v-if="previewVisible"
+            ref="generateForm"
+            insite="true"
+            :data="widgetForm"
+            :value="widgetModels"
+            :remote="remoteFuncs"
+            @on-change="handleDataChange"
+          >
 
             <template slot-scope="scope">
               Width <el-input v-model="scope.model.blank.width" style="width: 100px" />

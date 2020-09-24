@@ -63,7 +63,9 @@
     <template v-else>
       <template v-if="widget.type === 'input'">
         <el-input
-          v-if="widget.options.dataType === 'number' || widget.options.dataType === 'integer' || widget.options.dataType === 'float'"
+          v-if="widget.options.dataType === 'number'
+            || widget.options.dataType === 'integer'
+            || widget.options.dataType === 'float'"
           v-model.number="dataModel"
           :type="widget.options.dataType"
           :placeholder="widget.options.placeholder"
