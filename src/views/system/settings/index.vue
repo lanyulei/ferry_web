@@ -5,7 +5,7 @@
         <span>配置信息</span>
       </div>
       <div class="text item">
-        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
+        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px">
           <el-form-item label="系统名称：" prop="name">
             <el-input v-model="ruleForm.name" />
           </el-form-item>
@@ -21,6 +21,10 @@
               <img v-if="ruleForm.logo" :src="ruleForm.logo" class="avatar">
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
+          </el-form-item>
+          <el-form-item label="默认LDAP登陆：">
+            <el-radio v-model="ruleForm.is_ldap" :label="true">是</el-radio>
+            <el-radio v-model="ruleForm.is_ldap" :label="false">否</el-radio>
           </el-form-item>
           <el-form-item style="margin-bottom: 0">
             <el-button v-permisaction="['system:settings:index:config']" type="primary" @click="submitForm('ruleForm', 1)">确定</el-button>
@@ -85,7 +89,8 @@ export default {
       editable: [],
       ruleForm: {
         name: '',
-        logo: ''
+        logo: '',
+        is_ldap: false
       },
       rules: {
         name: [
@@ -99,7 +104,7 @@ export default {
       tableData: []
     }
   },
-  mounted() {
+  created() {
     this.getSettingsInfo()
   },
   methods: {
@@ -110,9 +115,13 @@ export default {
             if (v.content === undefined || v.content === null) {
               this.ruleForm = {
                 name: '',
-                logo: ''
+                logo: '',
+                is_ldap: false
               }
             } else {
+              if (v.content.is_ldap === undefined || v.content.is_ldap === null) {
+                v.content.is_ldap = false
+              }
               this.ruleForm = v.content
             }
           } else if (v.classify === 2) {
