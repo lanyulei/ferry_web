@@ -52,7 +52,7 @@
             :data="tplItem.form_structure"
             :disabled="currentNode.readonlyTpls===undefined ||
               currentNode.readonlyTpls===null ||
-              currentNode.readonlyTpls.indexOf(tplItem.id)===-1?false:true"
+              currentNode.readonlyTpls.indexOf(tplItem.id)===-1?null:true"
           />
         </template>
       </div>

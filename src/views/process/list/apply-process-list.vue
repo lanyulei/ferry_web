@@ -19,29 +19,38 @@
 
       <div v-for="item in processLists" :key="item.id">
         <div v-if="item.process_list.length!==0">
-          <div class="workflow-classify-title">{{ item.name }}</div>
+          <div class="workflow-classify-title">
+            {{ item.name }}
+          </div>
           <div style="margin-bottom: 15px;">
-            <el-button
-              v-for="buttonItem in item.process_list"
-              :key="buttonItem.id"
-              class="workflow-classify-button"
-              plain
-              @click="submitWorkOrder(buttonItem.id)"
-            >
-              <div class="process-button-div">
-                <div class="process-div-icon">
-                  <e-icon class="process-div-el-icon" :icon-name="buttonItem.icon" />
+            <template v-for="buttonItem in item.process_list">
+              <el-tooltip :key="buttonItem.id" effect="dark" placement="top">
+                <div slot="content">
+                  {{ buttonItem.name }}
+                  <br>
+                  {{ buttonItem.remarks }}
                 </div>
-                <div class="process-div-body">
-                  <div class="process-div-title ellipsis">
-                    {{ buttonItem.name }}
+                <el-button
+                  class="workflow-classify-button"
+                  plain
+                  @click="submitWorkOrder(buttonItem.id)"
+                >
+                  <div class="process-button-div">
+                    <div class="process-div-icon">
+                      <e-icon class="process-div-el-icon" :icon-name="buttonItem.icon" />
+                    </div>
+                    <div class="process-div-body">
+                      <div class="process-div-title ellipsis">
+                        {{ buttonItem.name }}
+                      </div>
+                      <div class="process-div-remarks ellipsis">
+                        {{ buttonItem.remarks }}
+                      </div>
+                    </div>
                   </div>
-                  <div class="process-div-remarks ellipsis">
-                    {{ buttonItem.remarks }}
-                  </div>
-                </div>
-              </div>
-            </el-button>
+                </el-button>
+              </el-tooltip>
+            </template>
           </div>
         </div>
       </div>
@@ -81,8 +90,8 @@ export default {
 
 <style scoped>
   .workflow-classify-title {
-    border-bottom: 1px solid #dddddd;
-    padding-bottom: 5px;
+    border-left: 3px solid rgb(64, 158, 255);
+    padding-left: 5px;
   }
 
   .workflow-classify-button {
