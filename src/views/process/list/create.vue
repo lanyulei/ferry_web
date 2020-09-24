@@ -1,22 +1,6 @@
 <template>
   <div class="app-container">
     <el-card class="box-card">
-      <div class="text item">
-        <el-steps :active="active" finish-status="success">
-          <template v-for="(item, index) in processStructureValue.nodes">
-            <el-step
-              v-if="item.isHideNode === false ||
-                item.isHideNode === undefined ||
-                item.isHideNode == null"
-              :key="index"
-              :title="item.label"
-            />
-          </template>
-        </el-steps>
-      </div>
-    </el-card>
-
-    <el-card class="box-card" style="margin-top: 15px">
       <div slot="header" class="clearfix">
         <span>公共信息</span>
       </div>
@@ -36,7 +20,7 @@
       </div>
     </el-card>
 
-    <el-card class="box-card" style="margin-top: 15px">
+    <el-card class="box-card" style="margin-top: 10px">
       <div slot="header" class="clearfix">
         <span>表单信息</span>
       </div>
