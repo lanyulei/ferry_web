@@ -24,7 +24,8 @@ export default {
         subform: '子表单',
         grid: '栅格布局',
         tabs: '标签页',
-        divider: '分割线'
+        divider: '分割线',
+        file: '文件'
       },
       basic: {
         title: '基础字段'
@@ -117,6 +118,7 @@ export default {
         limit: '最大上传数',
         isQiniu: '使用七牛上传',
         tokenFunc: '获取七牛Token方法',
+        setHeaders: '设置上传的请求头部',
         imageAction: '图片上传地址',
         tip: '提示说明文字',
         action: '上传地址',

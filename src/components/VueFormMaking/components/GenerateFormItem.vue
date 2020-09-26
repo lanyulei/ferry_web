@@ -17,6 +17,14 @@
       <template v-else-if="widget.type === 'editor'">
         <div class="previewEditorDiv" v-html="dataModel" />
       </template>
+
+      <template v-if="widget.type=='file'">
+        <div v-for="(uploadUrlItem, uploadUrlIndex) of dataModel" :key="uploadUrlIndex">
+          <i style="color: #909399;" class="el-icon-document" />
+          <a :href="uploadUrlItem.url" target="_blank">{{ uploadUrlItem.name }}</a>
+        </div>
+      </template>
+
       <template v-else-if="widget.type=='imgupload'">
         <fm-upload
           v-model="dataModel"
@@ -246,6 +254,10 @@
         />
       </template>
 
+      <template v-if="widget.type=='file'">
+        <FileUpload :element="widget" />
+      </template>
+
       <template v-if="widget.type === 'editor'">
         <vue-editor
           v-model="dataModel"
@@ -302,11 +314,13 @@
 
 <script>
 import FmUpload from './Upload'
+import FileUpload from './Upload/file'
 
 export default {
   name: 'GenetateFormItem',
   components: {
-    FmUpload
+    FmUpload,
+    FileUpload
   },
   /* eslint-disable */
   props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel'],

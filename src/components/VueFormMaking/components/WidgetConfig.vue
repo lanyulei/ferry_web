@@ -36,6 +36,9 @@
           v-model="data.options.labelWidthStatus"
         />
       </el-form-item>
+      <el-form-item v-if="Object.keys(data.options).indexOf('tip')>=0" :label="$t('fm.config.widget.tip')">
+        <el-input v-model="data.options.tip" />
+      </el-form-item>
       <!-- 兰玉磊结束添加 -->
 
       <!-- 高度 -->
@@ -75,7 +78,7 @@
         <el-input-number v-model="data.options.step" :min="0" :max="100" :step="1" />
       </el-form-item>
       <!-- 是否多选 -->
-      <el-form-item v-if="data.type=='select' || data.type=='imgupload'" :label="$t('fm.config.widget.multiple')">
+      <el-form-item v-if="data.type=='select'" :label="$t('fm.config.widget.multiple')">
         <el-switch v-model="data.options.multiple" @change="handleSelectMuliple" />
       </el-form-item>
       <!-- 是否可搜索 -->
@@ -263,12 +266,12 @@
         </el-form-item>
       </template>
       <!-- 图片上传 -->
-      <template v-if="data.type=='imgupload'">
+      <template v-if="data.type=='imgupload' || data.type=='file'">
 
         <el-form-item :label="$t('fm.config.widget.limit')">
           <el-input v-model.number="data.options.length" type="number" />
         </el-form-item>
-        <el-form-item :label="$t('fm.config.widget.isQiniu')">
+        <el-form-item v-if="Object.keys(data.options).indexOf('isQiniu')>0" :label="$t('fm.config.widget.isQiniu')">
           <el-switch v-model="data.options.isQiniu" />
         </el-form-item>
         <template v-if="data.options.isQiniu">
@@ -282,6 +285,37 @@
         <template v-else>
           <el-form-item :label="$t('fm.config.widget.imageAction')" :required="true">
             <el-input v-model="data.options.action" />
+          </el-form-item>
+          <el-form-item :label="$t('fm.config.widget.setHeaders')">
+            <el-row v-for="(uploadItem, uploadIndex) in headers" :key="uploadIndex">
+              <el-col :span="10">
+                <el-input
+                  v-model="uploadItem.key"
+                  type="textarea"
+                  :rows="1"
+                  placeholder="KEY"
+                />
+              </el-col>
+              <el-col :span="10" style="float: left; margin-left: 10px">
+                <el-input
+                  v-model="uploadItem.value"
+                  type="textarea"
+                  :rows="1"
+                  placeholder="VALUE"
+                />
+              </el-col>
+              <el-col :span="2">
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  plain
+                  circle
+                  style="padding: 4px; margin-left: 5px;"
+                  @click="handleDelHeader(uploadIndex)"
+                />
+              </el-col>
+            </el-row>
+            <el-button type="text" style="font-size: 12px; color: #1890ff" @click="handleAddHeader">添加</el-button>
           </el-form-item>
         </template>
       </template>
@@ -438,7 +472,8 @@ export default {
         pattern: null,
         range: null,
         length: null
-      }
+      },
+      headers: []
     }
   },
   computed: {
@@ -474,9 +509,44 @@ export default {
         this.validateDataType(this.data.options.dataType)
         this.valiatePattern(this.data.options.pattern)
       }
+    },
+    headers: {
+      handler: function (val) {
+        if (this.data.options) {
+          if (this.headers.length > 0) {
+            this.data.options.headers = {}
+            for (var headerValue of this.headers) {
+              this.data.options.headers[headerValue.key] = headerValue.value
+            }
+          } else {
+            this.data.options.headers = {}
+          }
+        }
+      },
+      deep: true
     }
   },
+  created() {
+    this.handleInitHeaders()
+  },
   methods: {
+    handleInitHeaders() {
+      for (var key in this.data.options.headers) {
+        this.headers.push({
+          key: key,
+          value: this.data.options.headers[key]
+        })
+      }
+    },
+    handleAddHeader() {
+      this.headers.push({
+        key: '',
+        value: ''
+      })
+    },
+    handleDelHeader(index) {
+      this.headers.splice(index, 1)
+    },
     handleOptionsRemove(index) {
       if (this.data.type === 'grid') {
         this.data.columns.splice(index, 1)
