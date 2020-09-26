@@ -95,7 +95,7 @@
               <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">{{ $t('fm.config.form.title') }}</div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-show="configTab=='widget'" :data="widgetFormSelect" />
+              <widget-config v-if="widgetFormSelect!==null" v-show="configTab=='widget'" :data="widgetFormSelect" />
               <form-config v-show="configTab=='form'" :data="widgetForm.config" />
             </el-main>
           </el-container>

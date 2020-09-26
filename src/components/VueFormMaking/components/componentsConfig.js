@@ -308,6 +308,26 @@ export const advanceComponents = [
     }
   },
   {
+    type: 'file',
+    icon: 'icon-wenjianshangchuan',
+    options: {
+      defaultValue: [],
+      width: '',
+      tokenFunc: 'funcGetToken',
+      token: '',
+      domain: 'http://pfp81ptt6.bkt.clouddn.com/',
+      disabled: false,
+      length: 9,
+      headers: {},
+      // isQiniu: false,
+      tip: '', // 提示说明
+      action: 'https://jsonplaceholder.typicode.com/photos/',
+      labelWidth: 100,
+      labelWidthDisabled: false,
+      labelWidthStatus: true
+    }
+  },
+  {
     type: 'editor',
     icon: 'icon-fuwenbenkuang',
     options: {

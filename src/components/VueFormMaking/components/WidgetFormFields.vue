@@ -157,6 +157,10 @@
       />
     </template>
 
+    <template v-if="element.type=='file'">
+      <FileUpload :element="element" />
+    </template>
+
     <template v-if="element.type == 'cascader'">
       <el-cascader
         v-model="element.options.defaultValue"
@@ -214,12 +218,14 @@
 
 <script>
 import FmUpload from './Upload'
+import FileUpload from './Upload/file'
 export default {
   name: 'WidgetFormFields',
   /* eslint-disable */ 
-    props: ['element'],
-    components: {
-      FmUpload
-    },
+  props: ['element'],
+  components: {
+    FmUpload,
+    FileUpload
   }
+}
 </script>
