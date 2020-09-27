@@ -55,7 +55,7 @@
             <span>{{ parseTime(scope.row.create_time) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="240">
           <template slot-scope="scope">
             <el-button
               v-permisaction="['process:list:all:select']"
@@ -80,6 +80,13 @@
               icon="el-icon-switch-button"
               @click="handleUnity(scope.row)"
             >结单</el-button>
+            <el-button
+              v-permisaction="['process:list:all:delete']"
+              size="mini"
+              type="text"
+              icon="el-icon-delete"
+              @click="handleDelete(scope.row)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -122,7 +129,7 @@
 </template>
 
 <script>
-import { workOrderList, unityWorkOrder, inversionWorkOrder } from '@/api/process/work-order'
+import { workOrderList, unityWorkOrder, inversionWorkOrder, deleteWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
 export default {
   data() {
@@ -173,6 +180,26 @@ export default {
     },
     handleView(row) {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
+    },
+    handleDelete(row) {
+      this.$confirm('此操作将删除该数据, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteWorkOrder(row.id).then(response => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.getList()
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
     },
     handleUnity(row) {
       this.$confirm('此操作将会结束该工单, 是否继续?', '提示', {
