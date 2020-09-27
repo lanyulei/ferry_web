@@ -71,3 +71,11 @@ export function activeOrder(data, workOrderId) {
     data
   })
 }
+
+// 删除工单
+export function deleteWorkOrder(workOrderId) {
+  return request({
+    url: `/api/v1/work-order/delete/${workOrderId}`,
+    method: 'delete'
+  })
+}

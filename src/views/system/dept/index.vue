@@ -129,6 +129,17 @@
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="部门状态">
+              <el-radio-group v-model="form.status">
+                <el-radio
+                  v-for="dict in statusOptions"
+                  :key="dict.value"
+                  :label="dict.value"
+                >{{ dict.label }}</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -197,7 +208,11 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      statusOptions: [
+        { label: '正常', value: '0' },
+        { label: '停用', value: '1' }
+      ]
     }
   },
   created() {
