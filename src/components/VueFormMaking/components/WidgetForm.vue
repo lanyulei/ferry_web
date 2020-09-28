@@ -98,7 +98,6 @@
                         <div
                           v-if="el && el.key"
                           :key="el.key"
-                          :style="{width: '249px', 'display': 'inline-block', 'vertical-align': 'top'}"
                           @click.native="handleSelectWidget(i)"
                         >
                           <widget-form-item
@@ -107,8 +106,6 @@
                             :index="i"
                             :data="element.columns"
                             :data-config="data"
-                            :is-label="true"
-                            :is-table="true"
                           />
                         </div>
                       </template>

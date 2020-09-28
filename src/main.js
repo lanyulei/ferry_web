@@ -40,7 +40,6 @@ Vue.use(VueEditor)
 import iconPicker from 'e-icon-picker'
 import 'e-icon-picker/dist/index.css'// 基础样式
 import 'e-icon-picker/dist/main.css' // fontAwesome 图标库样式
-
 Vue.use(iconPicker)
 
 // 全局方法挂载
