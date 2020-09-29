@@ -55,42 +55,47 @@
             :prop="item.model"
           >
             <el-table
-              :data="tableData"
+              :data="models[item.model]"
               border
               style="width: 100%"
             >
               <el-table-column
+                fixed
                 width="50"
               >
                 <template slot="header">
                   <i style="font-size: 25px; color: #409EFF;cursor:pointer;" class="el-icon-circle-plus" @click="addCol(item)" />
                 </template>
-                <template>
-                  <i style="font-size: 25px; color: red" class="el-icon-remove" />
+                <template slot-scope="scope">
+                  <i style="font-size: 25px; color: red" class="el-icon-remove" @click="delCol(item, scope.$index)" />
                 </template>
 
               </el-table-column>
-              <el-table-column
-                v-for="v in item.columns.list"
-                :key="v.key"
-                :prop="v.key"
-                :label="v.name"
-                width="250"
-              >
-                <template>
-                  <genetate-form-item
-                    :preview="preview"
-                    :models.sync="models"
-                    :rules="rules"
-                    :widget="v"
-                    :remote="remote"
-                    :data="data"
-                    :disabled="disabled"
-                    :is-label="false"
-                    @input-change="onSubformInputChange"
-                  />
-                </template>
-              </el-table-column>
+              <template v-for="(c, i) in item.columns">
+                <div :key="i">
+                  <el-table-column
+                    v-for="v in c.list"
+                    :key="v.key"
+                    :prop="v.modal"
+                    :label="v.name"
+                    min-width="250"
+                  >
+                    <template>
+                      <genetate-form-item
+                        :preview="preview"
+                        :models.sync="models"
+                        :rules="rules"
+                        :widget="v"
+                        :remote="remote"
+                        :data="data"
+                        :disabled="disabled"
+                        :is-label="false"
+                        @input-change="onSubformInputChange"
+                      />
+                    </template>
+                  </el-table-column>
+                </div>
+              </template>
             </el-table>
           </el-form-item>
         </template>
@@ -128,7 +133,8 @@ export default {
     return {
       tableData: [],
       models: {},
-      rules: {}
+      rules: {},
+      subformFields: {}
     }
   },
   watch: {
@@ -152,9 +158,16 @@ export default {
   },
   methods: {
     addCol(item) {
-      var j = {}
-      j["id"] = this.tableData.length + 1
-      this.tableData.push(j)
+      var subformFields = {}
+      for (var c of item.columns) {
+        for (var l of c.list) {
+          subformFields[l.model] = ""
+        }
+      }
+      this.models[item.model].push(subformFields)
+    },
+    delCol(item, index) {
+      this.models[item.model].splice(index, 1)
     },
     generateModle(genList) {
       for (let i = 0; i < genList.length; i++) {
@@ -162,14 +175,14 @@ export default {
           genList[i].columns.forEach(item => {
             this.generateModle(item.list)
           })
-        } else if (genList[i].type === 'subform') {
-          // this.generateModle(genList[i].columns.list)
         } else {
           if (this.value && Object.keys(this.value).indexOf(genList[i].model) >= 0) {
             this.models[genList[i].model] = this.value[genList[i].model]
           } else {
             if (genList[i].type === 'blank') {
               this.$set(this.models, genList[i].model, genList[i].options.defaultType === 'String' ? '' : (genList[i].options.defaultType === 'Object' ? {} : []))
+            } if (genList[i].type === 'subform') { 
+              this.$set(this.models, genList[i].model, [])
             } else {
               this.models[genList[i].model] = genList[i].options.defaultValue
             }
