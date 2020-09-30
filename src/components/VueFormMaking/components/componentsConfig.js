@@ -347,8 +347,31 @@ export const advanceComponents = [
       placeholder: '',
       disabled: false,
       clearable: false,
-      remote: true,
+      remote: false,
       remoteOptions: [],
+      showAllLevels: true,
+      options: [{
+        value: 'lanyulei',
+        label: '作者',
+        children: [{
+          value: 'character',
+          label: '性格',
+          children: [{
+            value: 'good',
+            label: '好'
+          }, {
+            value: 'well',
+            label: '很好'
+          }, {
+            value: 'veryGood',
+            label: '非常好'
+          }]
+        },
+        {
+          value: 'Handsome',
+          label: '帅气'
+        }]
+      }],
       props: {
         value: 'value',
         label: 'label',

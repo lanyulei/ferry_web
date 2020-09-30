@@ -63,6 +63,15 @@
       <template v-else-if="widget.type === 'input' && widget.options.showPassword">
         <input :value="dataModel" type="password" style="border: none; background-color: #ffffff; color: #303133" disabled="disabled">
       </template>
+      <template v-else-if="widget.type === 'cascader'">
+        <el-cascader
+          v-model="dataModel"
+          class="preview-cascader-class"
+          :disabled="true"
+          :show-all-levels="widget.options.showAllLevels"
+          :options="widget.options.remote?widget.options.remoteOptions:widget.options.options"
+        />
+      </template>
       <template v-else>
         <div>
           {{ dataModel }}
@@ -271,10 +280,11 @@
         <el-cascader
           v-model="dataModel"
           :disabled="widget.options.disabled"
+          :show-all-levels="widget.options.showAllLevels"
           :clearable="widget.options.clearable"
           :placeholder="widget.options.placeholder"
           :style="{width: widget.options.width}"
-          :options="widget.options.remoteOptions"
+          :options="widget.options.remote?widget.options.remoteOptions:widget.options.options"
         />
       </template>
 
@@ -406,5 +416,15 @@ export default {
 <style>
   .previewEditorDiv > p {
     margin: 0;
+  }
+
+  .preview-cascader-class .el-input.is-disabled .el-input__inner {
+    background-color: #fff;
+    border: none;
+    color: #303133;
+  }
+
+  .preview-cascader-class .el-input.is-disabled .el-input__suffix .el-input__suffix-inner .el-input__icon.el-icon-arrow-down:before {
+    content: ''
   }
 </style>

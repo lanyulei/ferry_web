@@ -165,10 +165,11 @@
       <el-cascader
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
+        :show-all-levels="element.options.showAllLevels"
         :clearable="element.options.clearable"
         :placeholder="element.options.placeholder"
         :style="{width: element.options.width}"
-        :options="element.options.remoteOptions"
+        :options="element.options.remote?element.options.remoteOptions:element.options.options"
       />
     </template>
 
