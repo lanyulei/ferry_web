@@ -80,7 +80,7 @@
                     :label="v.name"
                     min-width="250"
                   >
-                    <template>
+                    <template slot-scope="scope">
                       <genetate-form-item
                         :preview="preview"
                         :models.sync="models"
@@ -90,6 +90,8 @@
                         :data="data"
                         :disabled="disabled"
                         :is-label="false"
+                        :subform-index="scope.$index"
+                        :subform-model="item.model"
                         @input-change="onSubformInputChange"
                       />
                     </template>
@@ -222,8 +224,9 @@ export default {
     reset() {
       this.$refs.generateForm.resetFields()
     },
-    onSubformInputChange(value, field) {
-      this.$emit('on-change', field, value, this.models)
+    onSubformInputChange(value, field, index) {
+      console.log(value, field, index)
+      // this.$emit('on-change', field, value, this.models)
     },
     onInputChange(value, field) {
       this.$emit('on-change', field, value, this.models)

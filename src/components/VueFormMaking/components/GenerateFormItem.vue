@@ -323,7 +323,7 @@ export default {
     FileUpload
   },
   /* eslint-disable */
-  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel'],
+  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel', 'subformIndex', 'subformModel'],
   data() {
     return {
       widgetLabelWidth: '',
@@ -335,12 +335,21 @@ export default {
     dataModel: {
       deep: true,
       handler(val) {
-        this.models[this.widget.model] = val
-        this.$emit('update:models', {
-          ...this.models,
-          [this.widget.model]: val
-        })
-        this.$emit('input-change', val, this.widget.model)
+        if (this.subformIndex !== undefined) {
+          this.models[this.subformModel][this.subformIndex][this.widget.model] = val
+          this.$emit('update:models', {
+            ...this.models[this.subformModel][this.subformIndex],
+            [this.widget.model]: val
+          })
+          this.$emit('input-change', val, this.widget.model, this.subformIndex)
+        } else {
+          this.models[this.widget.model] = val
+          this.$emit('update:models', {
+            ...this.models,
+            [this.widget.model]: val
+          })
+          this.$emit('input-change', val, this.widget.model)
+        }
       }
     },
     models: {
