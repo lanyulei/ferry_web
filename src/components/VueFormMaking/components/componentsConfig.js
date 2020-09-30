@@ -363,10 +363,13 @@ export const advanceComponents = [
   {
     type: 'subform',
     icon: 'icon-table',
-    columns: {
-      span: 24,
+    columns: [{
+      span: 12,
       list: []
-    },
+    }, {
+      span: 12,
+      list: []
+    }],
     options: {
       gutter: 0,
       justify: 'start',

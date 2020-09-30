@@ -531,11 +531,13 @@ export default {
   },
   methods: {
     handleInitHeaders() {
-      for (var key in this.data.options.headers) {
-        this.headers.push({
-          key: key,
-          value: this.data.options.headers[key]
-        })
+      if (this.data.options) {
+        for (var key in this.data.options.headers) {
+          this.headers.push({
+            key: key,
+            value: this.data.options.headers[key]
+          })
+        }
       }
     },
     handleAddHeader() {
