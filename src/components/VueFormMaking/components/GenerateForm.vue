@@ -58,8 +58,10 @@
               :data="models[item.model]"
               border
               style="width: 100%"
+              :header-cell-style="{padding: '5px 0'}"
             >
               <el-table-column
+                v-if="!preview"
                 fixed
                 width="50"
               >
@@ -92,7 +94,6 @@
                         :is-label="false"
                         :subform-index="scope.$index"
                         :subform-model="item.model"
-                        @input-change="onSubformInputChange"
                       />
                     </template>
                   </el-table-column>
@@ -224,12 +225,8 @@ export default {
     reset() {
       this.$refs.generateForm.resetFields()
     },
-    onSubformInputChange(value, field, index) {
-      console.log(value, field, index)
-      // this.$emit('on-change', field, value, this.models)
-    },
     onInputChange(value, field) {
-      this.$emit('on-change', field, value, this.models)
+      // this.$emit('on-change', field, value, this.models)
     },
     refresh() {
 

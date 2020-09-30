@@ -3,6 +3,7 @@
     :label-width="isLabel===false||!widget.options.labelWidthStatus?'0px': widgetLabelWidth + 'px'"
     :label="isLabel===false||widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
     :prop="widget.model"
+    :style="subformIndex !== undefined?{'margin-bottom': '0'}: {}"
   >
     <template v-if="preview">
       <template v-if="widget.type === 'color'">
@@ -327,7 +328,7 @@ export default {
   data() {
     return {
       widgetLabelWidth: '',
-      dataModel: this.models[this.widget.model],
+      dataModel: this.subformIndex===undefined?this.models[this.widget.model]:this.models[this.subformModel][this.subformIndex][this.widget.model],
       tableData: []
     }
   },
@@ -335,27 +336,33 @@ export default {
     dataModel: {
       deep: true,
       handler(val) {
-        if (this.subformIndex !== undefined) {
-          this.models[this.subformModel][this.subformIndex][this.widget.model] = val
-          this.$emit('update:models', {
-            ...this.models[this.subformModel][this.subformIndex],
-            [this.widget.model]: val
-          })
-          this.$emit('input-change', val, this.widget.model, this.subformIndex)
-        } else {
-          this.models[this.widget.model] = val
-          this.$emit('update:models', {
-            ...this.models,
-            [this.widget.model]: val
-          })
-          this.$emit('input-change', val, this.widget.model)
+        if (val !== undefined) {
+          if (this.subformIndex !== undefined) {
+            this.models[this.subformModel][this.subformIndex][this.widget.model] = val
+            this.$emit('update:models', {
+              ...this.models,
+              [this.subformModel]: this.models[this.subformModel]
+            })
+            this.$emit('input-change', val, this.widget.model, this.subformIndex)
+          } else {
+            this.models[this.widget.model] = val
+            this.$emit('update:models', {
+              ...this.models,
+              [this.widget.model]: val
+            })
+            this.$emit('input-change', val, this.widget.model)
+          }
         }
       }
     },
     models: {
       deep: true,
       handler(val) {
-        this.dataModel = val[this.widget.model]
+        if (this.subformIndex === undefined) {
+          this.dataModel = val[this.widget.model]
+        } else {
+          this.dataModel = val[this.subformModel][this.subformIndex][this.widget.model]
+        }
       }
     }
   },
