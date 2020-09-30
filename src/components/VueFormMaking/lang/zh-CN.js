@@ -176,7 +176,8 @@ export default {
         tab: '标签页',
         validatorRequired: '必须填写',
         validatorType: '格式不正确',
-        validatorPattern: '格式不匹配'
+        validatorPattern: '格式不匹配',
+        showAllLevels: '完整路径'
       }
     },
     upload: {

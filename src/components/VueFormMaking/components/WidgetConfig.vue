@@ -120,6 +120,9 @@
             <el-input v-model="data.options.props.label" size="mini" style="">
               <template slot="prepend">{{ $t('fm.config.widget.label') }}</template>
             </el-input>
+            <el-input v-if="data.type === 'cascader'" v-model="data.options.props.children" size="mini" style="">
+              <template slot="prepend">{{ $t('fm.config.widget.childrenOption') }}</template>
+            </el-input>
           </div>
         </template>
         <template v-else>
@@ -173,28 +176,49 @@
               </draggable>
             </el-checkbox-group>
           </template>
-          <div style="margin-left: 22px;">
-            <el-button type="text" @click="handleAddOption">{{ $t('fm.actions.addOption') }}</el-button>
+
+          <template v-if="data.type === 'cascader'">
+            <el-tree
+              :data="data.options.options"
+              node-key="id"
+              default-expand-all
+              :expand-on-click-node="false"
+            >
+              <span slot-scope="{ node, data }" class="custom-tree-node">
+                <span style="font-size: 12px;">{{ node.label }}</span>
+                <span>
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="() => appendCascaderDialog(data)"
+                  >
+                    <i class="el-icon-circle-plus" style="font-size: 15px;" />
+                  </el-button>
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="() => editCascaderData(data)"
+                  >
+                    <i class="el-icon-edit-outline" style="font-size: 15px;" />
+                  </el-button>
+                  <el-button
+                    type="text"
+                    size="mini"
+                    @click="() => removeCascaderData(node, data)"
+                  >
+                    <i class="el-icon-remove" style="font-size: 15px; color: #f56c6c" />
+                  </el-button>
+                </span>
+              </span>
+            </el-tree>
+          </template>
+
+          <div :style="data.type === 'cascader'?{'margin-left': '5px'}: {'margin-left': '22px'}">
+            <el-button type="text" :style="data.type === 'cascader'?{'font-size': '13px'}:{}" @click="data.type === 'cascader'?handleAddCascaderTopDialog():handleAddOption()">
+              {{ $t('fm.actions.addOption') }}
+            </el-button>
           </div>
         </template>
-
-      </el-form-item>
-      <!-- 级联选择器 -->
-      <el-form-item v-if="data.type=='cascader'" :label="$t('fm.config.widget.remoteData')">
-        <div>
-          <el-input v-model="data.options.remoteFunc" size="mini" style="">
-            <template slot="prepend">{{ $t('fm.config.widget.remoteFunc') }}</template>
-          </el-input>
-          <el-input v-model="data.options.props.value" size="mini" style="">
-            <template slot="prepend">{{ $t('fm.config.widget.value') }}</template>
-          </el-input>
-          <el-input v-model="data.options.props.label" size="mini" style="">
-            <template slot="prepend">{{ $t('fm.config.widget.label') }}</template>
-          </el-input>
-          <el-input v-model="data.options.props.children" size="mini" style="">
-            <template slot="prepend">{{ $t('fm.config.widget.childrenOption') }}</template>
-          </el-input>
-        </div>
       </el-form-item>
       <!-- 默认值 -->
       <el-form-item v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')" :label="$t('fm.config.widget.defaultValue')">
@@ -379,7 +403,7 @@
         </el-form-item>
       </template>
       <!-- 珊格 -->
-      <template v-if="data.type == 'grid'">
+      <template v-if="data.type === 'grid'">
         <el-form-item :label="$t('fm.config.widget.gutter')">
           <el-input v-model.number="data.options.gutter" type="number" />
         </el-form-item>
@@ -420,7 +444,7 @@
         </el-form-item>
       </template>
       <!-- 非珊格 -->
-      <template v-if="data.type != 'grid'">
+      <template v-if="data.type !== 'grid'">
         <el-form-item :label="$t('fm.config.widget.attribute')">
           <el-checkbox v-if="Object.keys(data.options).indexOf('readonly')>=0" v-model="data.options.readonly">{{ $t('fm.config.widget.readonly') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('disabled')>=0" v-model="data.options.disabled">{{ $t('fm.config.widget.disabled') }}	</el-checkbox>
@@ -430,6 +454,7 @@
           <el-checkbox v-if="Object.keys(data.options).indexOf('arrowControl')>=0" v-model="data.options.arrowControl">{{ $t('fm.config.widget.arrowControl') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('isDelete')>=0" v-model="data.options.isDelete">{{ $t('fm.config.widget.isDelete') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('isEdit')>=0" v-model="data.options.isEdit">{{ $t('fm.config.widget.isEdit') }}</el-checkbox>
+          <el-checkbox v-if="Object.keys(data.options).indexOf('showAllLevels')>=0" v-model="data.options.showAllLevels">{{ $t('fm.config.widget.showAllLevels') }}</el-checkbox>
         </el-form-item>
         <el-form-item :label="$t('fm.config.widget.validate')">
           <div v-if="Object.keys(data.options).indexOf('required')>=0">
@@ -452,6 +477,36 @@
         </el-form-item>
       </template>
     </el-form>
+    <el-dialog
+      title="提示"
+      :visible.sync="cascaderDialog"
+      width="30%"
+      append-to-body
+      :before-close="handleClose"
+    >
+      <div>
+        <el-form ref="addTreeData" :model="addTreeData" label-width="80px">
+          <el-form-item
+            prop="label"
+            label="Label"
+            :rules="{ required: true, message: 'Label不能为空', trigger: 'blur' }"
+          >
+            <el-input v-model="addTreeData.label" style="width: 95%" />
+          </el-form-item>
+          <el-form-item
+            prop="value"
+            label="Value"
+            :rules="{ required: true, message: 'Value不能为空', trigger: 'blur' }"
+          >
+            <el-input v-model="addTreeData.value" style="width: 95%" />
+          </el-form-item>
+        </el-form>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="cascaderDialog = false">取 消</el-button>
+        <el-button type="primary" @click="operatingStatus==='add'?appendCascaderData():cascaderDialog = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -466,6 +521,10 @@ export default {
   props: ['data'],
   data() {
     return {
+      selectTreeData: {},
+      addTreeData: {},
+      cascaderDialog: false,
+      operatingStatus: 'add',
       validator: {
         type: null,
         required: null,
@@ -530,6 +589,47 @@ export default {
     this.handleInitHeaders()
   },
   methods: {
+    // 级联选择器
+    handleAddCascaderTopDialog() {
+      this.selectTreeData = "top"
+      this.addTreeData = {}
+      this.cascaderDialog = true
+    },
+    handleClose() {},
+    appendCascaderDialog(val) {
+      this.operatingStatus = 'add'
+      this.addTreeData = {}
+      this.selectTreeData = val
+      this.cascaderDialog = true
+    },
+    appendCascaderData() {
+      this.$refs['addTreeData'].validate((valid) => {
+        if (valid) {
+          if (this.selectTreeData === 'top') {
+            this.data.options.options.push(this.addTreeData)
+          } else {
+            if (this.selectTreeData.children) {
+              this.selectTreeData.children.push(this.addTreeData);
+            } else {
+              this.$set(this.selectTreeData, 'children', [this.addTreeData]);
+            }
+          }
+          this.cascaderDialog = false
+        }
+      })
+    },
+    editCascaderData(val) {
+      this.operatingStatus = 'edit'
+      this.addTreeData = val
+      this.cascaderDialog = true
+    },
+    removeCascaderData(node, data) {
+      const parent = node.parent;
+      const children = parent.data.children || parent.data;
+      const index = children.findIndex(d => d.id === data.id);
+      children.splice(index, 1);
+    },
+
     handleInitHeaders() {
       if (this.data.options) {
         for (var key in this.data.options.headers) {
@@ -639,3 +739,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
+  }
+</style>
