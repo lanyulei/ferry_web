@@ -118,8 +118,6 @@
 <script>
 import { workOrderList, inversionWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
-
-import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -149,11 +147,6 @@ export default {
         ]
       }
     }
-  },
-  computed: {
-    ...mapGetters([
-      'userId'
-    ])
   },
   created() {
     this.getList()
