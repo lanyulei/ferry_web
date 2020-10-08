@@ -23,7 +23,9 @@
         <el-table-column label="标题" prop="title" :show-overflow-tooltip="true" />
         <el-table-column label="当前状态" :show-overflow-tooltip="true">
           <template slot-scope="scope">
-            <span>{{ scope.row.state[0].label }}</span>
+            <span>
+              {{ scope.row.state_name }}
+            </span>
           </template>
         </el-table-column>
         <el-table-column label="当前处理人" :show-overflow-tooltip="true">
@@ -116,6 +118,8 @@
 <script>
 import { workOrderList, inversionWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
+
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -145,6 +149,11 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'userId'
+    ])
   },
   created() {
     this.getList()
