@@ -27,8 +27,8 @@ module.exports = {
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
   publicPath: '/',
-  outputDir: 'ferry_web',
-  assetsDir: 'static',
+  outputDir: 'web',
+  assetsDir: 'static/web',
   lintOnSave: false, // process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {

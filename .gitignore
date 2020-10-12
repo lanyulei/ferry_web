@@ -2,8 +2,8 @@
 node_modules/
 dist/
 dist.tar.gz
-ferry_web/
-ferry_web.tar.gz
+web/
+web.tar.gz
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
