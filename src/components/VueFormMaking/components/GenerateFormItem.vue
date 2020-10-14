@@ -338,29 +338,31 @@ export default {
   data() {
     return {
       widgetLabelWidth: '',
-      dataModel: this.subformIndex===undefined?this.models[this.widget.model]:this.models[this.subformModel][this.subformIndex][this.widget.model],
+      dataModel: this.subformIndex===undefined?
+        this.models[this.widget.model]:
+        this.models[this.subformModel][this.subformIndex][this.widget.model],
       tableData: []
     }
   },
   watch: {
     dataModel: {
       deep: true,
-      handler(val) {
-        if (val !== undefined) {
+      handler(newValue) {
+        if (newValue !== undefined && newValue !== null) {
           if (this.subformIndex !== undefined) {
-            this.models[this.subformModel][this.subformIndex][this.widget.model] = val
+            this.models[this.subformModel][this.subformIndex][this.widget.model] = newValue
             this.$emit('update:models', {
               ...this.models,
               [this.subformModel]: this.models[this.subformModel]
             })
-            this.$emit('input-change', val, this.widget.model, this.subformIndex)
+            // this.$emit('input-change', val, this.widget.model, this.subformIndex)
           } else {
-            this.models[this.widget.model] = val
+            this.models[this.widget.model] = newValue
             this.$emit('update:models', {
               ...this.models,
-              [this.widget.model]: val
+              [this.widget.model]: newValue
             })
-            this.$emit('input-change', val, this.widget.model)
+            // this.$emit('input-change', val, this.widget.model)
           }
         }
       }
@@ -368,11 +370,14 @@ export default {
     models: {
       deep: true,
       handler(val) {
-        if (this.subformIndex === undefined) {
-          this.dataModel = val[this.widget.model]
-        } else {
-          this.dataModel = val[this.subformModel][this.subformIndex][this.widget.model]
+        if (val.status === undefined && val.status === null) {
+          if (this.subformIndex === undefined) {
+            this.dataModel = val[this.widget.model]
+          } else {
+            this.dataModel = val[this.subformModel][this.subformIndex][this.widget.model]
+          }
         }
+        delete this.models.status
       }
     }
   },

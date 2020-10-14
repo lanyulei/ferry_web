@@ -240,11 +240,20 @@ export default {
             this.nodeStepList.push(this.processStructureValue.nodes[i])
           }
         }
+
+        // 如果回退到初始节点则可编辑。
+        if (this.activeIndex === 0 && this.currentNode.clazz === 'start') {
+          this.currentNode.writeTpls = []
+          for (var tplTmp of this.processStructureValue.tpls) {
+            this.currentNode.writeTpls.push(tplTmp.form_structure.id)
+          }
+        }
         this.getAlertMessage()
       })
     },
     submitAction(item) {
       var promiseList = []
+      this.tpls = []
       for (var tpl of this.processStructureValue.tpls) {
         this.tpls.push({
           tplDataId: tpl.id,
