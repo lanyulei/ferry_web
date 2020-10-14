@@ -66,10 +66,10 @@
                 width="50"
               >
                 <template slot="header">
-                  <i style="font-size: 25px; color: #409EFF;cursor:pointer;" class="el-icon-circle-plus" @click="addCol(item)" />
+                  <i style="font-size: 25px; color: #409EFF;cursor:pointer;" class="el-icon-circle-plus" @click="addSubformCol(item)" />
                 </template>
                 <template slot-scope="scope">
-                  <i style="font-size: 25px; color: red" class="el-icon-remove" @click="delCol(item, scope.$index)" />
+                  <i style="font-size: 25px; color: red" class="el-icon-remove" @click="delSubformCol(item, scope.$index)" />
                 </template>
 
               </el-table-column>
@@ -160,17 +160,23 @@ export default {
   mounted() {
   },
   methods: {
-    addCol(item) {
+    addSubformCol(item) {
       var subformFields = {}
       for (var c of item.columns) {
         for (var l of c.list) {
-          subformFields[l.model] = ""
+          if (l.options !== null && l.options !== undefined) {
+            subformFields[l.model] = l.options.defaultValue !== undefined && l.options.defaultValue !== null ? l.options.defaultValue: ""
+          } else {
+            subformFields[l.model] = ""
+          }
         }
       }
       this.models[item.model].push(subformFields)
+      this.models.status = 1
     },
-    delCol(item, index) {
+    delSubformCol(item, index) {
       this.models[item.model].splice(index, 1)
+      this.models.status = -1
     },
     generateModle(genList) {
       for (let i = 0; i < genList.length; i++) {
