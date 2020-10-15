@@ -154,7 +154,8 @@ export default {
             'form_data': []
           }
           // 绑定流程任务
-          this.ruleForm.tasks = this.processStructureValue.process.tasks === undefined ? [] : this.processStructureValue.process.tasks
+          console.log(this.processStructureValue.process)
+          this.ruleForm.tasks = this.processStructureValue.process.task === undefined ? [] : this.processStructureValue.process.task
           // 追加节点任务
           if (this.processStructureValue.nodes[this.active].task !== undefined && this.processStructureValue.nodes[this.active].task.length > 0) {
             for (var task of this.processStructureValue.nodes[this.active].task) {
