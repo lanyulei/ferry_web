@@ -19,7 +19,7 @@
         <div class="previewEditorDiv" v-html="dataModel" />
       </template>
 
-      <template v-if="widget.type=='file'">
+      <template v-else-if="widget.type=='file'">
         <div v-for="(uploadUrlItem, uploadUrlIndex) of dataModel" :key="uploadUrlIndex">
           <i style="color: #909399;" class="el-icon-document" />
           <a :href="uploadUrlItem.url" target="_blank">{{ uploadUrlItem.name }}</a>
