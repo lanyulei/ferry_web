@@ -32,6 +32,9 @@
               currentNode.hideTpls.indexOf(tplItem.id)===-1"
             :key="tplIndex"
             :ref="'generateForm-'+tplItem.id"
+            :preview="currentNode.hideTpls===undefined ||
+              currentNode.hideTpls===null ||
+              currentNode.hideTpls.indexOf(tplItem.id)===-1?false:true"
             :remote="remoteFunc"
             :data="tplItem.form_structure"
             :disabled="currentNode.readonlyTpls===undefined ||
@@ -154,7 +157,6 @@ export default {
             'form_data': []
           }
           // 绑定流程任务
-          console.log(this.processStructureValue.process)
           this.ruleForm.tasks = this.processStructureValue.process.task === undefined ? [] : this.processStructureValue.process.task
           // 追加节点任务
           if (this.processStructureValue.nodes[this.active].task !== undefined && this.processStructureValue.nodes[this.active].task.length > 0) {

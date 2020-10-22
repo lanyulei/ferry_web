@@ -197,22 +197,24 @@ export default {
             }
           }
 
-          if (this.rules[genList[i].model]) {
-            this.rules[genList[i].model] = [...this.rules[genList[i].model], ...genList[i].rules.map(item => {
-              if (item.pattern) {
-                return { ...item, pattern: eval(item.pattern) }
-              } else {
-                return { ...item }
-              }
-            })]
-          } else {
-            this.rules[genList[i].model] = [...genList[i].rules.map(item => {
-              if (item.pattern) {
-                return { ...item, pattern: eval(item.pattern) }
-              } else {
-                return { ...item }
-              }
-            })]
+          if (!this.preview) {
+            if (this.rules[genList[i].model]) {
+              this.rules[genList[i].model] = [...this.rules[genList[i].model], ...genList[i].rules.map(item => {
+                if (item.pattern) {
+                  return { ...item, pattern: eval(item.pattern) }
+                } else {
+                  return { ...item }
+                }
+              })]
+            } else {
+              this.rules[genList[i].model] = [...genList[i].rules.map(item => {
+                if (item.pattern) {
+                  return { ...item, pattern: eval(item.pattern) }
+                } else {
+                  return { ...item }
+                }
+              })]
+            }
           }
         }
       }

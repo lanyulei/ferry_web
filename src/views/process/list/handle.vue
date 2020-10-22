@@ -67,9 +67,12 @@
               currentNode.hideTpls.indexOf(tplItem.form_structure.id)===-1"
             :key="tplIndex"
             :ref="'generateForm-'+tplItem.id"
-            :preview="currentNode.writeTpls===undefined ||
+            :preview="(currentNode.hideTpls!==undefined &&
+              currentNode.hideTpls!==null &&
+              currentNode.hideTpls.indexOf(tplItem.form_structure.id)!==-1) ||
+              (currentNode.writeTpls===undefined ||
               currentNode.writeTpls===null ||
-              currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1?true:false"
+              currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1)?true:false"
             :remote="remoteFunc"
             :value="tplItem.form_data"
             :data="tplItem.form_structure"
