@@ -265,7 +265,7 @@
       </template>
 
       <template v-if="widget.type=='file'">
-        <FileUpload :element="widget" />
+        <FileUpload :element="widget" :data-model="dataModel" @fileList="fileList" />
       </template>
 
       <template v-if="widget.type === 'editor'">
@@ -414,6 +414,9 @@ export default {
     }
   },
   methods: {
+    fileList(files) {
+      this.dataModel = files
+    }
   }
 }
 </script>
