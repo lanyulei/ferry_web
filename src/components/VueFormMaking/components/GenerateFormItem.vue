@@ -265,25 +265,7 @@
       </template>
 
       <template v-if="widget.type=='file'">
-        <el-upload
-          :action="widget.options.action"
-          :on-success="handleSuccess"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="widget.options.length"
-          :headers="widget.options.headers"
-          :on-exceed="handleExceed"
-          :file-list="widget.options.defaultValue"
-          :disabled="widget.options.disabled"
-          :style="{'width': widget.options.width}"
-        >
-          <div v-if="!preview">
-            <el-button size="small" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">{{ widget.options.tip }}</div>
-          </div>
-        </el-upload>
+        <FileUpload :element="widget" :data-model="dataModel" @fileList="fileList" />
       </template>
 
       <template v-if="widget.type === 'editor'">
@@ -343,17 +325,18 @@
 
 <script>
 import FmUpload from './Upload'
+import FileUpload from './Upload/file'
 
 export default {
   name: 'GenetateFormItem',
   components: {
-    FmUpload
+    FmUpload,
+    FileUpload
   },
   /* eslint-disable */
   props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel', 'subformIndex', 'subformModel'],
   data() {
     return {
-      currentRemoveUid: '',
       widgetLabelWidth: '',
       dataModel: this.subformIndex===undefined?
         this.models[this.widget.model]:
@@ -387,7 +370,7 @@ export default {
     models: {
       deep: true,
       handler(val) {
-        if (val.status === undefined || val.status === null) {
+        if (val.status === undefined && val.status === null) {
           if (this.subformIndex === undefined) {
             this.dataModel = val[this.widget.model]
           } else {
@@ -431,24 +414,8 @@ export default {
     }
   },
   methods: {
-    handleRemove(file, fileList) {
-      this.widget.options.defaultValue = fileList
-    },
-    handlePreview(file) {
-      window.open(file.url, '_blank')
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(`最多允许上传 ${this.widget.options.length} 个文件。`)
-    },
-    beforeRemove(file, fileList) {
-      this.currentRemoveUid = file.uid
-      return this.$confirm(`确定要移除 ${file.name}？`)
-    },
-    handleSuccess(response, file, fileList) {
-      // this.widget.options.defaultValue.push({
-      //   name: file.name,
-      //   url: response.data
-      // })
+    fileList(files) {
+      this.dataModel = files
     }
   }
 }

@@ -10,7 +10,7 @@
       :limit="element.options.length"
       :headers="element.options.headers"
       :on-exceed="handleExceed"
-      :file-list="element.options.defaultValue"
+      :file-list="dataModel"
       :disabled="element.options.disabled"
       :style="{'width': element.options.width}"
     >
@@ -26,15 +26,15 @@
 export default {
   name: 'FileUpload',
   // eslint-disable-next-line vue/require-prop-types
-  props: ['element', 'preview'],
+  props: ['element', 'preview', 'dataModel'],
   data() {
     return {
-      currentRemoveUid: ''
+      fileListTmp: []
     }
   },
   methods: {
     handleRemove(file, fileList) {
-      this.element.options.defaultValue = fileList
+      this.$emit('fileList', fileList)
     },
     handlePreview(file) {
       window.open(file.url, '_blank')
@@ -43,14 +43,15 @@ export default {
       this.$message.warning(`最多允许上传 ${this.element.options.length} 个文件。`)
     },
     beforeRemove(file, fileList) {
-      this.currentRemoveUid = file.uid
       return this.$confirm(`确定要移除 ${file.name}？`)
     },
     handleSuccess(response, file, fileList) {
-      this.element.options.defaultValue.push({
+      this.fileListTmp.push({
+        uid: file.uid,
         name: file.name,
         url: response.data
       })
+      this.$emit('fileList', this.fileListTmp)
     }
   }
 }
