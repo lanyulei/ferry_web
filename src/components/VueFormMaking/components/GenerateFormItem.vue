@@ -73,8 +73,8 @@
         />
       </template>
       <template v-else>
-        <div>
-          {{ dataModel }}
+        <div v-html="dataModel">
+          <!-- {{ dataModel }} -->
         </div>
       </template>
     </template>

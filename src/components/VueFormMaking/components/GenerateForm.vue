@@ -215,6 +215,10 @@ export default {
                 }
               })]
             }
+          } else {
+            for (const key in this.models) {
+              this.models[key] = this.models[key].replace(/\n/g, "<br />")
+            }
           }
         }
       }
