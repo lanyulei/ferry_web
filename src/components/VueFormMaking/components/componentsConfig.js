@@ -321,7 +321,7 @@ export const advanceComponents = [
       headers: {},
       // isQiniu: false,
       tip: '', // 提示说明
-      action: 'https://jsonplaceholder.typicode.com/photos/',
+      action: 'http://ipaddress:port/api/v1/public/uploadFile',
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true
