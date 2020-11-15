@@ -199,6 +199,7 @@ import { templateList } from '@/api/process/admin/template'
 import { taskList } from '@/api/process/admin/task'
 import { listUser } from '@/api/system/sysuser'
 import { listRole } from '@/api/system/role'
+import { getOrdinaryDeptList } from '@/api/system/dept'
 
 export default {
   name: 'Process',
@@ -307,14 +308,12 @@ export default {
       })
     },
     // 获取部门
-    // getDepartments() {
-    //   departmentList({
-    //     page: 1,
-    //     per_page: 99999
-    //   }).then(response => {
-    //     this.departments = response.data.data
-    //   })
-    // },
+    getDepartments() {
+      getOrdinaryDeptList().then(response => {
+        this.departments = response.data
+        console.log(this.departments)
+      })
+    },
     /** 查询流程列表 */
     getList() {
       this.loading = true
@@ -333,6 +332,7 @@ export default {
       this.getTemplates()
       this.getUsers()
       this.getRoles()
+      this.getDepartments()
       this.getTaskList()
     },
     handleCreate() {
@@ -359,6 +359,7 @@ export default {
       this.dialogProcessVisibleName = 2
       this.getProcessInitData()
       this.wfdDesignRefresh = false
+      this.open = true
       processDetails({
         processId: row.id
       }).then(response => {
@@ -373,7 +374,6 @@ export default {
           icon: response.data.icon,
           remarks: response.data.remarks
         }
-        this.open = true
         this.wfdDesignRefresh = false
         this.$nextTick(() => {
           this.wfdDesignRefresh = true
