@@ -24,12 +24,12 @@
           :placeholder="i18n['handleNode.assignType.placeholder']"
           :value="model.assignType"
           :disabled="readOnly"
-          @change="(e) => { onChange('assignValue', []);onChange('assignType', e) }"
+          @change="(e) => { onChange('assignValue', []); onChange('assignType', e); assignmentType() }"
         >
           <el-option key="person" value="person" :label="i18n['handleNode.assignType.person']" />
           <el-option key="role" value="role" :label="i18n['userTask.assignType.role']" />
-          <!-- <el-option key="persongroup" value="persongroup" :label="i18n['handleNode.assignType.persongroup']"/>
-                    <el-option key="department" value="department" :label="i18n['handleNode.assignType.department']"/> -->
+          <!-- <el-option key="persongroup" value="persongroup" :label="i18n['handleNode.assignType.persongroup']"/> -->
+          <el-option key="department" value="department" :label="i18n['handleNode.assignType.department']" />
           <el-option key="variable" value="variable" :label="i18n['handleNode.assignType.variable']" />
         </el-select>
       </div>
@@ -75,22 +75,17 @@
         </el-select>
       </div> -->
       <div v-else-if="model.assignType === 'department'" class="panelRow">
-        <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.department.title'] }}：</div>
+        <div><span style="color: red">*</span> {{ i18n['userTask.assignType.department.title'] }}：</div>
         <el-select
           style="width:90%; font-size:12px"
-          :placeholder="i18n['handleNode.assignType.department.placeholder']"
+          :placeholder="i18n['userTask.assignType.department.placeholder']"
           :value="model.assignValue"
           :disabled="readOnly"
           :multiple="true"
           :filterable="true"
           @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
-          <el-option
-            v-for="department in departments"
-            :key="department.id"
-            :label="department.name===''?department.nickname:department.name"
-            :value="department.id"
-          />
+          <el-option v-for="department in departments" :key="department.deptId" :label="department.deptName" :value="department.deptId" />
         </el-select>
       </div>
       <div v-else-if="model.assignType === 'variable'" class="panelRow">
@@ -109,14 +104,14 @@
       </div>
       <div class="panelRow">
         <el-checkbox
-          :disabled="
-            model.assignValue===undefined||
-              model.assignValue===null||
-              model.assignValue.length <= 1||
-              model.activeOrder||
-              readOnly"
-          :value="!!model.isCounterSign"
-          @change="(value) => onChange('isCounterSign', value)"
+          :disabled="model.assignType !== 'role' && model.assignType !== 'department' && (
+            model.assignValue===undefined ||
+            model.assignValue===null ||
+            model.assignValue.length <= 1 ||
+            model.activeOrder ||
+            readOnly)"
+          :value="model.isCounterSign"
+          @change="(e) => { onChange('isCounterSign', e); initCounterSign(e) }"
         >{{ i18n['handleNode.counterSign'] }}</el-checkbox>
         <el-checkbox
           :disabled="
@@ -125,15 +120,18 @@
               model.assignValue.length <= 1||
               model.isCounterSign||
               readOnly"
-          :value="!!model.activeOrder"
+          :value="model.activeOrder"
           @change="(value) => onChange('activeOrder', value)"
         >{{ i18n['handleNode.activeOrder'] }}</el-checkbox>
-        <!-- <el-checkbox @change="(value) => onChange('isEndorsement', value)"
-                             :disabled="readOnly"
-                             :value="!!model.isEndorsement">{{i18n['handleNode.endorsement']}}</el-checkbox>
-                <el-checkbox @change="(value) => onChange('isTaskOrder', value)"
-                             :disabled="readOnly"
-                             :value="!!model.isTaskOrder">{{i18n['handleNode.taskOrder']}}</el-checkbox> -->
+        <el-checkbox
+          v-if="(model.assignType === 'role' || model.assignType === 'department') &&
+            model.assignValue!==undefined &&
+            model.assignValue!==null &&
+            model.assignValue.length >= 1 &&
+            model.isCounterSign"
+          :value="model.fullHandle"
+          @change="(value) => onChange('fullHandle', value)"
+        >{{ i18n['userTask.fullHandle'] }}</el-checkbox>
       </div>
       <NodeDetail
         :model="model"
@@ -205,7 +203,8 @@ export default {
       }, {
         value: 2,
         label: '创建者负责人'
-      }]
+      }],
+      roleList: []
     }
   },
   methods: {
@@ -214,6 +213,14 @@ export default {
         this.onChange('activeOrder', false)
         this.onChange('isCounterSign', false)
       }
+    },
+    initCounterSign(e) {
+      if (!e) {
+        this.onChange('fullHandle', false)
+      }
+    },
+    assignmentType() {
+      this.onChange('isCounterSign', false)
     }
   }
 }
