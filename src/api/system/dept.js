@@ -8,6 +8,14 @@ export function getDeptList(query) {
   })
 }
 
+export function getOrdinaryDeptList(params) {
+  return request({
+    url: '/api/v1/ordinaryDeptList',
+    method: 'get',
+    params
+  })
+}
+
 // 查询部门详细
 export function getDept(deptId) {
   return request({

@@ -24,12 +24,12 @@
           :placeholder="i18n['userTask.assignType.placeholder']"
           :value="model.assignType"
           :disabled="readOnly"
-          @change="(e) => { onChange('assignValue', []);onChange('assignType', e) }"
+          @change="(e) => { onChange('assignValue', []); onChange('assignType', e); assignmentType() }"
         >
           <el-option key="person" value="person" :label="i18n['userTask.assignType.person']" />
           <el-option key="role" value="role" :label="i18n['userTask.assignType.role']" />
-          <!-- <el-option key="persongroup" value="persongroup" :label="i18n['userTask.assignType.persongroup']"/>
-                    <el-option key="department" value="department" :label="i18n['userTask.assignType.department']"/> -->
+          <!-- <el-option key="persongroup" value="persongroup" :label="i18n['userTask.assignType.persongroup']" /> -->
+          <el-option key="department" value="department" :label="i18n['userTask.assignType.department']" />
           <el-option key="variable" value="variable" :label="i18n['userTask.assignType.variable']" />
         </el-select>
       </div>
@@ -74,7 +74,7 @@
           <el-option v-for="group in groups" :key="group.id" :label="group.nickname===''?group.name:group.nickname" :value="group.id" />
         </el-select>
       </div> -->
-      <!-- <div v-else-if="model.assignType === 'department'" class="panelRow">
+      <div v-else-if="model.assignType === 'department'" class="panelRow">
         <div><span style="color: red">*</span> {{ i18n['userTask.assignType.department.title'] }}：</div>
         <el-select
           style="width:90%; font-size:12px"
@@ -85,9 +85,9 @@
           :filterable="true"
           @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
-          <el-option v-for="department in departments" :key="department.id" :label="department.name===''?department.nickname:department.name" :value="department.id" />
+          <el-option v-for="department in departments" :key="department.deptId" :label="department.deptName" :value="department.deptId" />
         </el-select>
-      </div> -->
+      </div>
       <div v-else-if="model.assignType === 'variable'" class="panelRow">
         <div><span style="color: red">*</span> {{ i18n['userTask.assignType.variable.title'] }}：</div>
         <el-select
@@ -220,6 +220,9 @@ export default {
       if (!e) {
         this.onChange('fullHandle', false)
       }
+    },
+    assignmentType() {
+      this.onChange('isCounterSign', false)
     }
   }
 }
