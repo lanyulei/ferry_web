@@ -27,6 +27,7 @@
           @change="(e) => { onChange('assignValue', []);onChange('assignType', e) }"
         >
           <el-option key="person" value="person" :label="i18n['handleNode.assignType.person']" />
+          <el-option key="role" value="role" :label="i18n['userTask.assignType.role']" />
           <!-- <el-option key="persongroup" value="persongroup" :label="i18n['handleNode.assignType.persongroup']"/>
                     <el-option key="department" value="department" :label="i18n['handleNode.assignType.department']"/> -->
           <el-option key="variable" value="variable" :label="i18n['handleNode.assignType.variable']" />
@@ -44,6 +45,19 @@
           @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="user in users" :key="user.userId" :label="user.nickName===''?user.username:user.nickName" :value="user.userId" />
+        </el-select>
+      </div>
+      <div v-else-if="model.assignType === 'role'" class="panelRow">
+        <div><span style="color: red">*</span> {{ i18n['userTask.assignType.role.title'] }}：</div>
+        <el-select
+          v-model.number="model.assignValue"
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.role.placeholder']"
+          :disabled="readOnly"
+          :multiple="true"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
+        >
+          <el-option v-for="(item, index) in roles" :key="index" :label="item.roleName" :value="item.roleId" />
         </el-select>
       </div>
       <!-- <div v-else-if="model.assignType === 'persongroup'" class="panelRow">
@@ -147,6 +161,10 @@ export default {
       default: () => ({})
     },
     users: {
+      type: Array,
+      default: () => ([])
+    },
+    roles: {
       type: Array,
       default: () => ([])
     },

@@ -11,6 +11,7 @@
         :model="selectedModel"
         :read-only="mode !== 'edit'"
         :users="users"
+        :roles="roles"
         :groups="groups"
         :departments="departments"
         :tasks="tasks"
@@ -74,6 +75,11 @@ export default {
     },
     // 人员
     users: {
+      type: Array,
+      default: () => ([])
+    },
+    // 角色
+    roles: {
       type: Array,
       default: () => ([])
     },

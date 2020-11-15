@@ -6,6 +6,7 @@
       :on-change="onChange"
       :read-only="readOnly"
       :users="users"
+      :roles="roles"
       :groups="groups"
       :departments="departments"
       :tasks="tasks"
@@ -25,6 +26,7 @@
       :on-change="onChange"
       :read-only="readOnly"
       :users="users"
+      :roles="roles"
       :groups="groups"
       :departments="departments"
       :tasks="tasks"
@@ -111,6 +113,10 @@ export default {
       default: false
     },
     users: {
+      type: Array,
+      default: () => ([])
+    },
+    roles: {
       type: Array,
       default: () => ([])
     },
