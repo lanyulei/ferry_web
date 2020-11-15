@@ -162,6 +162,7 @@
                     v-if="wfdDesignRefresh"
                     ref="wfd"
                     :users="users"
+                    :roles="roles"
                     :departments="departments"
                     :tasks="taskListData"
                     :templates="ruleForm.tpls"
@@ -197,6 +198,7 @@ import { classifyList } from '@/api/process/admin/classify'
 import { templateList } from '@/api/process/admin/template'
 import { taskList } from '@/api/process/admin/task'
 import { listUser } from '@/api/system/sysuser'
+import { listRole } from '@/api/system/role'
 
 export default {
   name: 'Process',
@@ -221,6 +223,7 @@ export default {
       // 查询参数
       structureValue: [],
       users: [],
+      roles: [],
       groups: [],
       departments: [],
       templates: [],
@@ -296,6 +299,13 @@ export default {
         this.users = response.data.list
       })
     },
+    getRoles() {
+      listRole({
+        pageSize: 999999
+      }).then(response => {
+        this.roles = response.data.list
+      })
+    },
     // 获取部门
     // getDepartments() {
     //   departmentList({
@@ -322,6 +332,7 @@ export default {
       this.getClassifyList()
       this.getTemplates()
       this.getUsers()
+      this.getRoles()
       this.getTaskList()
     },
     handleCreate() {

@@ -27,6 +27,7 @@
           @change="(e) => { onChange('assignValue', []);onChange('assignType', e) }"
         >
           <el-option key="person" value="person" :label="i18n['userTask.assignType.person']" />
+          <el-option key="role" value="role" :label="i18n['userTask.assignType.role']" />
           <!-- <el-option key="persongroup" value="persongroup" :label="i18n['userTask.assignType.persongroup']"/>
                     <el-option key="department" value="department" :label="i18n['userTask.assignType.department']"/> -->
           <el-option key="variable" value="variable" :label="i18n['userTask.assignType.variable']" />
@@ -44,6 +45,19 @@
           @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="user in users" :key="user.userId" :label="user.nickName===''?user.username:user.nickName" :value="user.userId" />
+        </el-select>
+      </div>
+      <div v-else-if="model.assignType === 'role'" class="panelRow">
+        <div><span style="color: red">*</span> {{ i18n['userTask.assignType.role.title'] }}：</div>
+        <el-select
+          v-model.number="model.assignValue"
+          style="width:90%; font-size:12px"
+          :placeholder="i18n['userTask.assignType.role.placeholder']"
+          :disabled="readOnly"
+          :multiple="true"
+          @change="(e) => { onChange('assignValue', e); getPersons(e) }"
+        >
+          <el-option v-for="(item, index) in roles" :key="index" :label="item.roleName" :value="item.roleId" />
         </el-select>
       </div>
       <!-- <div v-else-if="model.assignType === 'persongroup'" class="panelRow">
@@ -89,14 +103,14 @@
       </div>
       <div class="panelRow">
         <el-checkbox
-          :disabled="
-            model.assignValue===undefined||
-              model.assignValue===null||
-              model.assignValue.length <= 1||
-              model.activeOrder||
-              readOnly"
+          :disabled="model.assignType !== 'role' && (
+            model.assignValue===undefined ||
+            model.assignValue===null ||
+            model.assignValue.length <= 1 ||
+            model.activeOrder ||
+            readOnly)"
           :value="model.isCounterSign"
-          @change="(value) => onChange('isCounterSign', value)"
+          @change="(e) => { onChange('isCounterSign', e); initCounterSign(e) }"
         >{{ i18n['userTask.counterSign'] }}</el-checkbox>
         <el-checkbox
           :disabled="
@@ -108,6 +122,15 @@
           :value="model.activeOrder"
           @change="(value) => onChange('activeOrder', value)"
         >{{ i18n['userTask.activeOrder'] }}</el-checkbox>
+        <el-checkbox
+          v-if="model.assignType === 'role' &&
+            model.assignValue!==undefined &&
+            model.assignValue!==null &&
+            model.assignValue.length >= 1 &&
+            model.isCounterSign"
+          :value="model.fullHandle"
+          @change="(value) => onChange('fullHandle', value)"
+        >{{ i18n['userTask.fullHandle'] }}</el-checkbox>
         <!-- <el-checkbox @change="(value) => onChange('isEndorsement', value)"
                              :disabled="readOnly"
                              :value="!!model.isEndorsement">{{i18n['userTask.endorsement']}}</el-checkbox> -->
@@ -138,6 +161,10 @@ export default {
       default: () => ({})
     },
     users: {
+      type: Array,
+      default: () => ([])
+    },
+    roles: {
       type: Array,
       default: () => ([])
     },
@@ -178,7 +205,8 @@ export default {
       }, {
         value: 2,
         label: '创建者负责人'
-      }]
+      }],
+      roleList: []
     }
   },
   methods: {
@@ -186,6 +214,11 @@ export default {
       if (e === undefined || e === null || e.length <= 1) {
         this.onChange('activeOrder', false)
         this.onChange('isCounterSign', false)
+      }
+    },
+    initCounterSign(e) {
+      if (!e) {
+        this.onChange('fullHandle', false)
       }
     }
   }
