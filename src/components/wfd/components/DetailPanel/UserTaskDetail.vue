@@ -96,6 +96,7 @@
           :placeholder="i18n['userTask.assignType.variable.placeholder']"
           :disabled="readOnly"
           :multiple="true"
+          :filterable="true"
           @change="(e) => { onChange('assignValue', e); getPersons(e) }"
         >
           <el-option v-for="(item, index) in variableOptions" :key="index" :label="item.label" :value="item.value" />
@@ -103,7 +104,7 @@
       </div>
       <div class="panelRow">
         <el-checkbox
-          :disabled="model.assignType !== 'role' && (
+          :disabled="model.assignType !== 'role' && model.assignType !== 'department' && (
             model.assignValue===undefined ||
             model.assignValue===null ||
             model.assignValue.length <= 1 ||
@@ -123,7 +124,7 @@
           @change="(value) => onChange('activeOrder', value)"
         >{{ i18n['userTask.activeOrder'] }}</el-checkbox>
         <el-checkbox
-          v-if="model.assignType === 'role' &&
+          v-if="(model.assignType === 'role' || model.assignType === 'department') &&
             model.assignValue!==undefined &&
             model.assignValue!==null &&
             model.assignValue.length >= 1 &&
@@ -131,9 +132,6 @@
           :value="model.fullHandle"
           @change="(value) => onChange('fullHandle', value)"
         >{{ i18n['userTask.fullHandle'] }}</el-checkbox>
-        <!-- <el-checkbox @change="(value) => onChange('isEndorsement', value)"
-                             :disabled="readOnly"
-                             :value="!!model.isEndorsement">{{i18n['userTask.endorsement']}}</el-checkbox> -->
       </div>
       <NodeDetail
         :model="model"
