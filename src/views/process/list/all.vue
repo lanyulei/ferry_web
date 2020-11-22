@@ -2,19 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <el-form ref="listQuery" :model="listQuery" :inline="true">
-        <el-form-item label="工单标题">
-          <el-input
-            v-model="listQuery.title"
-            placeholder="请输入工单标题"
-            clearable
-            size="small"
-            style="width: 240px"
-            @keyup.enter.native="getList"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="small" @click="getList">搜索</el-button>
-        </el-form-item>
+        <WorkOrderSearch :genre="'all'" @handleSearch="handleSearch" />
       </el-form>
 
       <el-table v-loading="loading" border :data="ticketList" @selection-change="handleSelectionChange">
@@ -133,7 +121,12 @@
 <script>
 import { workOrderList, unityWorkOrder, inversionWorkOrder, deleteWorkOrder } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
+
+// 搜索
+import WorkOrderSearch from './components/search/index'
+
 export default {
+  components: { WorkOrderSearch },
   data() {
     return {
       users: [],
@@ -179,6 +172,12 @@ export default {
         this.total = response.data.total_count
         this.loading = false
       })
+    },
+    handleSearch(val) {
+      for (var k in val) {
+        this.listQuery[k] = val[k]
+      }
+      this.getList()
     },
     handleView(row) {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
