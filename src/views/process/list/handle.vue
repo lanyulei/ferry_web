@@ -93,9 +93,7 @@
         </div>
         <div class="text item" style="text-align: center;margin-top:18px">
           <div
-            v-if="
-              processStructureValue.workOrder.state.length > 1 &&
-                currentNode.activeOrder"
+            v-if="isActiveProcessing && currentNode.activeOrder"
           >
             <el-button
               v-permisaction="['process:list:handle:active']"
@@ -177,6 +175,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      isActiveProcessing: false,
       tpls: [],
       remarks: '', // 备注信息
       alertMessage: '',
@@ -225,6 +224,7 @@ export default {
         processId: this.$route.query.processId,
         workOrderId: this.$route.query.workOrderId
       }).then(response => {
+        this.isActiveProcessing = false
         this.processStructureValue = response.data
         this.circulationHistoryList = this.processStructureValue.circulationHistory
         // 获取当前展示节点列表
@@ -249,6 +249,14 @@ export default {
           this.currentNode.writeTpls = []
           for (var tplTmp of this.processStructureValue.tpls) {
             this.currentNode.writeTpls.push(tplTmp.form_structure.id)
+          }
+        }
+
+        // 判断是否需要主动处理
+        for (var stateValue of this.processStructureValue.workOrder.state) {
+          if (this.processStructureValue.workOrder.current_state === stateValue.id && stateValue.processor.length > 1) {
+            this.isActiveProcessing = true
+            break
           }
         }
         this.getAlertMessage()
