@@ -59,6 +59,13 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
+              v-permisaction="['process:admin:template:clone']"
+              size="mini"
+              type="text"
+              icon="el-icon-receiving"
+              @click="handleClone(scope.row)"
+            >克隆</el-button>
+            <el-button
               v-permisaction="['process:admin:template:edit']"
               size="mini"
               type="text"
@@ -128,7 +135,8 @@ import {
   createTemplate,
   templateDetails,
   editTemplate,
-  deleteTemplate
+  deleteTemplate,
+  cloneTemplate
 } from '@/api/process/admin/template'
 
 // 表单设计
@@ -235,7 +243,7 @@ export default {
       this.handleSave(this.$refs.makingform.getJSON())
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          createTemplate(this.ruleForm).then(response => {
+          createTemplate(this.ruleForm).then(() => {
             this.getList()
             this.open = false
           })
@@ -246,7 +254,7 @@ export default {
       this.handleSave(this.$refs.makingform.getJSON())
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          editTemplate(this.ruleForm).then(response => {
+          editTemplate(this.ruleForm).then(() => {
             this.getList()
             this.open = false
           })
@@ -289,6 +297,26 @@ export default {
       } else {
         this.ruleForm.form_structure = ''
       }
+    },
+    handleClone(row) {
+      this.$confirm(`确认克隆模版 < ${row.name} > ?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).then(() => {
+        cloneTemplate(row.id).then(() => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '模版已克隆!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
     }
   }
 }
