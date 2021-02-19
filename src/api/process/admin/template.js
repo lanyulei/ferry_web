@@ -44,3 +44,11 @@ export function deleteTemplate(params) {
     params
   })
 }
+
+// 克隆模版
+export function cloneTemplate(id) {
+  return request({
+    url: `/api/v1/tpl/clone/${id}`,
+    method: 'post'
+  })
+}

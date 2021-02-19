@@ -59,6 +59,13 @@
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
+              v-permisaction="['process:admin:manager:clone']"
+              size="mini"
+              type="text"
+              icon="el-icon-receiving"
+              @click="handleClone(scope.row)"
+            >克隆</el-button>
+            <el-button
               v-permisaction="['process:admin:manager:edit']"
               size="mini"
               type="text"
@@ -191,7 +198,8 @@ import {
   createProcess,
   updateProcess,
   processDetails,
-  deleteProcess
+  deleteProcess,
+  cloneProcess
 } from '@/api/process/admin/process'
 
 import { classifyList } from '@/api/process/admin/classify'
@@ -497,6 +505,26 @@ export default {
       } else {
         this.ruleForm.form_structure = ''
       }
+    },
+    handleClone(row) {
+      this.$confirm(`确认克隆流程 < ${row.name} > ?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).then(() => {
+        cloneProcess(row.id).then(() => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '流程已克隆!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
     }
   }
 }
