@@ -57,6 +57,13 @@
               @click="handleView(scope.row)"
             >查看</el-button>
             <el-button
+              v-permisaction="['process:list:myCreate:reopen']"
+              size="mini"
+              type="text"
+              icon="el-icon-refresh-right"
+              @click="handleReopen(scope.row.id)"
+            >重开</el-button>
+            <el-button
               v-if="scope.row.is_end===0"
               v-permisaction="['process:list:upcoming:urge']"
               size="mini"
@@ -80,7 +87,7 @@
 </template>
 
 <script>
-import { workOrderList, urgeWorkOrder } from '@/api/process/work-order'
+import { workOrderList, urgeWorkOrder, reopenWorkOrder } from '@/api/process/work-order'
 
 // 搜索
 import WorkOrderSearch from './components/search/index'
@@ -139,6 +146,21 @@ export default {
     },
     handleView(row) {
       this.$router.push({ name: 'ProcessListHandle', query: { workOrderId: row.id, processId: row.process }})
+    },
+    handleReopen(id) {
+      this.$confirm('根据此工单新建一个新的工单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'info'
+      }).then(() => {
+        reopenWorkOrder(id).then(res => {
+          this.getList()
+          this.$message({
+            type: 'success',
+            message: '成功!'
+          })
+        })
+      })
     },
     handleSelectionChange() {},
     handleUrge(row) {
