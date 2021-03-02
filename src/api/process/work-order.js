@@ -79,3 +79,11 @@ export function deleteWorkOrder(workOrderId) {
     method: 'delete'
   })
 }
+
+// 删除工单
+export function reopenWorkOrder(id) {
+  return request({
+    url: `/api/v1/work-order/reopen/${id}`,
+    method: 'post'
+  })
+}
