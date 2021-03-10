@@ -26,7 +26,7 @@ export default {
       type: Boolean,
       default: true
     },
-    statisticsData: {
+    chartData: {
       type: Object,
       required: true
     }
@@ -37,7 +37,7 @@ export default {
     }
   },
   watch: {
-    statisticsData: {
+    chartData: {
       deep: true,
       handler(val) {
         this.setOptions(val)
@@ -59,54 +59,75 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.statisticsData)
+      this.setOptions(this.chartData)
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
-        title: {
-          text: '最近7天工单统计',
-          textStyle: {
-            fontSize: 15
+        xAxis: {
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          boundaryGap: false,
+          axisTick: {
+            show: false
           }
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          data: ['工单总数', '待办工单', '已完成工单']
         },
         grid: {
-          left: '25',
-          right: '45',
-          bottom: '20',
-          top: '50',
+          left: 10,
+          right: 10,
+          bottom: 20,
+          top: 30,
           containLabel: true
         },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: this.statisticsData.datetime
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          },
+          padding: [5, 10]
         },
         yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: '工单总数',
-            type: 'line',
-            data: this.statisticsData.total
-          },
-          {
-            name: '待办工单',
-            type: 'line',
-            data: this.statisticsData.processing
-          },
-          {
-            name: '已完成工单',
-            type: 'line',
-            data: this.statisticsData.overs
+          axisTick: {
+            show: false
           }
-        ]
+        },
+        legend: {
+          data: ['expected', 'actual']
+        },
+        series: [{
+          name: 'expected', itemStyle: {
+            normal: {
+              color: '#FF005A',
+              lineStyle: {
+                color: '#FF005A',
+                width: 2
+              }
+            }
+          },
+          smooth: true,
+          type: 'line',
+          data: expectedData,
+          animationDuration: 2800,
+          animationEasing: 'cubicInOut'
+        },
+        {
+          name: 'actual',
+          smooth: true,
+          type: 'line',
+          itemStyle: {
+            normal: {
+              color: '#3888fa',
+              lineStyle: {
+                color: '#3888fa',
+                width: 2
+              },
+              areaStyle: {
+                color: '#f3f8ff'
+              }
+            }
+          },
+          data: actualData,
+          animationDuration: 2800,
+          animationEasing: 'quadraticOut'
+        }]
       })
     }
   }
