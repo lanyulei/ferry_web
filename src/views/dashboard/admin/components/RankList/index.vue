@@ -29,7 +29,7 @@ export default {
 
 <style lang="scss" scoped>
   .rank {
-    padding: 0 32px 32px 72px;
+    padding: 0 32px 20px 38px;
     .list {
       margin: 25px 0 0;
       padding: 0;
