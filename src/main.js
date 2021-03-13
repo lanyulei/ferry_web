@@ -23,9 +23,6 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 
-import Viser from 'viser-vue'
-Vue.use(Viser)
-
 import Pagination from '@/components/Pagination'
 
 import VueParticles from 'vue-particles'

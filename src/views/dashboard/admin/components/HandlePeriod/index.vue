@@ -2,15 +2,17 @@
   <div class="rank">
     <h4 class="title">
       {{ title }}
-      <el-tooltip slot="action" class="item" effect="dark" content="最常被提交的流程排行及提交的次数。" placement="top-end">
+      <el-tooltip slot="action" class="item" effect="dark" content="工单的处理耗时，注意：仅统计处理节点，审批节点暂未统计。" placement="top-end">
         <i class="el-icon-warning-outline" style="float: right" />
       </el-tooltip>
     </h4>
     <ul class="list">
       <li v-for="(item, index) in list" :key="index">
         <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
-        <span>{{ item.name }}</span>
-        <span>{{ item.total }}</span>
+        <span>{{ item.nickname }} ({{ item.username }})</span>
+        <span>
+          {{ item.cost_duration > 60 ? item.cost_duration / 60 + ' 分' : item.cost_duration + ' 秒' }}
+        </span>
       </li>
     </ul>
   </div>
@@ -18,7 +20,7 @@
 
 <script>
 export default {
-  name: 'RankList',
+  name: 'HandlePeriod',
   props: {
     title: {
       type: String,

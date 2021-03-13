@@ -1,11 +1,10 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}" />
+  <div style="padding: 0 25px 20px 20px;" :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
 import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
+import resize from '../mixins/resize'
 
 export default {
   mixins: [resize],
@@ -28,6 +27,7 @@ export default {
     },
     statisticsData: {
       type: Object,
+      default: () => ({}),
       required: true
     }
   },
@@ -64,7 +64,6 @@ export default {
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         title: {
-          text: '最近7天工单统计',
           textStyle: {
             fontSize: 15
           }
@@ -73,11 +72,11 @@ export default {
           trigger: 'axis'
         },
         legend: {
-          data: ['工单总数', '待办工单', '已完成工单']
+          data: ['工单总数', '未结束', '已结束']
         },
         grid: {
           left: '25',
-          right: '45',
+          right: '35',
           bottom: '20',
           top: '50',
           containLabel: true
@@ -97,12 +96,12 @@ export default {
             data: this.statisticsData.total
           },
           {
-            name: '待办工单',
+            name: '未结束',
             type: 'line',
             data: this.statisticsData.processing
           },
           {
-            name: '已完成工单',
+            name: '已结束',
             type: 'line',
             data: this.statisticsData.overs
           }
