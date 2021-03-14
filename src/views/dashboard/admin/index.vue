@@ -31,6 +31,20 @@
       </el-col>
     </el-row>
 
+    <el-card :bordered="false" :body-style="{padding: '5'}" :style="{ marginBottom: '12px', textAlign: 'center' }">
+      <el-date-picker
+        v-model="querys"
+        type="daterange"
+        align="right"
+        unlink-panels
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :picker-options="pickerOptions"
+        @change="timeScreening"
+      />
+    </el-card>
+
     <el-card :bordered="false" :body-style="{padding: '0'}" :style="{ marginBottom: '12px' }">
       <div class="salesCard">
         <div>
@@ -90,7 +104,36 @@ export default {
         count: {}
       },
       rankList: [],
-      submitData: []
+      submitData: [],
+      querys: '',
+      queryList: {},
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
+      }
     }
   },
   created() {
@@ -98,9 +141,17 @@ export default {
   },
   methods: {
     getInitData() {
-      initData().then(response => {
+      initData(this.queryList).then(response => {
         this.dashboardValue = response.data
       })
+    },
+    timeScreening() {
+      console.log(this.querys)
+      if (this.querys.length > 1) {
+        this.queryList.start_time = this.querys[0]
+        this.queryList.end_time = this.querys[1]
+        this.getInitData()
+      }
     }
   }
 }
