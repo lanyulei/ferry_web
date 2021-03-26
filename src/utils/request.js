@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Notification, MessageBox, Message } from 'element-ui'
+import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -74,16 +74,11 @@ service.interceptors.response.use(
         location.reload() // 为了重新实例化vue-router对象 避免bug
       })
       return false
-    } else if (code === 400 || code === 403) {
+    } else if (code === 400 || code === 403 || code !== 200) {
       Message({
         message: response.data.msg,
         type: 'error',
         duration: 5 * 1000
-      })
-      return Promise.reject('error')
-    } else if (code !== 200) {
-      Notification.error({
-        title: response.data.msg
       })
       return Promise.reject('error')
     } else {
