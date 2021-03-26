@@ -78,8 +78,10 @@ const actions = {
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
         resolve(response)
-      }).catch(error => {
-        reject(error)
+      }).catch(() => {
+        commit('SET_TOKEN', '')
+        setToken('')
+        router.push({ path: '/' })
       })
     })
   },
