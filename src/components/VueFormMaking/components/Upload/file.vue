@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     handleRemove(file, fileList) {
+      this.fileListTmp = fileList
       this.$emit('fileList', fileList)
     },
     handlePreview(file) {
