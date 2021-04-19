@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-card class="box-card">
       <div class="text item">
-        <el-steps :active="activeIndex" finish-status="success">
+        <el-steps v-if="currentNode.clazz !== undefined && currentNode.clazz !== null && currentNode.clazz !== ''" :active="activeIndex" finish-status="success">
           <template v-for="(item, index) in nodeStepList">
             <el-step
               v-if="item.isHideNode === false ||
@@ -14,6 +14,13 @@
             />
           </template>
         </el-steps>
+        <div v-else>
+          <el-alert
+            show-icon
+            title="未找到当前工单流程信息，请确认当前工单绑定的流程是否存在。"
+            type="warning"
+          />
+        </div>
       </div>
     </el-card>
 
@@ -175,6 +182,10 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      currentNode: {
+        hideTpls: null,
+        writeTpls: null
+      },
       isActiveProcessing: false,
       tpls: [],
       remarks: '', // 备注信息
