@@ -1,5 +1,6 @@
 <template>
   <el-form-item
+    v-if="showStatus"
     :label-width="isLabel===false||!widget.options.labelWidthStatus?'0px': widgetLabelWidth + 'px'"
     :label="isLabel===false||widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
     :prop="widget.model"
@@ -337,6 +338,7 @@ export default {
   props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel', 'subformIndex', 'subformModel'],
   data() {
     return {
+      showStatus: true,
       widgetLabelWidth: '',
       dataModel: this.subformIndex===undefined?
         this.models[this.widget.model]:
@@ -378,6 +380,7 @@ export default {
           }
         }
         delete this.models.status
+        this.handleDisplayVerifiy()
       }
     }
   },
@@ -412,10 +415,37 @@ export default {
     } else {
       this.widgetLabelWidth = this.data.config.labelWidth
     }
+
+    this.handleDisplayVerifiy()
   },
   methods: {
     fileList(files) {
       this.dataModel = files
+    },
+    handleDisplayVerifiy() {
+      if (Object.keys(this.widget.options).indexOf('displayVerifiy')>=0) {
+        if (this.widget.options.displayVerifiy.type !== 'hide') {
+          var c = 0
+          for (var v of this.widget.options.displayVerifiy.list) {
+            if (this.models[v.model].toString() === v.value) {
+              c++
+            }
+          }
+          if (this.widget.options.displayVerifiy.type === 'and') {
+            if (c !== this.widget.options.displayVerifiy.list.length) {
+              this.showStatus = false
+            } else {
+              this.showStatus = true
+            }
+          } else if (this.widget.options.displayVerifiy.type === 'or')  {
+            if (c === 0) {
+              this.showStatus = false
+            } else {
+              this.showStatus = true
+            }
+          }
+        }
+      }
     }
   }
 }
