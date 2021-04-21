@@ -177,7 +177,10 @@ export default {
         validatorRequired: '必须填写',
         validatorType: '格式不正确',
         validatorPattern: '格式不匹配',
-        showAllLevels: '完整路径'
+        showAllLevels: '完整路径',
+        displayVerifiy: '显示校验',
+        displayVerifiyPlaceholderModel: '请输入字段标识',
+        displayVerifiyPlaceholderValue: '请输入字段值'
       }
     },
     upload: {

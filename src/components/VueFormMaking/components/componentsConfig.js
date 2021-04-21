@@ -13,7 +13,14 @@ export const basicComponents = [
       showPassword: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -28,7 +35,14 @@ export const basicComponents = [
       placeholder: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -45,7 +59,14 @@ export const basicComponents = [
       controlsPosition: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -81,7 +102,14 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -114,7 +142,14 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -172,7 +207,14 @@ export const basicComponents = [
       required: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -185,7 +227,14 @@ export const basicComponents = [
       required: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -220,7 +269,14 @@ export const basicComponents = [
       remoteFunc: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -232,7 +288,14 @@ export const basicComponents = [
       disabled: false,
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -250,7 +313,14 @@ export const basicComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -265,7 +335,14 @@ export const basicComponents = [
       labelWidthStatus: true,
       customClass: '',
       labelWidth: 100,
-      labelWidthDisabled: false
+      labelWidthDisabled: false,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   }
 ]
@@ -278,7 +355,14 @@ export const advanceComponents = [
       defaultType: 'String',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -304,7 +388,14 @@ export const advanceComponents = [
       action: 'https://jsonplaceholder.typicode.com/photos/',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -324,7 +415,14 @@ export const advanceComponents = [
       action: 'http://ipaddress:port/api/v1/public/uploadFile',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -335,7 +433,14 @@ export const advanceComponents = [
       width: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -380,7 +485,14 @@ export const advanceComponents = [
       remoteFunc: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   },
   {
@@ -399,7 +511,14 @@ export const advanceComponents = [
       align: 'top',
       labelWidth: 100,
       labelWidthDisabled: false,
-      labelWidthStatus: true
+      labelWidthStatus: true,
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   }
 ]
@@ -434,7 +553,14 @@ export const layoutComponents = [
       font_weight: '500', // 粗体
       font_family: '', // 字体属性
       direction: 'horizontal', // horizontal / vertical 设置分割线方向
-      content_position: 'center' // left / right / center 设置分割线文案的位置
+      content_position: 'center', // left / right / center 设置分割线文案的位置
+      displayVerifiy: {
+        type: 'hide',
+        list: [{
+          model: '字段标识',
+          value: '字段值'
+        }]
+      }
     }
   }
 ]

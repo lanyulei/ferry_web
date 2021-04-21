@@ -476,6 +476,24 @@
           </div>
         </el-form-item>
       </template>
+      <el-form-item v-if="Object.keys(data.options).indexOf('displayVerifiy')>=0" :label="$t('fm.config.widget.displayVerifiy')">
+        <el-radio-group v-model="data.options.displayVerifiy.type">
+          <el-radio label="hide">不校验</el-radio>
+          <el-radio label="and">与</el-radio>
+          <el-radio label="or">或</el-radio>
+        </el-radio-group>
+        <div v-if="data.options.displayVerifiy.type !== 'hide'">
+          <template v-for="(item, index) in data.options.displayVerifiy.list">
+            <div :key="item.model">
+              <el-input v-model="item.model" size="mini" :placeholder="$t('fm.config.widget.displayVerifiyPlaceholderModel')" />
+              <el-input v-model="item.value" size="mini" :placeholder="$t('fm.config.widget.displayVerifiyPlaceholderValue')" />
+              <el-button v-if="index > 0" type="text" icon="el-icon-remove-outline" @click="delDisplayVerifiy(index)">删  除</el-button>
+              <hr v-if="data.options.displayVerifiy.list.length > 1" style="background-color: #dcdfe6; border:none; height:1px;">
+            </div>
+          </template>
+          <el-button type="text" icon="el-icon-circle-plus-outline" @click="addDisplayVerifiy">新  增</el-button>
+        </div>
+      </el-form-item>
     </el-form>
     <el-dialog
       title="提示"
@@ -589,6 +607,15 @@ export default {
     this.handleInitHeaders()
   },
   methods: {
+    addDisplayVerifiy() {
+      this.data.options.displayVerifiy.list.push({
+        model: (new Date()).valueOf(),
+        value: '字段值'
+      })
+    },
+    delDisplayVerifiy(index) {
+      this.data.options.displayVerifiy.list.splice(index, 1)
+    },
     // 级联选择器
     handleAddCascaderTopDialog() {
       this.selectTreeData = "top"
