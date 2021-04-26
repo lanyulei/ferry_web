@@ -189,3 +189,17 @@ aside {
 .multiselect--active {
   z-index: 1000 !important;
 }
+
+// 适用于所有表格table
+table,tbody,thead {
+  width: 100% !important;
+}
+colgroup {
+  position: absolute;
+  width: 100% !important;
+  display: flex;
+}
+col {
+  flex: 1;
+  text-align: center;
+}
