@@ -47,7 +47,7 @@
           </el-form-item>
         </template>
         <!-- 子表单 -->
-        <template v-if="item.type === 'subform'">
+        <template v-else-if="item.type === 'subform'">
           <el-form-item
             :key="item.key"
             :label-width="!item.options.labelWidthStatus?'0px': item.options.labelWidth + 'px'"
