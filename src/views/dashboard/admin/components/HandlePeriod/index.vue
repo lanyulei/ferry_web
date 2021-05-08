@@ -11,7 +11,7 @@
         <span :class="index < 3 ? 'active' : null">{{ index + 1 }}</span>
         <span>{{ item.nickname }} ({{ item.username }})</span>
         <span>
-          {{ item.cost_duration > 60 ? item.cost_duration / 60 + ' 分' : item.cost_duration + ' 秒' }}
+          {{ item.cost_duration > 60 ? Number((item.cost_duration / 60).toString().match(/^\d+(?:\.\d{0,2})?/)) + ' 分' : item.cost_duration + ' 秒' }}
         </span>
       </li>
     </ul>
