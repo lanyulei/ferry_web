@@ -31,9 +31,19 @@
 
 演示demo: [http://fdevops.com:8001/#/dashboard](http://fdevops.com:8001/#/dashboard)
 
-账号密码：admin/123456
+```
+账号：admin
+密码：123456
+
+演示demo登陆需要取消ldap验证，就是登陆页面取消ldap的打勾。
+```
 
 文档: [https://www.fdevops.com/docs/ferry](https://www.fdevops.com/docs/ferry-tutorial-document/introduction)
+
+视频教程（由群内好友<稳定>提供，非常感谢。）：
+
+* ferry工单系统需要的软件准备 https://www.bilibili.com/video/BV1sA411s7jE
+* ferry源代码下载后第一次运行 https://www.bilibili.com/video/BV1oy4y1v7LR
 
 官网：[http://ferry.fdevops.com](http://ferry.fdevops.com)
 
@@ -69,7 +79,17 @@
 <ul><li>用户、角色、岗位的增删查改，批量删除，多条件搜索</li><li>角色、岗位数据导出Excel</li><li>重置用户密码</li><li>维护个人信息，上传管理头像，修改当前账户密码</li><li>部门的增删查改</li><li>菜单目录、跳转、按钮及API接口的增删查改</li><li>登陆日志管理</li><li>左菜单权限控制</li><li>页面按钮权限控制</li><li>API接口权限控制</li></ul>
 <!-- /wp:list -->
 
-## 交流群
+快速安装部署:  
+```
+bash build.sh install
+```
+
+启动服务： 
+```
+bash build.sh start
+```
+
+## 交流
 
 加群条件是需给项目一个star，不需要您费多大的功夫与力气，一个小小的star是作者能维护下去的动力。
 
@@ -80,15 +100,25 @@
 群里只要不说骂人、侮辱人之类人身攻击的话，您就可以畅所欲言，有bug我及时修改，使用中有不懂的，我会及时回复，感谢。
 
 <p>
-  <img src="https://www.fdevops.com/wp-content/uploads/2020/07/2020072209114938.png">
+  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/05/1620470212-WechatIMG391.jpeg">
 </p>
 
-QQ群：1127401830
+QQ群 1：1127401830 已满
+
+QQ群 2：1043807251
 
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
+个人微信，添加好友请描述地区、公司及名字，例如：北京-阿里巴巴-xxx。
+
+微信号：fdevops
+
+<p>
+  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/03/1616727212-WechatIMG3.jpeg">
+</p>
+
 ## 特别感谢
-[go-amdin # 不错的后台开发框架](https://github.com/wenjianzhang/go-admin.git)
+[go-amdin # 不错的后台开发框架](https://github.com/go-admin-team/go-admin)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
@@ -104,34 +134,9 @@ QQ群：1127401830
 
 > 如果您觉得这个项目帮助到了您，您可以请作者喝一杯咖啡表示鼓励:
 
+[打赏名人榜](https://www.fdevops.com/docs/ferry-tutorial-document/reward-celebrity-list)
+
 <img class="no-margin" src="https://www.fdevops.com/wp-content/uploads/2020/07/1595075890-81595075871_.pic_hd.png"  height="200px" >
-
-------------------------------
-
-感谢各位的打赏，你的支持，我的动力。所有打赏将作为项目维护成本。
-
-微信：
-
-* 王*   1元
-* p*i  1元
-* LJ   10元
-* 吻住，我们能赢   10.24元
-* *悟 3元
-* Super_z 10元
-* T*i 10元
-* *伟 10元
-* 老白@天智 20元
-
-支付宝：
-
-* **英     10元
-* *城       5元
-* **华      1元
-
-其他：
-
-* everstar_l 10元
-* 五色花 20元
 
 ## 鸣谢
 
@@ -155,4 +160,4 @@ QQ群：1127401830
 
 [LGPL-3.0](https://github.com/lanyulei/ferry/blob/master/LICENSE)
 
-Copyright (c) 2020 lanyulei
+Copyright (c) 2021 lanyulei
