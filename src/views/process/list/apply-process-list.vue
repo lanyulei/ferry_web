@@ -23,32 +23,37 @@
             {{ item.name }}
           </div>
           <div style="margin-bottom: 15px;">
-            <template v-for="buttonItem in item.process_list">
+            <template v-for="(buttonItem, buttonIndex) in item.process_list">
               <el-tooltip :key="buttonItem.id" effect="dark" placement="top">
                 <div slot="content">
                   {{ buttonItem.name }}
                   <br>
                   {{ buttonItem.remarks }}
                 </div>
-                <el-button
-                  class="workflow-classify-button"
-                  plain
-                  @click="submitWorkOrder(buttonItem.id)"
+                <div
+                  class="workflow-classify-div"
+                  :style="(buttonIndex + 1) % 5 === 0 ? {'padding-right': 0} : {'padding-right': '12px'}"
                 >
-                  <div class="process-button-div">
-                    <div class="process-div-icon">
-                      <e-icon class="process-div-el-icon" :icon-name="buttonItem.icon" />
-                    </div>
-                    <div class="process-div-body">
-                      <div class="process-div-title ellipsis">
-                        {{ buttonItem.name }}
+                  <el-button
+                    style="width: 100%"
+                    plain
+                    @click="submitWorkOrder(buttonItem.id)"
+                  >
+                    <div class="process-button-div">
+                      <div class="process-div-icon">
+                        <e-icon class="process-div-el-icon" :icon-name="buttonItem.icon" />
                       </div>
-                      <div class="process-div-remarks ellipsis">
-                        {{ buttonItem.remarks }}
+                      <div class="process-div-body">
+                        <div class="process-div-title ellipsis">
+                          {{ buttonItem.name }}
+                        </div>
+                        <div class="process-div-remarks ellipsis">
+                          {{ buttonItem.remarks }}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </el-button>
+                  </el-button>
+                </div>
               </el-tooltip>
             </template>
           </div>
@@ -94,9 +99,10 @@ export default {
     padding-left: 5px;
   }
 
-  .workflow-classify-button {
+  .workflow-classify-div {
+    width: 20%;
+    display: inline-block;
     margin-left: 0;
-    margin-right: 12px;
     margin-top: 12px;
   }
 
