@@ -23,8 +23,8 @@
     <div class="login-weaper animated bounceInDown">
       <div class="login-left">
         <div class="login-time" v-text="currentTime" />
-        <img :src="sysInfo.logo!==''?sysInfo.logo:'https://www.fdevops.com/wp-content/uploads/2020/08/1597815294-ferry_logo_white.png'" alt="" class="img">
-        <p class="title" v-text="sysInfo.name!==''?sysInfo.name:'ferry 管理平台'" />
+        <img :src="logo" alt="" class="img">
+        <p class="title" v-text="title" />
       </div>
       <div class="login-border">
         <div class="login-main">
@@ -89,7 +89,7 @@
               <img style="height: 48px;width: 100%;border: 1px solid rgba(0,0,0, 0.1);border-radius:5px;" :src="codeUrl" @click="getCode">
             </div>
             <div prop="code" style="width: 100%;float: left;margin-bottom: 13px">
-              <el-checkbox v-model="sysInfo.is_ldap">LDAP登陆</el-checkbox>
+              <el-checkbox v-model="isLdap">LDAP登陆</el-checkbox>
             </div>
             <el-button :loading="loading" type="primary" style="width:100%;padding:12px 20px;margin-bottom:30px;" @click.native.prevent="handleLogin">
               <span v-if="!loading">登 录</span>
@@ -106,8 +106,8 @@
 <script>
 
 import { getCodeImg } from '@/api/login'
-import { getSettings } from '@/api/system/settings'
 import moment from 'moment'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Login',
@@ -137,13 +137,11 @@ export default {
       loading: false,
       redirect: undefined,
       otherQuery: {},
-      currentTime: null,
-      sysInfo: {
-        logo: '',
-        name: '',
-        is_ldap: false
-      }
+      currentTime: null
     }
+  },
+  computed: {
+    ...mapGetters(['title', 'logo', 'isLdap'])
   },
   watch: {
     $route: {
@@ -161,7 +159,6 @@ export default {
     this.getCode()
     // window.addEventListener('storage', this.afterQRScan)
     this.getCurrentTime()
-    this.getSystemSetting()
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -169,18 +166,15 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.getSystemSettings()
   },
   destroyed() {
     clearInterval(this.timer)
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    getSystemSetting() {
-      getSettings({
-        classify: 1
-      }).then(response => {
-        this.sysInfo = response.data[0].content
-      })
+    getSystemSettings() {
+      this.$store.dispatch('settings/getSystemSettings')
     },
     getCurrentTime() {
       this.timer = setInterval(_ => {
@@ -220,7 +214,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.sysInfo.is_ldap) {
+          if (this.isLdap) {
             this.loginForm.loginType = 1
           } else {
             this.loginForm.loginType = 0
