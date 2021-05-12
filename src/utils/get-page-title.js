@@ -1,8 +1,11 @@
 import defaultSettings from '@/settings'
 
-const title = defaultSettings.title || 'Vue Element Admin'
+var title = defaultSettings.title || 'ferry 管理平台'
 
-export default function getPageTitle(pageTitle) {
+export default function getPageTitle(pageTitle, globalTitle) {
+  if (globalTitle !== undefined && globalTitle !== null) {
+    title = globalTitle
+  }
   if (pageTitle) {
     return `${pageTitle} - ${title}`
   }

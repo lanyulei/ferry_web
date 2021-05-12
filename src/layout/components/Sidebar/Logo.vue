@@ -2,19 +2,19 @@
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="sysInfo.logo" :src="sysInfo.logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ sysInfo.name }} </h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 v-else class="sidebar-title">{{ title }} </h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="sysInfo.logo" :src="sysInfo.logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ sysInfo.name }} </h1>
+        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <h1 class="sidebar-title">{{ title }} </h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
-import { getSettings } from '@/api/system/settings'
+import { mapGetters } from 'vuex'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -23,20 +23,13 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      sysInfo: {
-        name: '',
-        logo: ''
-      }
-    }
+  computed: {
+    ...mapGetters(['title', 'logo', 'isLdap'])
   },
-  created() {
-    getSettings({
-      classify: 1
-    }).then(response => {
-      this.sysInfo = response.data[0].content
-    })
+  methods: {
+    getSystemSettings() {
+      this.$store.dispatch('settings/getSystemSettings')
+    }
   }
 }
 </script>

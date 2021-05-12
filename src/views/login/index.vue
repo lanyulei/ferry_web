@@ -166,16 +166,12 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
-    this.getSystemSettings()
   },
   destroyed() {
     clearInterval(this.timer)
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    getSystemSettings() {
-      this.$store.dispatch('settings/getSystemSettings')
-    },
     getCurrentTime() {
       this.timer = setInterval(_ => {
         this.currentTime = moment().format('YYYY-MM-DD HH时mm分ss秒')
