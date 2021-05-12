@@ -2,7 +2,6 @@
   <img src="https://www.fdevops.com/wp-content/uploads/2020/09/1599039924-ferry_log.png">
 </p>
 
-
 <p align="center">
   <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067271-badge.png">
@@ -42,8 +41,8 @@
 
 视频教程（由群内好友<稳定>提供，非常感谢。）：
 
-* ferry工单系统需要的软件准备 https://www.bilibili.com/video/BV1sA411s7jE
-* ferry源代码下载后第一次运行 https://www.bilibili.com/video/BV1oy4y1v7LR
+* ferry工单系统需要的软件准备 <https://www.bilibili.com/video/BV1sA411s7jE>
+* ferry源代码下载后第一次运行 <https://www.bilibili.com/video/BV1oy4y1v7LR>
 
 官网：[http://ferry.fdevops.com](http://ferry.fdevops.com)
 
@@ -80,11 +79,13 @@
 <!-- /wp:list -->
 
 快速安装部署:  
+
 ```
 bash build.sh install
 ```
 
-启动服务： 
+启动服务：
+
 ```
 bash build.sh start
 ```
@@ -103,8 +104,6 @@ bash build.sh start
   <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/05/1620470212-WechatIMG391.jpeg">
 </p>
 
-QQ群 1：1127401830 已满
-
 QQ群 2：1043807251
 
 [兰玉磊的技术博客](https://www.fdevops.com/)
@@ -118,11 +117,12 @@ QQ群 2：1043807251
 </p>
 
 ## 特别感谢
+
 [go-amdin # 不错的后台开发框架](https://github.com/go-admin-team/go-admin)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
-[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发 ](https://github.com/GavinZhuLei/vue-form-making.git)
+[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发](https://github.com/GavinZhuLei/vue-form-making.git)
 
 [wfd-vue # 流程设计器](https://github.com/guozhaolong/wfd-vue)
 
