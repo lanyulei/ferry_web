@@ -9,6 +9,7 @@
         <!-- <el-table-column type="selection" width="55" align="center" /> -->
         <el-table-column label="ID" prop="id" width="120" />
         <el-table-column label="标题" prop="title" :show-overflow-tooltip="true" />
+        <el-table-column label="流程" prop="process_name" :show-overflow-tooltip="true" />
         <el-table-column label="当前状态" :show-overflow-tooltip="true">
           <template slot-scope="scope">
             <span>

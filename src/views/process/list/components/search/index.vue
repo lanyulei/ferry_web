@@ -14,6 +14,7 @@
       <el-select
         v-model="listQuery.processor"
         filterable
+        clearable
         remote
         size="small"
         reserve-keyword
@@ -47,6 +48,7 @@
     <el-form-item label="创建时间">
       <el-date-picker
         v-model="timeValue"
+        clearable
         size="small"
         type="datetimerange"
         :picker-options="pickerOptions"
@@ -54,6 +56,7 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期"
         align="right"
+        @change="getList"
       />
     </el-form-item>
     <el-form-item>
