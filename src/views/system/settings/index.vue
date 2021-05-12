@@ -153,6 +153,7 @@ export default {
       }
       if (requestStatus) {
         setSettings(jsonValue).then(response => {
+          this.$store.dispatch('settings/getSystemSettings')
           this.$message({
             message: '设置成功',
             type: 'success'
