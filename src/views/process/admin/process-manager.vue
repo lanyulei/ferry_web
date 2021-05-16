@@ -140,18 +140,18 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="任务">
-                  <el-select v-model="ruleForm.task" multiple filterable clearable placeholder="请选择流程任务" style="width: 100%">
-                    <el-option
-                      v-for="(item, index) in taskListData"
-                      :key="index"
-                      :label="item.name"
-                      :value="item.full_name"
-                    />
-                  </el-select>
-                </el-form-item>
-              </el-col>
+              <!--              <el-col :span="12">-->
+              <!--                <el-form-item label="任务">-->
+              <!--                  <el-select v-model="ruleForm.task" multiple filterable clearable placeholder="请选择流程任务2222" style="width: 100%">-->
+              <!--                    <el-option-->
+              <!--                      v-for="(item, index) in taskListData"-->
+              <!--                      :key="index"-->
+              <!--                      :label="item.name"-->
+              <!--                      :value="item.full_name"-->
+              <!--                    />-->
+              <!--                  </el-select>-->
+              <!--                </el-form-item>-->
+              <!--              </el-col>-->
             </el-row>
             <el-form-item label="描述" prop="remarks">
               <el-input

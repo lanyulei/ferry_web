@@ -3,20 +3,20 @@
     <div class="panelTitle">{{ i18n['endEvent'] }}</div>
     <div class="panelBody">
       <DefaultDetail :model="model" :on-change="onChange" :read-only="readOnly" />
-      <div class="panelRow">
-        <div>之后任务：</div>
-        <el-select
-          style="width:90%; font-size:12px"
-          placeholder="选择任务"
-          :disabled="readOnly"
-          :value="model.task"
-          :multiple="true"
-          :filterable="true"
-          @change="(e) => onChange('task', e)"
-        >
-          <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />
-        </el-select>
-      </div>
+      <!--      <div class="panelRow">-->
+      <!--        <div>之后任务：</div>-->
+      <!--        <el-select-->
+      <!--          style="width:90%; font-size:12px"-->
+      <!--          placeholder="选择任务"-->
+      <!--          :disabled="readOnly"-->
+      <!--          :value="model.task"-->
+      <!--          :multiple="true"-->
+      <!--          :filterable="true"-->
+      <!--          @change="(e) => onChange('task', e)"-->
+      <!--        >-->
+      <!--          <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />-->
+      <!--        </el-select>-->
+      <!--      </div>-->
       <NodeDetail
         :model="model"
         :on-change="onChange"
