@@ -79,7 +79,8 @@
               currentNode.hideTpls.indexOf(tplItem.form_structure.id)!==-1) ||
               (currentNode.writeTpls===undefined ||
               currentNode.writeTpls===null ||
-              currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1)?true:false"
+              currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1)||
+              (isActiveProcessing && currentNode.activeOrder)?true:false"
             :remote="remoteFunc"
             :value="tplItem.form_data"
             :data="tplItem.form_structure"
@@ -318,7 +319,7 @@ export default {
         process_method: 'person',
         processor: [this.userId]
       }]
-      activeOrder(jsonData, this.$route.query.workOrderId).then(response => {
+      activeOrder(jsonData, this.$route.query.workOrderId).then(() => {
         this.getProcessNodeList()
       })
     }
