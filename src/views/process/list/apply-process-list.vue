@@ -137,8 +137,10 @@ export default {
 
   .process-div-title {
     font-size: 15px;
-    margin-top: 10px;
+    margin-top: 6px;
     color: #606266;
+    height: 18px;
+    line-height: 18px;
   }
 
   .process-div-remarks {
