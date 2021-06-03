@@ -3,7 +3,7 @@
     v-if="showStatus"
     :label-width="isLabel===false||!widget.options.labelWidthStatus?'0px': widgetLabelWidth + 'px'"
     :label="isLabel===false||widget.type==='divider' || !widget.options.labelWidthStatus?'':widget.name"
-    :prop="widget.model"
+    :prop="propValue"
     :style="subformIndex !== undefined?{'margin-bottom': '0'}: {}"
   >
     <template v-if="preview">
@@ -335,7 +335,7 @@ export default {
     FileUpload
   },
   /* eslint-disable */
-  props: ['widget', 'models', 'rules', 'remote', 'data', 'disabled', 'preview', 'isLabel', 'subformIndex', 'subformModel'],
+  props: ['widget', 'models', 'propValue', 'remote', 'data', 'disabled', 'preview', 'isLabel', 'subformIndex', 'subformModel'],
   data() {
     return {
       showStatus: true,
@@ -396,7 +396,7 @@ export default {
         })
       })
     }
-    
+
     if (this.widget.type === 'imgupload' && this.widget.options.isQiniu) {
       this.remote[this.widget.options.tokenFunc]((data) => {
         this.widget.options.token = data

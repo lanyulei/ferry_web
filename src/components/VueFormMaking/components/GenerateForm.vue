@@ -10,7 +10,6 @@
       :label-width="data.config.labelWidth + 'px'"
     >
       <template v-for="item in data.list">
-
         <template v-if="item.type == 'grid'">
           <el-row
             :key="item.key"
@@ -20,7 +19,6 @@
             :align="item.options.align"
           >
             <el-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
-
               <template v-for="citem in col.list">
                 <el-form-item v-if="citem.type=='blank'" :key="citem.key" :label="citem.name" :prop="citem.model">
                   <slot :name="citem.model" :model="models" />
@@ -31,9 +29,9 @@
                   :preview="preview"
                   :models.sync="models"
                   :remote="remote"
-                  :rules="rules"
                   :widget="citem"
                   :data="data"
+                  :prop-value="citem.model"
                   @input-change="onInputChange"
                 />
               </template>
@@ -47,18 +45,18 @@
           </el-form-item>
         </template>
         <!-- 子表单 -->
-        <template v-if="item.type === 'subform'">
+        <template v-else-if="item.type === 'subform'">
           <el-form-item
             :key="item.key"
             :label-width="!item.options.labelWidthStatus?'0px': item.options.labelWidth + 'px'"
             :label="!item.options.labelWidthStatus?'':item.name"
-            :prop="item.model"
           >
             <el-table
               :data="models[item.model]"
               border
               style="width: 100%"
               :header-cell-style="{padding: '5px 0'}"
+              size="mini"
             >
               <el-table-column
                 v-if="!preview"
@@ -71,22 +69,21 @@
                 <template slot-scope="scope">
                   <i style="font-size: 25px; color: red" class="el-icon-remove" @click="delSubformCol(item, scope.$index)" />
                 </template>
-
               </el-table-column>
               <template v-for="(c, i) in item.columns">
                 <div :key="i">
                   <el-table-column
                     v-for="v in c.list"
                     :key="v.key"
-                    :prop="v.modal"
+                    :prop="v.model"
                     :label="v.name"
                     min-width="250"
                   >
                     <template slot-scope="scope">
                       <genetate-form-item
+                        :prop-value="item.model + '.' + scope.$index + '.' + v.model"
                         :preview="preview"
                         :models.sync="models"
-                        :rules="rules"
                         :widget="v"
                         :remote="remote"
                         :data="data"
@@ -106,9 +103,9 @@
         <template v-else>
           <genetate-form-item
             :key="item.key"
+            :prop-value="item.model"
             :preview="preview"
             :models.sync="models"
-            :rules="rules"
             :widget="item"
             :remote="remote"
             :data="data"
@@ -169,6 +166,20 @@ export default {
           } else {
             subformFields[l.model] = ""
           }
+
+          if (this.rules[item.model] === undefined) {
+            this.rules[item.model] = []
+          }
+          if (this.rules[item.model][this.models[item.model].length] === undefined) {
+            this.rules[item.model][this.models[item.model].length] = {}
+          }
+          this.rules[item.model][this.models[item.model].length][l.model] = [...l.rules.map(item => {
+            if (item.pattern) {
+              return { ...item, pattern: eval(item.pattern) }
+            } else {
+              return { ...item }
+            }
+          })]
         }
       }
       this.models[item.model].push(subformFields)
