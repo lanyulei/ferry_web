@@ -78,7 +78,7 @@
                   <el-table-column
                     v-for="v in c.list"
                     :key="v.key"
-                    :prop="v.modal"
+                    :prop="v.model"
                     :label="v.name"
                     min-width="250"
                   >
@@ -206,6 +206,19 @@ export default {
                   return { ...item }
                 }
               })]
+            } else if (genList[i].type === 'subform') {
+              console.log(genList[i].columns)
+              for (var c of genList[i].columns) {
+                // for (var l of c.list) {
+                //   this.rules[l.model] = [...l.rules.map(item => {
+                //     if (item.pattern) {
+                //       return { ...item, pattern: eval(item.pattern) }
+                //     } else {
+                //       return { ...item }
+                //     }
+                //   })]
+                // }
+              }
             } else {
               this.rules[genList[i].model] = [...genList[i].rules.map(item => {
                 if (item.pattern) {
@@ -215,6 +228,8 @@ export default {
                 }
               })]
             }
+
+            // console.log(this.models)
           }
         }
       }
