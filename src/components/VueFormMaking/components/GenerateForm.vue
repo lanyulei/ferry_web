@@ -12,7 +12,7 @@
       <template v-for="item in data.list">
         <template v-if="item.type == 'grid'">
           <el-row
-            :key="item.model"
+            :key="item.key"
             type="flex"
             :gutter="item.options.gutter ? item.options.gutter : 0"
             :justify="item.options.justify"
