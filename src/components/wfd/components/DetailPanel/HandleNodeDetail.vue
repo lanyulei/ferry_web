@@ -6,6 +6,7 @@
       <div class="panelRow">
         <div>之后任务：</div>
         <el-select
+          size="small"
           style="width:90%; font-size:12px"
           placeholder="选择任务"
           :disabled="readOnly"
@@ -20,6 +21,7 @@
       <div class="panelRow">
         <div><span style="color: red">*</span> {{ i18n['handleNode.assignType'] }}：</div>
         <el-select
+          size="small"
           style="width:90%; font-size: 12px"
           :placeholder="i18n['handleNode.assignType.placeholder']"
           :value="model.assignType"
@@ -36,6 +38,7 @@
       <div v-if="model.assignType === 'person'" class="panelRow">
         <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.person.title'] }}：</div>
         <el-select
+          size="small"
           style="width:90%; font-size:12px"
           :placeholder="i18n['handleNode.assignType.person.placeholder']"
           :disabled="readOnly"
@@ -51,6 +54,7 @@
         <div><span style="color: red">*</span> {{ i18n['userTask.assignType.role.title'] }}：</div>
         <el-select
           v-model.number="model.assignValue"
+          size="small"
           style="width:90%; font-size:12px"
           :placeholder="i18n['userTask.assignType.role.placeholder']"
           :disabled="readOnly"
@@ -77,6 +81,7 @@
       <div v-else-if="model.assignType === 'department'" class="panelRow">
         <div><span style="color: red">*</span> {{ i18n['userTask.assignType.department.title'] }}：</div>
         <el-select
+          size="small"
           style="width:90%; font-size:12px"
           :placeholder="i18n['userTask.assignType.department.placeholder']"
           :value="model.assignValue"
@@ -92,6 +97,7 @@
         <div><span style="color: red">*</span> {{ i18n['handleNode.assignType.variable.title'] }}：</div>
         <el-select
           v-model.number="model.assignValue"
+          size="small"
           style="width:90%; font-size:12px"
           :placeholder="i18n['handleNode.assignType.variable.placeholder']"
           :disabled="readOnly"
@@ -104,6 +110,7 @@
       </div>
       <div class="panelRow">
         <el-checkbox
+          size="small"
           :disabled="model.assignType !== 'role' && model.assignType !== 'department' && (
             model.assignValue===undefined ||
             model.assignValue===null ||
@@ -114,6 +121,7 @@
           @change="(e) => { onChange('isCounterSign', e); initCounterSign(e) }"
         >{{ i18n['handleNode.counterSign'] }}</el-checkbox>
         <el-checkbox
+          size="small"
           :disabled="
             model.assignValue===undefined||
               model.assignValue===null||
@@ -129,6 +137,7 @@
             model.assignValue!==null &&
             model.assignValue.length >= 1 &&
             model.isCounterSign"
+          size="small"
           :value="model.fullHandle"
           @change="(value) => onChange('fullHandle', value)"
         >{{ i18n['userTask.fullHandle'] }}</el-checkbox>
@@ -140,6 +149,7 @@
         :templates="templates"
         :templates-base="templatesBase"
         :readonly-preview="false"
+        :users="users"
       />
     </div>
   </div>

@@ -6,6 +6,7 @@
       <div class="panelRow">
         <div>之后任务：</div>
         <el-select
+          size="small"
           style="width:90%; font-size:12px"
           placeholder="选择任务"
           :disabled="readOnly"
@@ -25,6 +26,7 @@
         :templates-base="templatesBase"
         :write-preview="false"
         :readonly-preview="false"
+        :cc-preview="false"
       />
     </div>
   </div>
