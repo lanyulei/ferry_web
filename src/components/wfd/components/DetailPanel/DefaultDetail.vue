@@ -6,12 +6,14 @@
         style="width:90%; font-size:12px"
         :disabled="readOnly"
         :value="model.label"
+        size="small"
         @input="(value) => {onChange('label', value)}"
       />
     </div>
     <div class="panelRow">
       <div><span style="color: red">*</span> 顺序：</div>
       <el-input
+        size="small"
         style="width:90%; font-size:12px"
         :disabled="readOnly"
         :value="model.sort"
@@ -20,11 +22,13 @@
     </div>
     <div class="panelRow">
       <el-checkbox
+        size="small"
         :disabled="readOnly"
         :value="!!model.isHideNode"
         @change="(value) => onChange('isHideNode', value)"
       >隐藏节点</el-checkbox>
       <el-checkbox
+        size="small"
         :disabled="readOnly"
         :value="!!model.hideIcon"
         @change="(value) => onChange('hideIcon', value)"

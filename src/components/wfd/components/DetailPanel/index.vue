@@ -1,5 +1,5 @@
 <template>
-  <div class="detailPanel" :style="{'height':height+'px'}">
+  <div class="detailPanel" :style="{'height':height+'px'}" style="overflow-y: scroll; padding-bottom: 10px;">
     <UserTaskDetail
       v-if="model.clazz === 'userTask'"
       :model="model"
@@ -45,6 +45,7 @@
     <StartEventDetail
       v-else-if="model.clazz === 'start'"
       :model="model"
+      :users="users"
       :on-change="onChange"
       :read-only="readOnly"
       :tasks="tasks"

@@ -12,6 +12,7 @@
           :value="model.task"
           :multiple="true"
           :filterable="true"
+          size="small"
           @change="(e) => onChange('task', e)"
         >
           <el-option v-for="(taskValue, taskIndex) in tasks" :key="taskIndex" :label="taskValue.name" :value="taskValue.full_name" />
@@ -24,6 +25,7 @@
         :templates="templates"
         :templates-base="templatesBase"
         :write-preview="false"
+        :users="users"
       />
     </div>
   </div>
@@ -59,6 +61,10 @@ export default {
       default: () => ([])
     },
     templatesBase: {
+      type: Array,
+      default: () => ([])
+    },
+    users: {
       type: Array,
       default: () => ([])
     }
