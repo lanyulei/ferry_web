@@ -319,7 +319,6 @@ export default {
     getDepartments() {
       getOrdinaryDeptList().then(response => {
         this.departments = response.data
-        console.log(this.departments)
       })
     },
     /** 查询流程列表 */

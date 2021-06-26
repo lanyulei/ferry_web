@@ -51,7 +51,7 @@
           :key="index"
           type="primary"
           :disabled="submitDisabled"
-          @click="submitAction(item.target)"
+          @click="submitAction(item)"
         >
           {{ item.label }}
         </el-button>
@@ -129,17 +129,17 @@ export default {
         this.currentNode = this.processStructureValue.nodes[0]
       })
     },
-    submitAction(target) {
+    submitAction(item) {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           this.submitDisabled = true
           var stateMap = {}
           this.ruleForm.process = parseInt(this.$route.query.processId)
           this.ruleForm.classify = this.processStructureValue.process.classify
-          stateMap['id'] = target
+          stateMap['id'] = item.target
           this.ruleForm.source_state = this.processStructureValue.nodes[this.active].label
           for (var v of this.processStructureValue.nodes) {
-            if (v.id === target) {
+            if (v.id === item.target) {
               if (v.assignType !== undefined) {
                 stateMap['process_method'] = v.assignType
               }
@@ -176,6 +176,7 @@ export default {
           Promise.all(promiseList).then(values => {
             this.ruleForm.source = this.processStructureValue.nodes[this.active].id
             this.ruleForm.tpls.form_data = values
+            this.ruleForm.is_exec_task = item.isExecuteTask
             createWorkOrder(this.ruleForm).then(response => {
               if (response.code === 200) {
                 this.$router.push({ path: '/process/upcoming' })

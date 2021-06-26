@@ -301,6 +301,7 @@ export default {
           flow_properties: item.flowProperties === undefined ? 2 : parseInt(item.flowProperties),
           work_order_id: parseInt(this.$route.query.workOrderId),
           remarks: this.remarks,
+          is_exec_task: item.isExecuteTask,
           tpls: this.tpls
         }).then(response => {
           if (response.code === 200) {

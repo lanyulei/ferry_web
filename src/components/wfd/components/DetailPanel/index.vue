@@ -1,5 +1,5 @@
 <template>
-  <div class="detailPanel" :style="{'height':height+'px'}" style="overflow-y: scroll; padding-bottom: 10px;">
+  <div class="detailPanel" :style="{'height':height+'px'}" style="overflow-y: auto; padding-bottom: 10px;">
     <UserTaskDetail
       v-if="model.clazz === 'userTask'"
       :model="model"

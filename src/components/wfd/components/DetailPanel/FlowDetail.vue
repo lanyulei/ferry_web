@@ -18,6 +18,14 @@
         </el-select>
       </div>
       <div class="panelRow">
+        <el-checkbox
+          size="small"
+          :disabled="readOnly"
+          :value="model.isExecuteTask"
+          @change="(e) => onChange('isExecuteTask', e)"
+        >是否执行任务</el-checkbox>
+      </div>
+      <div class="panelRow">
         <div>{{ i18n['sequenceFlow.expression'] }}：</div>
         <el-input
           style="width:90%; font-size:12px"
