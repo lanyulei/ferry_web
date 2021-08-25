@@ -2,28 +2,28 @@
   <div class="dashboard-editor-container">
     <el-row :gutter="12">
       <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="工单总数" :total="dashboardValue.count.all">
+        <chart-card title="工单总数" :total="dashboardValue.count.all" style="cursor: pointer" @click.native="toTicketList('/process/all')">
           <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
             <i class="el-icon-warning-outline" />
           </el-tooltip>
         </chart-card>
       </el-col>
       <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="我创建的" :total="dashboardValue.count.my_create">
+        <chart-card title="我创建的" :total="dashboardValue.count.my_create" style="cursor: pointer" @click.native="toTicketList('/process/my-create')">
           <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
             <i class="el-icon-warning-outline" />
           </el-tooltip>
         </chart-card>
       </el-col>
       <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="我相关的" :total="dashboardValue.count.related">
+        <chart-card title="我相关的" :total="dashboardValue.count.related" style="cursor: pointer" @click.native="toTicketList('/process/related')">
           <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
             <i class="el-icon-warning-outline" />
           </el-tooltip>
         </chart-card>
       </el-col>
       <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="我的待办" :total="dashboardValue.count.upcoming">
+        <chart-card title="我的待办" :total="dashboardValue.count.upcoming" style="cursor: pointer" @click.native="toTicketList('/process/upcoming')">
           <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
             <i class="el-icon-warning-outline" />
           </el-tooltip>
@@ -146,12 +146,14 @@ export default {
       })
     },
     timeScreening() {
-      console.log(this.querys)
       if (this.querys.length > 1) {
         this.queryList.start_time = this.querys[0]
         this.queryList.end_time = this.querys[1]
         this.getInitData()
       }
+    },
+    toTicketList(path) {
+      this.$router.push({ path: path })
     }
   }
 }
