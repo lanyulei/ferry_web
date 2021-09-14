@@ -81,7 +81,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="用户" prop="user_id">
-            <el-select v-model="ruleForm.user_id" placeholder="选择用户" size="small" style="width: 100%">
+            <el-select v-model="ruleForm.user_id" filterable placeholder="选择用户" size="small" style="width: 100%">
               <el-option v-for="(item, index) in users" :key="index" :label="item.nickName" :value="item.userId" />
             </el-select>
           </el-form-item>
