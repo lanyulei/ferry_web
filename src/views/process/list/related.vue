@@ -3,7 +3,7 @@
     <el-card class="box-card">
       <el-form ref="listQuery" :model="listQuery" :inline="true">
         <el-form ref="listQuery" :model="listQuery" :inline="true">
-          <WorkOrderSearch :genre="'my-create'" @handleSearch="handleSearch" />
+          <WorkOrderSearch :genre="'related'" @handleSearch="handleSearch" />
         </el-form>
       </el-form>
 

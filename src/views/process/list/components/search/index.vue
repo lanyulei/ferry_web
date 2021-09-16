@@ -10,6 +10,28 @@
         @keyup.enter.native="getList"
       />
     </el-form-item>
+    <el-form-item v-if="genre !== 'my-create'" label="申请人">
+      <el-select
+        v-model="listQuery.creator"
+        filterable
+        clearable
+        remote
+        size="small"
+        reserve-keyword
+        placeholder="请输入当前处理人"
+        :remote-method="remoteUserList"
+        :loading="loading"
+        style="width: 150px"
+        @change="getList"
+      >
+        <el-option
+          v-for="item in UserOptions"
+          :key="item.userId"
+          :label="item.nickName"
+          :value="item.userId"
+        />
+      </el-select>
+    </el-form-item>
     <el-form-item v-if="genre !== 'upcoming'" label="当前处理人">
       <el-select
         v-model="listQuery.processor"
