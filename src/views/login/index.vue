@@ -89,7 +89,7 @@
               <img style="height: 48px;width: 100%;border: 1px solid rgba(0,0,0, 0.1);border-radius:5px;" :src="codeUrl" @click="getCode">
             </div>
             <div prop="code" style="width: 100%;float: left;margin-bottom: 13px">
-              <el-checkbox v-model="isLdap">LDAP登陆</el-checkbox>
+              <el-checkbox v-model="isLdapTmp">LDAP登陆</el-checkbox>
             </div>
             <el-button :loading="loading" type="primary" style="width:100%;padding:12px 20px;margin-bottom:30px;" @click.native.prevent="handleLogin">
               <span v-if="!loading">登 录</span>
@@ -113,6 +113,7 @@ export default {
   name: 'Login',
   data() {
     return {
+      isLdapTmp: false,
       codeUrl: '',
       cookiePassword: '',
       loginForm: {
@@ -153,6 +154,11 @@ export default {
         }
       },
       immediate: true
+    },
+    isLdap: {
+      handler: function(val) {
+        this.isLdapTmp = val
+      }
     }
   },
   created() {
@@ -187,11 +193,7 @@ export default {
     },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
-        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-          this.capsTooltip = true
-        } else {
-          this.capsTooltip = false
-        }
+        this.capsTooltip = shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')
       }
       if (key === 'CapsLock' && this.capsTooltip === true) {
         this.capsTooltip = false
@@ -210,7 +212,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          if (this.isLdap) {
+          if (this.isLdapTmp) {
             this.loginForm.loginType = 1
           } else {
             this.loginForm.loginType = 0
