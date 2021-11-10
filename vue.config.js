@@ -28,6 +28,7 @@ module.exports = {
    */
   publicPath: '/',
   outputDir: 'web',
+  assetsDir: '.',
   lintOnSave: false, // process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
