@@ -10,6 +10,26 @@
         @keyup.enter.native="getList"
       />
     </el-form-item>
+    <el-form-item label="模版数据">
+      <el-input
+        v-model="listQuery.formData"
+        placeholder="请输入模版数据"
+        clearable
+        size="small"
+        style="width: 180px"
+        @keyup.enter.native="getList"
+      />
+    </el-form-item>
+    <el-form-item label="流程">
+      <el-select v-model="listQuery.process" placeholder="请选择流程" size="small" filterable clearable style="width: 230px" @change="getList">
+        <el-option
+          v-for="item in processValueList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
     <el-form-item v-if="genre !== 'my-create'" label="申请人">
       <el-select
         v-model="listQuery.creator"
@@ -51,16 +71,6 @@
           :key="item.userId"
           :label="item.nickName"
           :value="item.userId"
-        />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="流程">
-      <el-select v-model="listQuery.process" placeholder="请选择流程" size="small" filterable clearable style="width: 230px" @change="getList">
-        <el-option
-          v-for="item in processValueList"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
         />
       </el-select>
     </el-form-item>
