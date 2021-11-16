@@ -54,6 +54,16 @@
         />
       </el-select>
     </el-form-item>
+    <el-form-item label="流程">
+      <el-select v-model="listQuery.process" placeholder="请选择流程" size="small" filterable clearable style="width: 230px" @change="getList">
+        <el-option
+          v-for="item in processValueList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+    </el-form-item>
     <el-form-item label="优先级">
       <el-select v-model="listQuery.priority" placeholder="请选择优先级" size="small" clearable style="width: 130px" @change="getList">
         <el-option label="一般" :value="1" />
@@ -93,12 +103,14 @@ import {
 } from '@/api/system/sysuser'
 
 import { parseTime } from '@/utils'
+import { processList } from '@/api/process/admin/process'
 export default {
   name: 'WorkOrderSearch',
   // eslint-disable-next-line vue/require-prop-types
   props: ['genre'],
   data() {
     return {
+      processValueList: [],
       loading: false,
       timeValue: '',
       listQuery: {},
@@ -132,6 +144,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getProcessList()
+  },
   methods: {
     getList() {
       if (this.timeValue === null || this.timeValue === undefined || this.timeValue === '') {
@@ -149,6 +164,13 @@ export default {
         nickName: query
       }).then(res => {
         this.UserOptions = res.data.list
+      })
+    },
+    getProcessList() {
+      processList({
+        per_page: 999999
+      }).then(response => {
+        this.processValueList = response.data.data
       })
     }
   }
