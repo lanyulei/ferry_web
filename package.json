@@ -1,9 +1,9 @@
 {
-  "name": "vue-element-admin",
-  "version": "4.2.1",
+  "name": "ferry_web",
+  "version": "1.0.0",
   "description": "A magical vue admin. An out-of-box UI solution for enterprise applications. Newest development stack of vue. Lots of awesome features",
-  "author": "Pan <panfree23@gmail.com>",
-  "license": "MIT",
+  "author": "lanyulei<fdevops@163.com>",
+  "license": "LGPL-3.0",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
