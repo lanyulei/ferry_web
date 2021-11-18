@@ -76,13 +76,13 @@
                 currentNode.hideTpls.indexOf(tplItem.form_structure.id)===-1"
               :key="tplIndex"
               :ref="'generateForm-'+tplItem.id"
-              :preview="(currentNode.hideTpls!==undefined &&
+              :preview="!!((currentNode.hideTpls!==undefined &&
                 currentNode.hideTpls!==null &&
                 currentNode.hideTpls.indexOf(tplItem.form_structure.id)!==-1) ||
                 (currentNode.writeTpls===undefined ||
                 currentNode.writeTpls===null ||
                 currentNode.writeTpls.indexOf(tplItem.form_structure.id)===-1)||
-                (isActiveProcessing && currentNode.activeOrder)?true:false"
+                (isActiveProcessing && currentNode.activeOrder))"
               :remote="remoteFunc"
               :value="tplItem.form_data"
               :data="tplItem.form_structure"
@@ -245,18 +245,20 @@ export default {
         this.circulationHistoryList = this.processStructureValue.circulationHistory
         // 获取当前展示节点列表
         this.nodeStepList = []
-        for (var i = 0; i < this.processStructureValue.nodes.length; i++) {
-          if (this.processStructureValue.nodes[i].id === this.processStructureValue.workOrder.current_state) {
-            // 当前节点
-            this.nodeStepList.push(this.processStructureValue.nodes[i])
-            this.activeIndex = this.nodeStepList.length - 1
-            if (i + 1 === this.processStructureValue.nodes.length) {
-              this.activeIndex = this.nodeStepList.length
+        if (this.processStructureValue.nodes) {
+          for (var i = 0; i < this.processStructureValue.nodes.length; i++) {
+            if (this.processStructureValue.nodes[i].id === this.processStructureValue.workOrder.current_state) {
+              // 当前节点
+              this.nodeStepList.push(this.processStructureValue.nodes[i])
+              this.activeIndex = this.nodeStepList.length - 1
+              if (i + 1 === this.processStructureValue.nodes.length) {
+                this.activeIndex = this.nodeStepList.length
+              }
+              this.currentNode = this.processStructureValue.nodes[i]
+            } else if (!this.processStructureValue.nodes[i].isHideNode) {
+              // 非隐藏节点
+              this.nodeStepList.push(this.processStructureValue.nodes[i])
             }
-            this.currentNode = this.processStructureValue.nodes[i]
-          } else if (!this.processStructureValue.nodes[i].isHideNode) {
-            // 非隐藏节点
-            this.nodeStepList.push(this.processStructureValue.nodes[i])
           }
         }
 
