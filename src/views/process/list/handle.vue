@@ -201,7 +201,6 @@ export default {
       processStructureValue: {
         workOrder: { title: '' }
       },
-      processRemarks: '',
       ruleForm: {
         title: '',
         process: '',
