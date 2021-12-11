@@ -364,7 +364,7 @@ export default {
               ...this.models,
               [this.widget.model]: newValue
             })
-            // this.$emit('input-change', val, this.widget.model)
+            this.$emit('input-change', newValue, this.widget.model)
           }
         }
       }

@@ -24,7 +24,7 @@
                   <slot :name="citem.model" :model="models" />
                 </el-form-item>
                 <genetate-form-item
-                  v-else
+                  v-else-if="!item.options.hidden"
                   :key="citem.key"
                   :preview="preview"
                   :models.sync="models"
@@ -45,7 +45,7 @@
           </el-form-item>
         </template>
         <!-- 子表单 -->
-        <template v-else-if="item.type === 'subform'">
+        <template v-else-if="item.type === 'subform' && !item.options.hidden ">
           <el-form-item
             :key="item.key"
             :label-width="!item.options.labelWidthStatus?'0px': item.options.labelWidth + 'px'"
@@ -102,6 +102,7 @@
 
         <template v-else>
           <genetate-form-item
+            v-if="!item.options.hidden"
             :key="item.key"
             :prop-value="item.model"
             :preview="preview"
@@ -201,7 +202,7 @@ export default {
           } else {
             if (genList[i].type === 'blank') {
               this.$set(this.models, genList[i].model, genList[i].options.defaultType === 'String' ? '' : (genList[i].options.defaultType === 'Object' ? {} : []))
-            } if (genList[i].type === 'subform') { 
+            } if (genList[i].type === 'subform') {
               this.$set(this.models, genList[i].model, [])
             } else {
               this.models[genList[i].model] = genList[i].options.defaultValue
@@ -245,10 +246,15 @@ export default {
       this.$refs.generateForm.resetFields()
     },
     onInputChange(value, field) {
-      // this.$emit('on-change', field, value, this.models)
+      this.$emit('on-change', field, value, this.models)
     },
     refresh() {
 
+    },
+    setData (keymap) {
+      for (const k in keymap) {
+        this.models[k] = keymap[k]
+      }
     }
   }
 }

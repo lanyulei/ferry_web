@@ -15,7 +15,12 @@
                 @start="handleMoveStart"
               >
                 <template v-for="(item, index) in basicComponents">
-                  <li v-if="basicFields.indexOf(item.type)>=0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type == 'divider'}">
+                  <li
+                    v-if="basicFields.indexOf(item.type)>=0"
+                    :key="index"
+                    class="form-edit-widget-label"
+                    :class="{'no-put': item.type == 'divider'}"
+                  >
                     <a>
                       <i class="icon iconfont" :class="item.icon" />
                       <span>{{ item.name }}</span>
@@ -37,7 +42,12 @@
                 @start="handleMoveStart"
               >
                 <template v-for="(item, index) in advanceComponents">
-                  <li v-if="advanceFields.indexOf(item.type) >= 0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type == 'table'}">
+                  <li
+                    v-if="advanceFields.indexOf(item.type) >= 0"
+                    :key="index"
+                    class="form-edit-widget-label"
+                    :class="{'no-put': item.type == 'table'}"
+                  >
                     <a>
                       <i class="icon iconfont" :class="item.icon" />
                       <span>{{ item.name }}</span>
@@ -76,11 +86,26 @@
         <el-container class="center-container" direction="vertical">
           <el-header class="btn-bar" style="height: 45px;">
             <slot name="action" />
-            <el-button v-if="upload" type="text" size="medium" icon="el-icon-upload2" @click="handleUpload">{{ $t('fm.actions.import') }}</el-button>
-            <el-button v-if="clearable" type="text" size="medium" icon="el-icon-delete" @click="handleClear">{{ $t('fm.actions.clear') }}</el-button>
-            <el-button v-if="preview" type="text" size="medium" icon="el-icon-view" @click="handlePreview">{{ $t('fm.actions.preview') }}</el-button>
-            <el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">{{ $t('fm.actions.json') }}</el-button>
-            <el-button v-if="generateCode" type="text" size="medium" icon="el-icon-document" @click="handleGenerateCode">{{ $t('fm.actions.code') }}</el-button>
+            <el-button v-if="upload" type="text" size="medium" icon="el-icon-upload2" @click="handleUpload">
+              {{ $t('fm.actions.import') }}
+            </el-button>
+            <el-button v-if="clearable" type="text" size="medium" icon="el-icon-delete" @click="handleClear">
+              {{ $t('fm.actions.clear') }}
+            </el-button>
+            <el-button v-if="preview" type="text" size="medium" icon="el-icon-view" @click="handlePreview">
+              {{ $t('fm.actions.preview') }}
+            </el-button>
+            <el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">
+              {{ $t('fm.actions.json') }}
+            </el-button>
+            <el-button
+              v-if="generateCode"
+              type="text"
+              size="medium"
+              icon="el-icon-document"
+              @click="handleGenerateCode"
+            >{{ $t('fm.actions.code') }}
+            </el-button>
           </el-header>
           <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
 
@@ -91,23 +116,35 @@
         <el-aside class="widget-config-container" style="width: 305px;">
           <el-container>
             <el-header height="45px">
-              <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">{{ $t('fm.config.widget.title') }}</div>
-              <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">{{ $t('fm.config.form.title') }}</div>
+              <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">
+                {{ $t('fm.config.widget.title') }}
+              </div>
+              <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">
+                {{ $t('fm.config.form.title') }}
+              </div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-if="widgetFormSelect!==null" v-show="configTab=='widget'" :data="widgetFormSelect" />
+              <widget-config
+                v-if="widgetFormSelect!==null"
+                v-show="configTab=='widget'"
+                :diymethod="widgetForm.diymethod"
+                :data="widgetFormSelect"
+                @on-update="updatemethod"
+                @on-update-relation="updaterelation"
+              />
               <form-config v-show="configTab=='form'" :data="widgetForm.config" />
             </el-main>
           </el-container>
 
         </el-aside>
 
-        <cus-dialog
+        <el-dialog
           ref="widgetPreview"
           :visible="previewVisible"
           width="1000px"
           form
-          @on-close="previewVisible = false"
+          center
+          :before-close="handleClose"
         >
           <generate-form
             v-if="previewVisible"
@@ -118,18 +155,18 @@
             :remote="remoteFuncs"
             @on-change="handleDataChange"
           >
-
             <template slot-scope="scope">
-              Width <el-input v-model="scope.model.blank.width" style="width: 100px" />
-              Height <el-input v-model="scope.model.blank.height" style="width: 100px" />
+              Width
+              <el-input v-model="scope.model.blank.width" style="width: 100px" />
+              Height
+              <el-input v-model="scope.model.blank.height" style="width: 100px" />
             </template>
           </generate-form>
-
-          <template slot="action">
+          <span slot="footer" class="dialog-footer">
             <el-button type="primary" @click="handleTest">{{ $t('fm.actions.getData') }}</el-button>
             <el-button @click="handleReset">{{ $t('fm.actions.reset') }}</el-button>
-          </template>
-        </cus-dialog>
+          </span>
+        </el-dialog>
 
         <cus-dialog
           ref="uploadJson"
@@ -154,7 +191,10 @@
           <div id="jsoneditor" style="height: 400px;width: 100%;">{{ jsonTemplate }}</div>
 
           <template slot="action">
-            <el-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">{{ $t('fm.actions.copyData') }}</el-button>
+            <el-button type="primary" class="json-btn" :data-clipboard-text="jsonCopyValue">{{
+              $t('fm.actions.copyData')
+            }}
+            </el-button>
           </template>
         </cus-dialog>
 
@@ -170,7 +210,8 @@
         </cus-dialog>
       </el-container>
     </el-main>
-    <el-footer height="30px" style="font-weight: 600;">Powered by <a target="_blank" href="http://www.fdevops.com">fdevops</a></el-footer>
+    <el-footer height="30px" style="font-weight: 600;">Powered by <a target="_blank" href="http://www.fdevops.com">fdevops</a>
+    </el-footer>
   </el-container>
 
 </template>
@@ -250,7 +291,9 @@ export default {
           labelWidth: 100,
           labelPosition: 'right',
           size: 'small'
-        }
+        },
+        diymethod: {},
+        itemRelation: {}
       },
       configTab: 'widget',
       widgetFormSelect: null,
@@ -258,6 +301,7 @@ export default {
       jsonVisible: false,
       codeVisible: false,
       uploadVisible: false,
+      backupwidgetForm: {},
       remoteFuncs: {
         func_test(resolve) {
           setTimeout(() => {
@@ -340,17 +384,21 @@ export default {
       return true
     },
     handlePreview() {
+      this.backupwidgetForm = JSON.parse(JSON.stringify(this.widgetForm))
       this.previewVisible = true
     },
     handleTest() {
       this.$refs.generateForm.getData().then(data => {
-        this.$alert(data, '').catch(e => {})
+        this.$alert(data, '').catch(e => {
+        })
         this.$refs.widgetPreview.end()
       }).catch(e => {
         this.$refs.widgetPreview.end()
       })
     },
     handleReset() {
+      this.widgetModels = {}
+      this.widgetForm = JSON.parse(JSON.stringify(this.backupwidgetForm))
       this.$refs.generateForm.reset()
     },
     handleGenerateJson() {
@@ -399,11 +447,11 @@ export default {
         config: {
           labelWidth: 100,
           labelPosition: 'right',
-          size: 'small',
-          customClass: ''
-        }
+          size: 'small'
+        },
+        diymethod: {},
+        itemRelation: {}
       }
-
       this.widgetFormSelect = {}
     },
     getJSON() {
@@ -422,14 +470,82 @@ export default {
     handleInput(val) {
       this.blank = val
     },
+    displayItem(target) {
+      for (const k in this.widgetForm.list) {
+        if (target.indexOf(this.widgetForm.list[k].model) !== -1) {
+          this.widgetForm.list[k].options.hidden = false
+        }
+      }
+    },
     handleDataChange(field, value, data) {
+      this.widgetModels[field] = value
+      if (this.widgetForm.itemRelation[field] !== undefined) {
+        // itemRelation 是函数对应的执行方法
+        // eslint-disable-next-line no-new-func
+        const Func = new Function('self', this.widgetForm.diymethod[this.widgetForm.itemRelation[field]])
+        Func(this)
+        // console.log('----')
+      }
+    },
+    disableItem(target) {
+      console.log('is idsabled')
+      for (const k in this.widgetForm.list) {
+        if (target.indexOf(this.widgetForm.list[k].model) !== -1) {
+          this.widgetForm.list[k].options.hidden = true
+        }
+      }
+    },
+    updatemethod(methods) {
+      this.widgetForm.diymethod = methods
+    },
+    updaterelation(target, method) {
+      if (method !== '') {
+        this.widgetForm.itemRelation[target] = method
+      } else {
+        this.$delete(this.widgetForm.itemRelation, target)
+      }
+    },
+    setItemValue(valuemap) {
+      for (const k in this.widgetForm.list) {
+        if (valuemap[this.widgetForm.list[k].model] !== undefined) {
+          this.widgetModels[this.widgetForm.list[k].model] = valuemap[this.widgetForm.list[k].model]
+        }
+      }
+    },
+    setItemOptions(target, value) {
+      for (const k in this.widgetForm.list) {
+        if (this.widgetForm.list[k].model === target) {
+          this.widgetForm.list[k].options.options = value
+        }
+      }
+    },
+    getItemValue(target) {
+      return this.widgetModels[target]
+    },
+    disableWithWhite(target, white) {
+      for (const k in this.widgetForm.list) {
+        if (target.indexOf(this.widgetForm.list[k].model) === -1) {
+          continue
+        }
+        if (white.indexOf(this.widgetForm.list[k].model) !== -1) {
+          this.widgetForm.list[k].options.hidden = false
+        } else {
+          this.widgetForm.list[k].options.hidden = true
+        }
+      }
+    },
+    handleClose() {
+      console.log('is close')
+      this.widgetForm = JSON.parse(JSON.stringify(this.backupwidgetForm))
+      this.widgetModels = {}
+      this.previewVisible = false
     }
   }
 }
 </script>
 
 <style lang="scss">
-.widget-empty{
+.widget-empty {
   background-position: 50%;
 }
 

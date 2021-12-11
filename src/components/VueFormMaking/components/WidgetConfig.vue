@@ -446,6 +446,7 @@
       <!-- 非珊格 -->
       <template v-if="data.type !== 'grid'">
         <el-form-item :label="$t('fm.config.widget.attribute')">
+          <el-checkbox v-model="data.options.hidden">{{ $t('fm.config.widget.hidden') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('readonly')>=0" v-model="data.options.readonly">{{ $t('fm.config.widget.readonly') }}</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('disabled')>=0" v-model="data.options.disabled">{{ $t('fm.config.widget.disabled') }}	</el-checkbox>
           <el-checkbox v-if="Object.keys(data.options).indexOf('showPassword')>=0" v-model="data.options.showPassword">{{ $t('fm.config.widget.showPassword') }}	</el-checkbox>
@@ -494,6 +495,15 @@
           <el-button type="text" icon="el-icon-circle-plus-outline" @click="addDisplayVerifiy">新  增</el-button>
         </div>
       </el-form-item>
+      <!-- 动作设置  -->
+      <el-form-item :label="$t('fm.config.widget.diyaction')">
+        <el-row>
+          <el-button type="primary" size="medium" plain style="width: 100%" @click="mountMethod">动作绑定</el-button>
+        </el-row>
+        <el-row>
+          <el-button type="primary" size="medium" plain style="width: 100%" @click="opendiamic">动作管理</el-button>
+        </el-row>
+      </el-form-item>
     </el-form>
     <el-dialog
       title="提示"
@@ -525,20 +535,116 @@
         <el-button type="primary" @click="operatingStatus==='add'?appendCascaderData():cascaderDialog = false">确 定</el-button>
       </span>
     </el-dialog>
+    <!--    动作设置  -->
+    <el-dialog title="动作设置" width="60%" :visible.sync="dynamicDialog" append-to-body :before-close="savemethod">
+      <el-row>
+        <el-col :span="6">
+          <el-button size="medium" @click="newmethod">新增</el-button>
+        </el-col>
+        <el-col v-if="codedom" :offset="12" :span="6">
+          <el-button size="medium" @click="savefunc">保存函数</el-button>
+          <el-button size="medium" @click="cancelfunc">取消</el-button>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
+        <el-col :span="9">
+          <el-card v-if="methodCatch.length > 0">
+            <template v-for="(_, index) in methodCatch">
+              <el-row :key="index">
+                <el-button shadow="never" @click="showcode(index)">
+                  Function {{ methodCatch[index].key }}
+                  <!--                  Function {{ index }}-->
+                </el-button>
+              </el-row>
+            </template>
+          </el-card>
+        </el-col>
+        <el-col v-if="codedom" :span="15">
+          <el-row>
+            <el-form label-width="120px" label-position="left">
+              <el-form-item label="Function Name">
+                <el-input v-model="funcname" />
+              </el-form-item>
+            </el-form>
+          </el-row>
+          <el-row>
+            <div class="codemirror-div">
+              <codemirror
+                ref="codemirror"
+                :value="vueCode"
+                :options="contentOptions"
+                class="codemirror"
+              />
+            </div>
+          </el-row>
+        </el-col>
+      </el-row>
+    </el-dialog>
+    <!--    动作绑定  -->
+    <el-dialog title="动作绑定" append-to-body :visible.sync="mountMethodDialog">
+      <el-row>
+        <el-form label-width="120px" label-position="left">
+          <el-form-item label="onChange">
+            <el-select v-model="data.options.onchange" clearable>
+              <el-option
+                v-for="(_, index) in methodCatch"
+                :key="index"
+                :label="methodCatch[index].key"
+                :value="methodCatch[index].key"
+              />
+            </el-select>
+          </el-form-item>
+        </el-form>
+      </el-row>
+      <el-row>
+        <el-button @click="savemount">确认</el-button>
+        <el-button @click="mountMethodDialog = false">取消</el-button>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Draggable from 'vuedraggable'
+import { codemirror } from 'vue-codemirror'
+import { Message } from 'element-ui'
+
+require('codemirror/mode/vue/vue')
+require('codemirror/mode/javascript/javascript')
+require('codemirror/mode/htmlmixed/htmlmixed')
+require('codemirror/mode/htmlembedded/htmlembedded')
 
 export default {
   components: {
-    Draggable
+    Draggable,
+    codemirror
   },
   /* eslint-disable */
-  props: ['data'],
+  props: ['data', 'diymethod'],
   data() {
     return {
+      tmpindex: -1,
+      codedom: false,
+      funcname: '',
+      methodCatch: [],
+      mountMethodDialog: false,
+      contentOptions: {
+        flattenSpans: false, // 默认情况下，CodeMirror会将使用相同class的两个span合并成一个。通过设置此项为false禁用此功能
+        matchBrackets: true, // 匹配符号
+        lineWiseCopyCut: true, // 如果在复制或剪切时没有选择文本，那么就会自动操作光标所在的整行
+        tabSize: 4,
+        value: '',
+        mode: 'python',
+        lineNumbers: true, // 显示行号
+        line: true,
+        smartIndent: true, // 智能缩进
+        autoCloseBrackets: true, // 自动输入括弧
+        foldGutter: true, // 允许在行号位置折叠
+        indentUnit: 4, // 智能缩进单位为4个空格长度
+        styleActiveLine: true // 激活当前行样式
+      },
+      vueCode: '',
+      dynamicDialog: false,
       selectTreeData: {},
       addTreeData: {},
       cascaderDialog: false,
@@ -605,6 +711,12 @@ export default {
   },
   created() {
     this.handleInitHeaders()
+    for (const k in this.diymethod) {
+      this.methodCatch.push({
+        key: k,
+        value: this.diymethod[k]
+      })
+    }
   },
   methods: {
     addDisplayVerifiy() {
@@ -762,7 +874,97 @@ export default {
       }
 
       this.generateRule()
-    }
+    },
+    showcode (index) {
+      if (index === this.tmpindex) {
+        return
+      }
+      if (this.codedom && ((this.$refs.codemirror.content !== '' && this.vueCode !== this.$refs.codemirror.content) || this.vueCode === '')) {
+        Message({
+          message: '当前函数未保存或为空',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      } else {
+        this.codedom = true
+        this.tmpindex = index
+        this.funcname = this.methodCatch[index].key
+        this.vueCode = String(this.methodCatch[index].value)
+      }
+    },
+    newmethod () {
+      if (this.codedom && ((this.$refs.codemirror.content !== '' && this.vueCode !== this.$refs.codemirror.content) || this.vueCode === '')) {
+        Message({
+          message: '当前函数未保存或为空, 无法创建新函数',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return
+      }
+      var date = new Date().getTime()
+      this.methodCatch.push({
+        key: `method_${date}`,
+        value: ''
+      })
+      this.tmpindex = this.methodCatch.length - 1
+      this.funcname = `method_${date}`
+      this.vueCode = ''
+      this.codedom = true
+    },
+    savemethod () {
+      if (this.codedom && ((this.$refs.codemirror.content !== '' && this.vueCode !== this.$refs.codemirror.content) || this.vueCode === '')) {
+        Message({
+          message: '当前函数未保存或为空, 无法更新',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        return
+      }
+      let tmp = {}
+      for (let index in this.methodCatch) {
+        tmp[this.methodCatch[index].key] = this.methodCatch[index].value
+      }
+      this.$emit('on-update', tmp)
+      this.codedom = false
+      this.dynamicDialog = false
+    },
+    mountMethod () {
+      this.mountMethodDialog = true
+    },
+    savefunc () {
+      if (this.$refs.codemirror.content == '') {
+        Message({
+          message: '当前函数为空, 无法保存',
+          type: 'error',
+          duration: 5 * 1000
+        })
+      } else {
+        this.methodCatch[this.tmpindex] = {
+          key: this.funcname,
+          value: this.$refs.codemirror.content
+        }
+        this.codedom = false
+        this.tmpindex = -1
+        this.funcname = -1
+        this.vueCode = ''
+      }
+    },
+    cancelfunc () {
+      if (this.$refs.codemirror.content === '' && this.vueCode === '') {
+        this.$delete(this.methodCatch, this.tmpindex)
+      }
+      this.codedom = false
+      this.tmpindex = -1
+      this.funcname = ''
+      this.vueCode = ''
+    },
+    savemount () {
+      this.$emit('on-update-relation', this.data.model, this.data.options.onchange)
+      this.mountMethodDialog = false
+    },
+    opendiamic () {
+      this.dynamicDialog = true
+    },
   }
 }
 </script>
@@ -775,5 +977,14 @@ export default {
     justify-content: space-between;
     font-size: 14px;
     padding-right: 8px;
+  }
+  .codemirror {
+    line-height: 150%;
+  }
+
+  .codemirror-div {
+    border: 1px solid #DCDFE6;
+    border-radius: 4px;
+    overflow: hidden;
   }
 </style>

@@ -10,6 +10,7 @@ export const basicComponents = [
       pattern: '',
       placeholder: '',
       disabled: false,
+      hidden: false,
       showPassword: false,
       labelWidth: 100,
       labelWidthDisabled: false,
@@ -31,6 +32,7 @@ export const basicComponents = [
       defaultValue: '',
       required: false,
       disabled: false,
+      hidden: false,
       pattern: '',
       placeholder: '',
       labelWidth: 100,
@@ -52,6 +54,7 @@ export const basicComponents = [
       width: '',
       required: false,
       defaultValue: 0,
+      hidden: false,
       min: '',
       max: '',
       step: 1,
@@ -75,6 +78,7 @@ export const basicComponents = [
     options: {
       inline: false,
       defaultValue: '',
+      hidden: false,
       showLabel: false,
       options: [
         {
@@ -118,6 +122,7 @@ export const basicComponents = [
     options: {
       inline: false,
       defaultValue: [],
+      hidden: false,
       showLabel: false,
       options: [
         {
@@ -160,6 +165,7 @@ export const basicComponents = [
       readonly: false,
       disabled: false,
       editable: true,
+      hidden: false,
       clearable: true,
       placeholder: '',
       startPlaceholder: '',
@@ -181,6 +187,7 @@ export const basicComponents = [
       defaultValue: '',
       readonly: false,
       disabled: false,
+      hidden: false,
       editable: true,
       clearable: true,
       placeholder: '',
@@ -202,6 +209,7 @@ export const basicComponents = [
     options: {
       defaultValue: null,
       max: 5,
+      hidden: false,
       disabled: false,
       allowHalf: false,
       required: false,
@@ -223,6 +231,7 @@ export const basicComponents = [
     options: {
       defaultValue: '',
       disabled: false,
+      hidden: false,
       showAlpha: false,
       required: false,
       labelWidth: 100,
@@ -242,6 +251,7 @@ export const basicComponents = [
     icon: 'icon-select',
     options: {
       defaultValue: '',
+      hidden: false,
       multiple: false,
       disabled: false,
       clearable: false,
@@ -286,6 +296,7 @@ export const basicComponents = [
       defaultValue: false,
       required: false,
       disabled: false,
+      hidden: false,
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
@@ -305,6 +316,7 @@ export const basicComponents = [
       defaultValue: 0,
       disabled: false,
       required: false,
+      hidden: false,
       min: 0,
       max: 100,
       step: 1,
@@ -333,6 +345,7 @@ export const basicComponents = [
       font_family: '', // 字体属性
       defaultValue: '这是一句话',
       labelWidthStatus: true,
+      hidden: false,
       customClass: '',
       labelWidth: 100,
       labelWidthDisabled: false,
@@ -381,6 +394,7 @@ export const advanceComponents = [
       disabled: false,
       length: 8,
       multiple: false,
+      hidden: false,
       isQiniu: false,
       isDelete: false,
       min: 0,
@@ -406,6 +420,7 @@ export const advanceComponents = [
       width: '',
       tokenFunc: 'funcGetToken',
       token: '',
+      hidden: false,
       domain: 'http://pfp81ptt6.bkt.clouddn.com/',
       disabled: false,
       length: 9,
@@ -431,6 +446,7 @@ export const advanceComponents = [
     options: {
       defaultValue: '',
       width: '',
+      hidden: false,
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
@@ -450,6 +466,7 @@ export const advanceComponents = [
       defaultValue: [],
       width: '',
       placeholder: '',
+      hidden: false,
       disabled: false,
       clearable: false,
       remote: false,
@@ -507,6 +524,7 @@ export const advanceComponents = [
     }],
     options: {
       gutter: 0,
+      hidden: false,
       justify: 'start',
       align: 'top',
       labelWidth: 100,

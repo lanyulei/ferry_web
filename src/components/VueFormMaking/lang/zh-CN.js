@@ -78,6 +78,7 @@ export default {
         customClass: '自定义Class'
       },
       widget: {
+        diyaction: '动作设置',
         title: '字段属性',
         model: '字段标识',
         name: '标题',

@@ -36,10 +36,12 @@
               currentNode.hideTpls===null ||
               currentNode.hideTpls.indexOf(tplItem.id)===-1?false:true"
             :remote="remoteFunc"
+            :value="widgetModels[tplIndex]"
             :data="tplItem.form_structure"
             :disabled="currentNode.readonlyTpls===undefined ||
               currentNode.readonlyTpls===null ||
               currentNode.readonlyTpls.indexOf(tplItem.id)===-1?null:true"
+            @on-change="handleDataChange"
           />
         </template>
       </div>
@@ -67,6 +69,7 @@ import {
   GenerateForm
 } from '@/components/VueFormMaking'
 import 'form-making/dist/FormMaking.css'
+
 Vue.component(GenerateForm.name, GenerateForm)
 
 import {
@@ -74,12 +77,14 @@ import {
   createWorkOrder
 } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
+
 export default {
   name: 'Create',
   data() {
     return {
       submitDisabled: false,
       active: 0,
+      widgetModels: [],
       processStructureValue: {},
       ruleForm: {
         title: '',
@@ -127,6 +132,9 @@ export default {
       }).then(response => {
         this.processStructureValue = response.data
         this.currentNode = this.processStructureValue.nodes[0]
+        for (let i = 0; i < this.processStructureValue.tpls.length; i++) {
+          this.widgetModels.push({})
+        }
       })
     },
     submitAction(item) {
@@ -189,6 +197,82 @@ export default {
           })
         }
       })
+    },
+    handleDataChange(field, value, data) {
+      // formstructure 可能是由多个模版拼接的 所以是list 处理的时候也需要先套一个list
+      for (const index in this.processStructureValue.tpls) {
+        for (const item in this.processStructureValue.tpls[index].form_structure.list) {
+          if (this.processStructureValue.tpls[index].form_structure.list[item].model === field) {
+            this.widgetModels[index][field] = value
+          }
+        }
+      }
+      for (const index in this.processStructureValue.tpls) {
+        if (this.processStructureValue.tpls[index].form_structure.itemRelation[field] !== undefined) {
+          // eslint-disable-next-line no-new-func
+          const Func = new Function('self', this.processStructureValue.tpls[index].form_structure.diymethod[this.processStructureValue.tpls[index].form_structure.itemRelation[field]])
+          Func(this)
+        }
+      }
+    },
+    displayItem(target) {
+      for (const index in this.processStructureValue.tpls) {
+        for (const k in this.processStructureValue.tpls[index].form_structure.list) {
+          if (target.indexOf(this.processStructureValue.tpls[index].form_structure.list[k].model) !== -1) {
+            this.processStructureValue.tpls[index].form_structure.list[k].options.hidden = false
+          }
+        }
+      }
+    },
+    disableItem(target) {
+      for (const index in this.processStructureValue.tpls) {
+        for (const k in this.processStructureValue.tpls[index].form_structure.list) {
+          if (target.indexOf(this.processStructureValue.tpls[index].form_structure.list[k].model) !== -1) {
+            this.processStructureValue.tpls[index].form_structure.list[k].options.hidden = true
+          }
+        }
+      }
+    },
+    setItemValue(valuemap) {
+      for (const index in this.processStructureValue.tpls) {
+        for (const k in this.processStructureValue.tpls[index].form_structure.list) {
+          if (valuemap[this.processStructureValue.tpls[index].form_structure.list[k].model] !== undefined) {
+            this.widgetModels[index][this.processStructureValue.tpls[index].form_structure.list[k].model] = valuemap[this.processStructureValue.tpls[index].form_structure.list[k].model]
+          }
+        }
+      }
+    },
+    getItemValue(target) {
+      for (const i in this.widgetModels) {
+        for (const k in this.widgetModels[i]) {
+          if (k === target) {
+            return this.widgetModels[i][k]
+          }
+        }
+      }
+    },
+    setItemOptions(target, value) {
+      for (const index in this.processStructureValue.tpls) {
+        for (const k in this.processStructureValue.tpls[index].form_structure.list) {
+          if (this.processStructureValue.tpls[index].form_structure.list[k].model === target) {
+            this.processStructureValue.tpls[index].form_structure.list[k].options.options = value
+          }
+        }
+      }
+    },
+    disableWithWhite(target, white) {
+      for (const index in this.processStructureValue.tpls) {
+        for (const k in this.processStructureValue.tpls[index].form_structure.list) {
+          if (target.indexOf(this.processStructureValue.tpls[index].form_structure.list[k].model) === -1) {
+            continue
+          }
+          if (white.indexOf(this.processStructureValue.tpls[index].form_structure.list[k].model) !== -1) {
+            this.processStructureValue.tpls[index].form_structure.list[k].options.hidden = false
+          } else {
+            this.processStructureValue.tpls[index].form_structure.list[k].options.hidden = true
+          }
+        }
+      }
     }
   }
 }

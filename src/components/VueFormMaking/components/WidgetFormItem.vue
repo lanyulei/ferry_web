@@ -3,6 +3,7 @@
     v-if="element && element.key"
     :label-width="isLabel || !element.options.labelWidthStatus?'0px': elementLabelWidth + 'px'"
     class="widget-view "
+    :style="{ 'background-color': element.options.hidden? 'rgba(245, 151, 148, .3)':'rgba(236, 245, 255, .3)' }"
     :class="{active: selectWidget.key === element.key, 'is_req': element.options.required}"
     :label="isLabel || element.type==='divider' || !element.options.labelWidthStatus?'':element.name"
     @click.native.stop="handleSelectWidget(index)"
@@ -32,7 +33,7 @@
     <div v-if="selectWidget.key == element.key" class="widget-view-drag">
       <i class="iconfont icon-drag drag-widget" />
     </div>
-
+    <div class="widget-view-model"> <span>{{ element.model }}</span> </div>
   </el-form-item>
 </template>
 
