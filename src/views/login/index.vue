@@ -110,7 +110,7 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'LoginIndex',
   data() {
     return {
       isLdapTmp: false,
