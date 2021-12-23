@@ -2,6 +2,7 @@
   <img src="https://www.fdevops.com/wp-content/uploads/2020/09/1599039924-ferry_log.png">
 </p>
 
+
 <p align="center">
   <a href="https://github.com/lanyulei/ferry">
     <img src="https://www.fdevops.com/wp-content/uploads/2020/07/1595067271-badge.png">
@@ -41,8 +42,8 @@
 
 视频教程（由群内好友<稳定>提供，非常感谢。）：
 
-* ferry工单系统需要的软件准备 <https://www.bilibili.com/video/BV1sA411s7jE>
-* ferry源代码下载后第一次运行 <https://www.bilibili.com/video/BV1oy4y1v7LR>
+* ferry工单系统需要的软件准备 https://www.bilibili.com/video/BV1sA411s7jE
+* ferry源代码下载后第一次运行 https://www.bilibili.com/video/BV1oy4y1v7LR
 
 官网：[http://ferry.fdevops.com](http://ferry.fdevops.com)
 
@@ -78,14 +79,12 @@
 <ul><li>用户、角色、岗位的增删查改，批量删除，多条件搜索</li><li>角色、岗位数据导出Excel</li><li>重置用户密码</li><li>维护个人信息，上传管理头像，修改当前账户密码</li><li>部门的增删查改</li><li>菜单目录、跳转、按钮及API接口的增删查改</li><li>登陆日志管理</li><li>左菜单权限控制</li><li>页面按钮权限控制</li><li>API接口权限控制</li></ul>
 <!-- /wp:list -->
 
-快速安装部署:  
-
+快速安装部署:
 ```
 bash build.sh install
 ```
 
 启动服务：
-
 ```
 bash build.sh start
 ```
@@ -101,14 +100,14 @@ bash build.sh start
 群里只要不说骂人、侮辱人之类人身攻击的话，您就可以畅所欲言，有bug我及时修改，使用中有不懂的，我会及时回复，感谢。
 
 <p>
-  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/05/1620470212-WechatIMG391.jpeg">
+  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/12/1640275868-2021122316110810.png">
 </p>
 
-QQ群 2：1043807251
+QQ群 3：767524537
 
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
-个人微信，添加好友请描述地区、公司及名字，例如：北京-阿里巴巴-xxx。
+###个人微信，添加好友请描述地区、公司及名字，例如：北京-国美-xxx。
 
 微信号：fdevops
 
@@ -117,12 +116,11 @@ QQ群 2：1043807251
 </p>
 
 ## 特别感谢
-
 [go-amdin # 不错的后台开发框架](https://github.com/go-admin-team/go-admin)
 
 [vue-element-admin # 不错的前端模版框架](https://github.com/PanJiaChen/vue-element-admin)
 
-[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发](https://github.com/GavinZhuLei/vue-form-making.git)
+[vue-form-making # 表单设计器，开源版本比较简单，如果有能力的话可以自己进行二次开发 ](https://github.com/GavinZhuLei/vue-form-making.git)
 
 [wfd-vue # 流程设计器](https://github.com/guozhaolong/wfd-vue)
 
