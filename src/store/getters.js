@@ -15,6 +15,7 @@ const getters = {
   errorLogs: state => state.errorLog.logs,
   title: state => state.settings.title,
   logo: state => state.settings.logo,
-  isLdap: state => state.settings.isLdap
+  isLdap: state => state.settings.isLdap,
+  isVerifyCode: state => state.settings.isVerifyCode
 }
 export default getters

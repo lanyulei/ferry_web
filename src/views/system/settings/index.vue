@@ -22,7 +22,11 @@
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
-          <el-form-item label="默认LDAP登陆：">
+          <el-form-item label="验证码：">
+            <el-radio v-model="ruleForm.is_verify_code" :label="true">是</el-radio>
+            <el-radio v-model="ruleForm.is_verify_code" :label="false">否</el-radio>
+          </el-form-item>
+          <el-form-item label="LDAP登陆：">
             <el-radio v-model="ruleForm.is_ldap" :label="true">是</el-radio>
             <el-radio v-model="ruleForm.is_ldap" :label="false">否</el-radio>
           </el-form-item>
@@ -90,7 +94,8 @@ export default {
       ruleForm: {
         name: '',
         logo: '',
-        is_ldap: false
+        is_ldap: false,
+        is_verify_code: true
       },
       rules: {
         name: [
