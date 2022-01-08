@@ -2,7 +2,7 @@ import variables from '@/styles/element-variables.scss'
 import defaultSettings from '@/settings'
 import { getSettings } from '@/api/system/settings'
 
-const { title, logo, isLdap, showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
+const { title, logo, isLdap, showSettings, tagsView, fixedHeader, sidebarLogo, isVerifyCode } = defaultSettings
 
 const state = {
   theme: variables.theme,
@@ -12,7 +12,8 @@ const state = {
   sidebarLogo: sidebarLogo,
   title: title,
   logo: logo,
-  isLdap: isLdap
+  isLdap: isLdap,
+  isVerifyCode: isVerifyCode
 }
 
 const mutations = {
@@ -25,6 +26,7 @@ const mutations = {
     state.title = content.name
     state.logo = content.logo
     state.isLdap = content.is_ldap
+    state.isVerifyCode = content.is_verify_code
   }
 }
 
