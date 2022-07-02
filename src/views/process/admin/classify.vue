@@ -117,7 +117,10 @@ export default {
   data() {
     return {
       dialogFormVisibleName: 1,
-      queryParams: {},
+      queryParams: {
+        pageIndex: 1,
+        pageSize: 10
+      },
       // 遮罩层
       loading: true,
       // 选中数组
