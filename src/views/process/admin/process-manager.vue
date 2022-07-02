@@ -216,7 +216,10 @@ export default {
   },
   data() {
     return {
-      queryParams: {},
+      queryParams: {
+        pageIndex: 1,
+        pageSize: 10
+      },
       // 遮罩层
       loading: true,
       // 选中数组
