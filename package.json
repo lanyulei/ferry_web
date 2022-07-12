@@ -73,7 +73,7 @@
     "vue-codemirror-lite": "^1.0.4",
     "vue-count-to": "1.0.13",
     "vue-cropper": "^0.5.0",
-    "vue-i18n": "^5.0.3",
+    "vue-i18n": "5.0.3",
     "vue-loader": "^15.9.3",
     "vue-particles": "^1.0.9",
     "vue-quill-editor": "^3.0.6",
