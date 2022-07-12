@@ -57,27 +57,27 @@
         <el-table-column label="创建时间" align="center" prop="create_time" width="180" />
         <el-table-column label="更新时间" align="center" prop="update_time" width="180" />
         <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-          <template slot-scope="scope">
+          <template #default="{row}">
             <el-button
               v-permisaction="['process:admin:template:clone']"
               size="mini"
               type="text"
               icon="el-icon-receiving"
-              @click="handleClone(scope.row)"
+              @click="handleClone(row)"
             >克隆</el-button>
             <el-button
               v-permisaction="['process:admin:template:edit']"
               size="mini"
               type="text"
               icon="el-icon-edit"
-              @click="handleEdit(scope.row)"
+              @click="handleEdit(row)"
             >编辑</el-button>
             <el-button
               v-permisaction="['process:admin:template:delete']"
               size="mini"
               type="text"
               icon="el-icon-delete"
-              @click="handleDelete(scope.row)"
+              @click="handleDelete(row)"
             >删除</el-button>
           </template>
         </el-table-column>
