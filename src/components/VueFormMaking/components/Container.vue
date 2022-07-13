@@ -15,7 +15,7 @@
                 @start="handleMoveStart"
               >
                 <template v-for="(item, index) in basicComponents">
-                  <li v-if="basicFields.indexOf(item.type)>=0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type == 'divider'}">
+                  <li v-if="basicFields.indexOf(item.type)>=0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type === 'divider'}">
                     <a>
                       <i class="icon iconfont" :class="item.icon" />
                       <span>{{ item.name }}</span>
@@ -37,7 +37,7 @@
                 @start="handleMoveStart"
               >
                 <template v-for="(item, index) in advanceComponents">
-                  <li v-if="advanceFields.indexOf(item.type) >= 0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type == 'table'}">
+                  <li v-if="advanceFields.indexOf(item.type) >= 0" :key="index" class="form-edit-widget-label" :class="{'no-put': item.type === 'table'}">
                     <a>
                       <i class="icon iconfont" :class="item.icon" />
                       <span>{{ item.name }}</span>
@@ -82,7 +82,7 @@
             <el-button v-if="generateJson" type="text" size="medium" icon="el-icon-tickets" @click="handleGenerateJson">{{ $t('fm.actions.json') }}</el-button>
             <el-button v-if="generateCode" type="text" size="medium" icon="el-icon-document" @click="handleGenerateCode">{{ $t('fm.actions.code') }}</el-button>
           </el-header>
-          <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
+          <el-main :class="{'widget-empty': widgetForm.list.length === 0}">
 
             <widget-form v-if="!resetJson" ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect" />
           </el-main>
@@ -91,12 +91,12 @@
         <el-aside class="widget-config-container" style="width: 305px;">
           <el-container>
             <el-header height="45px">
-              <div class="config-tab" :class="{active: configTab=='widget'}" @click="handleConfigSelect('widget')">{{ $t('fm.config.widget.title') }}</div>
-              <div class="config-tab" :class="{active: configTab=='form'}" @click="handleConfigSelect('form')">{{ $t('fm.config.form.title') }}</div>
+              <div class="config-tab" :class="{active: configTab==='widget'}" @click="handleConfigSelect('widget')">{{ $t('fm.config.widget.title') }}</div>
+              <div class="config-tab" :class="{active: configTab==='form'}" @click="handleConfigSelect('form')">{{ $t('fm.config.form.title') }}</div>
             </el-header>
             <el-main class="config-content">
-              <widget-config v-if="widgetFormSelect!==null" v-show="configTab=='widget'" :data="widgetFormSelect" />
-              <form-config v-show="configTab=='form'" :data="widgetForm.config" />
+              <widget-config v-if="widgetFormSelect!==null" v-show="configTab==='widget'" :data="widgetFormSelect" />
+              <form-config v-show="configTab==='form'" :data="widgetForm.config" />
             </el-main>
           </el-container>
 
@@ -301,7 +301,7 @@ export default {
       handler: function(val) {
       }
     },
-    '$lang': function(val) {
+    '$i18n.locale': function(val) {
       this._loadComponents()
     }
   },

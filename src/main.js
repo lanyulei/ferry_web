@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 
 import Cookies from 'js-cookie'
 
@@ -39,7 +40,9 @@ Vue.use(VueEditor)
 
 import iconPicker from 'e-icon-picker'
 import 'e-icon-picker/dist/index.css'// 基础样式
-import 'e-icon-picker/dist/main.css' // fontAwesome 图标库样式
+import 'e-icon-picker/dist/main.css'
+import enLocale from 'element-ui/lib/locale/lang/en'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN' // fontAwesome 图标库样式
 Vue.use(iconPicker)
 
 // 全局方法挂载
@@ -66,7 +69,46 @@ Vue.prototype.msgInfo = function(msg) {
 Vue.use(permission)
 
 Vue.use(Element, {
+  i18n: (key, value) => i18n.t(key, value),
   size: Cookies.get('size') || 'medium' // set element-ui default size
+})
+
+const messages = {
+  'en-US': {
+    header: {
+      title: 'FormMaking',
+      document: 'Docs',
+      pricing: 'Pricing',
+      advanced: 'Advanced'
+    }
+  },
+  'zh-CN': {
+    header: {
+      title: '表单设计器',
+      document: '使用文档',
+      pricing: '商业授权',
+      advanced: '高级版本'
+    }
+  }
+}
+
+const i18n = new VueI18n({
+  messages: {
+    'en-US': {
+      ...enLocale, ...messages['en-US']
+    },
+    'zh-CN': {
+      ...zhLocale, ...messages['zh-CN']
+    }
+  }
+})
+
+// import 'form-making/dist/FormMaking.css'
+// import FormMaking from 'form-making'
+import FormMaking from './components/VueFormMaking/index'
+// Vue.use(FormMaking)
+Vue.use(FormMaking, {
+  i18n
 })
 
 // register global utility filters
@@ -78,6 +120,7 @@ Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   render: h => h(App)
