@@ -9,6 +9,10 @@ export function parseTime(time, pattern) {
   if (typeof time === 'object') {
     date = time
   } else {
+    // 兼容 Mac, ios
+    if ((typeof time === 'string') && (/-/g.test(time))) {
+      time = time.replace(/-/g, '/')
+    }
     if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
       time = parseInt(time)
     }
