@@ -109,11 +109,7 @@ QQ群 3：767524537
 
 ###个人微信，添加好友请描述地区、公司及名字，例如：北京-国美-xxx。
 
-微信号：fdevops
-
-<p>
-  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2021/03/1616727212-WechatIMG3.jpeg">
-</p>
+微信号：lanyulei666
 
 ## 特别感谢
 [go-amdin # 不错的后台开发框架](https://github.com/go-admin-team/go-admin)
