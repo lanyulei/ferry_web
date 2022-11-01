@@ -10,7 +10,7 @@
       :label-width="data.config.labelWidth + 'px'"
     >
       <template v-for="item in data.list">
-        <template v-if="item.type == 'grid'">
+        <template v-if="item.type === 'grid'">
           <el-row
             :key="item.key"
             type="flex"
@@ -20,7 +20,7 @@
           >
             <el-col v-for="(col, colIndex) in item.columns" :key="colIndex" :span="col.span">
               <template v-for="citem in col.list">
-                <el-form-item v-if="citem.type=='blank'" :key="citem.key" :label="citem.name" :prop="citem.model">
+                <el-form-item v-if="citem.type==='blank'" :key="citem.key" :label="citem.name" :prop="citem.model">
                   <slot :name="citem.model" :model="models" />
                 </el-form-item>
                 <genetate-form-item
@@ -39,7 +39,7 @@
           </el-row>
         </template>
 
-        <template v-else-if="item.type == 'blank'">
+        <template v-else-if="item.type === 'blank'">
           <el-form-item :key="item.key" :label="item.name" :prop="item.model">
             <slot :name="item.model" :model="models" />
           </el-form-item>
@@ -201,7 +201,7 @@ export default {
           } else {
             if (genList[i].type === 'blank') {
               this.$set(this.models, genList[i].model, genList[i].options.defaultType === 'String' ? '' : (genList[i].options.defaultType === 'Object' ? {} : []))
-            } if (genList[i].type === 'subform') { 
+            } if (genList[i].type === 'subform') {
               this.$set(this.models, genList[i].model, [])
             } else {
               this.models[genList[i].model] = genList[i].options.defaultValue

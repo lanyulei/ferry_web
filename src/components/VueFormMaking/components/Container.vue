@@ -184,7 +184,6 @@ import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Clipboard from 'clipboard'
 import { basicComponents, layoutComponents, advanceComponents } from './componentsConfig.js'
-import request from '../util/request.js'
 import generateCode from './generateCode.js'
 
 var ace = require('ace-builds/src-noconflict/ace')
@@ -258,26 +257,7 @@ export default {
       jsonVisible: false,
       codeVisible: false,
       uploadVisible: false,
-      remoteFuncs: {
-        func_test(resolve) {
-          setTimeout(() => {
-            const options = [
-              { id: '1', name: '1111' },
-              { id: '2', name: '2222' },
-              { id: '3', name: '3333' }
-            ]
-
-            resolve(options)
-          }, 2000)
-        },
-        funcGetToken(resolve) {
-          request.get('http://tools-server.xiaoyaoji.cn/api/uptoken').then(res => {
-            resolve(res.uptoken)
-          })
-        },
-        upload_callback(response, file, fileList) {
-        }
-      },
+      remoteFuncs: {},
       widgetModels: {},
       blank: '',
       htmlTemplate: '',

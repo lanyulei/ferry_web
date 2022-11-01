@@ -74,6 +74,7 @@ import {
   createWorkOrder
 } from '@/api/process/work-order'
 import { listUser } from '@/api/system/sysuser'
+import { getDeptList } from '@/api/system/dept'
 export default {
   name: 'Create',
   data() {
@@ -106,13 +107,16 @@ export default {
       },
       remoteFunc: {
         // 获取用户列表
-        userList(resolve) {
-          listUser({
+        async userList(resolve) {
+          const res = await listUser({
             pageSize: 999999
-          }).then(response => {
-            const options = response.data.list
-            resolve(options)
           })
+          const options = res.data.list
+          resolve(options)
+        },
+        async deptTreeList(resolve) {
+          const res = await getDeptList()
+          resolve(res.data)
         }
       }
     }

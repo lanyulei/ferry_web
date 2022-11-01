@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="element.type == 'input'">
+    <template v-if="element.type === 'input'">
       <el-input
         v-model="element.options.defaultValue"
         :style="{width: element.options.width}"
@@ -9,7 +9,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'textarea'">
+    <template v-if="element.type === 'textarea'">
       <el-input
         v-model="element.options.defaultValue"
         type="textarea"
@@ -20,7 +20,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'number'">
+    <template v-if="element.type === 'number'">
       <el-input-number
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
@@ -29,7 +29,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'radio'">
+    <template v-if="element.type === 'radio'">
       <el-radio-group
         v-model="element.options.defaultValue"
         :style="{width: element.options.width}"
@@ -46,7 +46,7 @@
       </el-radio-group>
     </template>
 
-    <template v-if="element.type == 'checkbox'">
+    <template v-if="element.type === 'checkbox'">
       <el-checkbox-group
         v-model="element.options.defaultValue"
         :style="{width: element.options.width}"
@@ -63,7 +63,7 @@
       </el-checkbox-group>
     </template>
 
-    <template v-if="element.type == 'time'">
+    <template v-if="element.type === 'time'">
       <el-time-picker
         v-model="element.options.defaultValue"
         :is-range="element.options.isRange"
@@ -79,7 +79,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'date'">
+    <template v-if="element.type === 'date'">
       <el-date-picker
         v-model="element.options.defaultValue"
         :type="element.options.type"
@@ -95,7 +95,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'rate'">
+    <template v-if="element.type === 'rate'">
       <el-rate
         v-model="element.options.defaultValue"
         :max="element.options.max"
@@ -104,7 +104,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'color'">
+    <template v-if="element.type === 'color'">
       <el-color-picker
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
@@ -112,7 +112,7 @@
       />
     </template>
 
-    <template v-if="element.type == 'select'">
+    <template v-if="element.type === 'select'">
       <el-select
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
@@ -125,14 +125,14 @@
       </el-select>
     </template>
 
-    <template v-if="element.type=='switch'">
+    <template v-if="element.type==='switch'">
       <el-switch
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
       />
     </template>
 
-    <template v-if="element.type=='slider'">
+    <template v-if="element.type==='slider'">
       <el-slider
         v-model="element.options.defaultValue"
         :min="element.options.min"
@@ -145,7 +145,7 @@
       />
     </template>
 
-    <template v-if="element.type=='imgupload'">
+    <template v-if="element.type==='imgupload'">
       <fm-upload
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
@@ -157,11 +157,11 @@
       />
     </template>
 
-    <template v-if="element.type=='file'">
+    <template v-if="element.type==='file'">
       <FileUpload :element="element" />
     </template>
 
-    <template v-if="element.type == 'cascader'">
+    <template v-if="element.type === 'cascader'">
       <el-cascader
         v-model="element.options.defaultValue"
         :disabled="element.options.disabled"
@@ -170,17 +170,18 @@
         :placeholder="element.options.placeholder"
         :style="{width: element.options.width}"
         :options="element.options.remote?element.options.remoteOptions:element.options.options"
+        :props="element.options.props"
       />
     </template>
 
-    <template v-if="element.type == 'editor'">
+    <template v-if="element.type === 'editor'">
       <vue-editor
         v-model="element.options.defaultValue"
         :style="{width: element.options.width}"
       />
     </template>
 
-    <template v-if="element.type=='blank'">
+    <template v-if="element.type==='blank'">
       <div style="height: 50px;color: #999;background: #eee;line-height:50px;text-align:center;">{{ $t('fm.components.fields.blank') }}</div>
     </template>
 
@@ -222,7 +223,7 @@ import FmUpload from './Upload'
 import FileUpload from './Upload/file'
 export default {
   name: 'WidgetFormFields',
-  /* eslint-disable */ 
+  /* eslint-disable */
   props: ['element'],
   components: {
     FmUpload,

@@ -2,7 +2,7 @@
   <div v-if="show">
     <el-form label-position="top">
       <!-- 字段标识 -->
-      <el-form-item v-if="data.type!='grid'" :label="$t('fm.config.widget.model')">
+      <el-form-item v-if="data.type!=='grid'" :label="$t('fm.config.widget.model')">
         <el-input v-model="data.model" />
       </el-form-item>
       <!-- 标题 -->
@@ -126,7 +126,7 @@
           </div>
         </template>
         <template v-else>
-          <template v-if="data.type=='radio' || (data.type=='select'&&!data.options.multiple)">
+          <template v-if="data.type==='radio' || (data.type==='select'&&!data.options.multiple)">
             <el-radio-group v-model="data.options.defaultValue">
               <draggable
                 tag="ul"
