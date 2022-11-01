@@ -10,7 +10,7 @@
       <template v-if="widget.type === 'color'">
         <div style="width: 32px; height: 20px; margin-top: 6px; border-radius: 3px" :style="{'background-color': dataModel}" />
       </template>
-      <template v-else-if="widget.type=='switch'">
+      <template v-else-if="widget.type==='switch'">
         <el-switch
           v-model="dataModel"
           :disabled="true"
@@ -20,14 +20,14 @@
         <div class="previewEditorDiv" v-html="dataModel" />
       </template>
 
-      <template v-else-if="widget.type=='file'">
+      <template v-else-if="widget.type==='file'">
         <div v-for="(uploadUrlItem, uploadUrlIndex) of dataModel" :key="uploadUrlIndex">
           <i style="color: #909399;" class="el-icon-document" />
           <a :href="uploadUrlItem.url" target="_blank">{{ uploadUrlItem.name }}</a>
         </div>
       </template>
 
-      <template v-else-if="widget.type=='imgupload'">
+      <template v-else-if="widget.type==='imgupload'">
         <fm-upload
           v-model="dataModel"
           :style="{'width': widget.options.width}"
@@ -36,7 +36,7 @@
           :preview="preview"
         />
       </template>
-      <template v-else-if="widget.type =='rate'">
+      <template v-else-if="widget.type ==='rate'">
         <el-rate
           v-model="dataModel"
           :max="widget.options.max"
@@ -71,6 +71,7 @@
           :disabled="true"
           :show-all-levels="widget.options.showAllLevels"
           :options="widget.options.remote?widget.options.remoteOptions:widget.options.options"
+          :props="widget.options.props"
         />
       </template>
       <template v-else>
@@ -178,7 +179,7 @@
         />
       </template>
 
-      <template v-if="widget.type=='date'">
+      <template v-if="widget.type==='date'">
         <el-date-picker
           v-model="dataModel"
           :type="widget.options.type"
@@ -195,7 +196,7 @@
         />
       </template>
 
-      <template v-if="widget.type =='rate'">
+      <template v-if="widget.type ==='rate'">
         <el-rate
           v-model="dataModel"
           :max="widget.options.max"
@@ -226,14 +227,14 @@
         </el-select>
       </template>
 
-      <template v-if="widget.type=='switch'">
+      <template v-if="widget.type==='switch'">
         <el-switch
           v-model="dataModel"
           :disabled="widget.options.disabled"
         />
       </template>
 
-      <template v-if="widget.type=='slider'">
+      <template v-if="widget.type==='slider'">
         <el-slider
           v-model="dataModel"
           :min="widget.options.min"
@@ -246,7 +247,7 @@
         />
       </template>
 
-      <template v-if="widget.type=='imgupload'">
+      <template v-if="widget.type==='imgupload'">
         <fm-upload
           v-model="dataModel"
           :disabled="widget.options.disabled"
@@ -265,7 +266,7 @@
         />
       </template>
 
-      <template v-if="widget.type=='file'">
+      <template v-if="widget.type==='file'">
         <FileUpload :element="widget" :data-model="dataModel" @fileList="fileList" />
       </template>
 
@@ -286,6 +287,7 @@
           :placeholder="widget.options.placeholder"
           :style="{width: widget.options.width}"
           :options="widget.options.remote?widget.options.remoteOptions:widget.options.options"
+          :props="widget.options.props"
         />
       </template>
 
@@ -385,15 +387,24 @@ export default {
     }
   },
   created() {
-    if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
-      this.remote[this.widget.options.remoteFunc]((data) => {
-        this.widget.options.remoteOptions = data.map(item => {
-          return {
-            value: item[this.widget.options.props.value],
-            label: item[this.widget.options.props.label],
-            children: item[this.widget.options.props.children]
+    if (this.widget.type !== 'cascader') {
+      if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
+        this.remote[this.widget.options.remoteFunc]((data) => {
+          if (this.widget.type !== 'cascader') {
+            this.widget.options.remoteOptions = data.map(item => {
+              return {
+                value: item[this.widget.options.props.value],
+                label: item[this.widget.options.props.label],
+                children: item[this.widget.options.props.children]
+              }
+            })
           }
         })
+      }
+    } else {
+      this.remote[this.widget.options.remoteFunc](res=>{
+        this.widget.options.remoteOptions = res
+        this.cascaderChild(this.widget.options.remoteOptions)
       })
     }
 
@@ -419,6 +430,15 @@ export default {
     this.handleDisplayVerifiy()
   },
   methods: {
+    cascaderChild(options) {
+      options.forEach(i => {
+        if (i.children && i.children.length > 0) {
+          this.cascaderChild(i.children)
+        } else {
+          i.children = null
+        }
+      })
+    },
     fileList(files) {
       this.dataModel = files
     },

@@ -68,26 +68,28 @@
                 </span>
               </el-form-item>
             </el-tooltip>
-            <el-form-item prop="code" style="width: 66%;float: left; margin-bottom: 13px">
-              <span class="svg-container">
-                <svg-icon icon-class="validCode" />
-              </span>
-              <el-input
-                ref="username"
-                v-model="loginForm.code"
-                placeholder="验证码"
-                name="username"
-                type="text"
-                tabindex="3"
-                maxlength="5"
-                autocomplete="off"
-                style=" width: 75%;"
-                @keyup.enter.native="handleLogin"
-              />
-            </el-form-item>
-            <div class="login-code" style="cursor:pointer; width: 30%;height: 48px;float: right;background-color: #f0f1f5;">
-              <img style="height: 48px;width: 100%;border: 1px solid rgba(0,0,0, 0.1);border-radius:5px;" :src="codeUrl" @click="getCode">
-            </div>
+            <template v-if="isVerifyCodeTmp">
+              <el-form-item prop="code" style="width: 66%;float: left; margin-bottom: 13px">
+                <span class="svg-container">
+                  <svg-icon icon-class="validCode" />
+                </span>
+                <el-input
+                  ref="username"
+                  v-model="loginForm.code"
+                  placeholder="验证码"
+                  name="username"
+                  type="text"
+                  tabindex="3"
+                  maxlength="5"
+                  autocomplete="off"
+                  style=" width: 75%;"
+                  @keyup.enter.native="handleLogin"
+                />
+              </el-form-item>
+              <div class="login-code" style="cursor:pointer; width: 30%;height: 48px;float: right;background-color: #f0f1f5;">
+                <img style="height: 48px;width: 100%;border: 1px solid rgba(0,0,0, 0.1);border-radius:5px;" :src="codeUrl" @click="getCode">
+              </div>
+            </template>
             <div prop="code" style="width: 100%;float: left;margin-bottom: 13px">
               <el-checkbox v-model="isLdapTmp">LDAP登陆</el-checkbox>
             </div>
@@ -110,7 +112,7 @@ import moment from 'moment'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Login',
+  name: 'LoginIndex',
   data() {
     return {
       isLdapTmp: false,
@@ -142,7 +144,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['title', 'logo', 'isLdap'])
+    ...mapGetters(['title', 'logo', 'isLdap', 'isVerifyCode']),
+    isVerifyCodeTmp: function() {
+      if (this.isVerifyCode) {
+        this.getCode()
+      }
+      return this.isVerifyCode
+    }
   },
   watch: {
     $route: {
@@ -159,10 +167,16 @@ export default {
       handler: function(val) {
         this.isLdapTmp = val
       }
+    },
+    isVerifyCode: {
+      handler: function(val) {
+        if (val) {
+          this.getCode()
+        }
+      }
     }
   },
   created() {
-    this.getCode()
     // window.addEventListener('storage', this.afterQRScan)
     this.getCurrentTime()
   },

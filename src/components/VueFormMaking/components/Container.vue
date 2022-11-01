@@ -107,7 +107,7 @@
             >{{ $t('fm.actions.code') }}
             </el-button>
           </el-header>
-          <el-main :class="{'widget-empty': widgetForm.list.length == 0}">
+          <el-main :class="{'widget-empty': widgetForm.list.length === 0}">
 
             <widget-form v-if="!resetJson" ref="widgetForm" :data="widgetForm" :select.sync="widgetFormSelect" />
           </el-main>
@@ -225,7 +225,6 @@ import CusDialog from './CusDialog'
 import GenerateForm from './GenerateForm'
 import Clipboard from 'clipboard'
 import { basicComponents, layoutComponents, advanceComponents } from './componentsConfig.js'
-import request from '../util/request.js'
 import generateCode from './generateCode.js'
 
 var ace = require('ace-builds/src-noconflict/ace')
@@ -345,7 +344,7 @@ export default {
       handler: function(val) {
       }
     },
-    '$lang': function(val) {
+    '$i18n.locale': function(val) {
       this._loadComponents()
     }
   },

@@ -25,12 +25,12 @@
       <WidgetFormFields :element="element" />
     </div>
 
-    <div v-if="selectWidget.key == element.key" class="widget-view-action">
+    <div v-if="selectWidget.key === element.key" class="widget-view-action">
       <i class="iconfont icon-icon_clone" @click.stop="handleWidgetClone(index)" />
       <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)" />
     </div>
 
-    <div v-if="selectWidget.key == element.key" class="widget-view-drag">
+    <div v-if="selectWidget.key === element.key" class="widget-view-drag">
       <i class="iconfont icon-drag drag-widget" />
     </div>
     <div class="widget-view-model"> <span>{{ element.model }}</span> </div>
