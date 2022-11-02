@@ -108,8 +108,87 @@
         <el-radio-group v-model="data.options.remote" size="mini" style="margin-bottom:10px;">
           <el-radio-button :label="false">{{ $t('fm.config.widget.staticData') }}</el-radio-button>
           <el-radio-button :label="true">{{ $t('fm.config.widget.remoteData') }}</el-radio-button>
+          <el-radio-button :label="99">{{ $t('fm.config.widget.requestMethod') }}</el-radio-button>
         </el-radio-group>
-        <template v-if="data.options.remote">
+        <template v-if="data.options.remote === 99">
+          <div class="form-request-method">
+            <div>
+              <div class="form-request-method-title">URL</div>
+              <div class="form-request-method-content">
+                <el-input v-model="data.options.requestMethod.url" placeholder="请输入URL" size="mini" />
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title">请求方式</div>
+              <div class="form-request-method-content">
+                <el-radio-group v-model="data.options.requestMethod.method" size="mini">
+                  <el-radio label="get">Get</el-radio>
+                  <el-radio label="post">Post</el-radio>
+                </el-radio-group>
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title" style="margin-bottom: 6px">参数（JSON）</div>
+              <div class="form-request-method-content">
+                <el-input
+                  v-model="data.options.requestMethod.params"
+                  size="mini"
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入内容"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title" style="margin-bottom: 6px">请求头（JSON）</div>
+              <div class="form-request-method-content">
+                <el-input
+                  v-model="data.options.requestMethod.headers"
+                  size="mini"
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入内容"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title" style="margin-bottom: 6px">超时时间</div>
+              <div class="form-request-method-content">
+                <el-input
+                  v-model="data.options.requestMethod.timeout"
+                  size="mini"
+                  type="number"
+                  placeholder="请输入内容"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title" style="margin-bottom: 6px">返回字段</div>
+              <div class="form-request-method-content">
+                <el-input
+                  v-model="data.options.requestMethod.result"
+                  size="mini"
+                  placeholder="请输入内容"
+                />
+              </div>
+            </div>
+            <div>
+              <div class="form-request-method-title" style="margin-bottom: 6px">字段映射</div>
+              <div class="form-request-method-content">
+                <el-input v-model="data.options.props.value" size="mini" style="">
+                  <template slot="prepend">{{ $t('fm.config.widget.value') }}</template>
+                </el-input>
+                <el-input v-model="data.options.props.label" size="mini" style="">
+                  <template slot="prepend">{{ $t('fm.config.widget.label') }}</template>
+                </el-input>
+                <el-input v-if="data.type === 'cascader'" v-model="data.options.props.children" size="mini" style="">
+                  <template slot="prepend">{{ $t('fm.config.widget.childrenOption') }}</template>
+                </el-input>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else-if="data.options.remote">
           <div>
             <el-input v-model="data.options.remoteFunc" size="mini" style="">
               <template slot="prepend">{{ $t('fm.config.widget.remoteFunc') }}</template>
@@ -221,21 +300,21 @@
         </template>
       </el-form-item>
       <!-- 默认值 -->
-      <el-form-item v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type == 'textarea' || data.type == 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')" :label="$t('fm.config.widget.defaultValue')">
+      <el-form-item v-if="Object.keys(data.options).indexOf('defaultValue')>=0 && (data.type === 'textarea' || data.type === 'input' || data.type=='rate' || data.type=='color' || data.type=='switch')" :label="$t('fm.config.widget.defaultValue')">
         <el-input v-if="data.type=='textarea'" v-model="data.options.defaultValue" type="textarea" :rows="5" />
         <el-input v-if="data.type=='input'" v-model="data.options.defaultValue" />
-        <el-rate v-if="data.type == 'rate'" v-model="data.options.defaultValue" style="display:inline-block;vertical-align: middle;" :max="data.options.max" :allow-half="data.options.allowHalf" />
-        <el-button v-if="data.type == 'rate'" type="text" style="display:inline-block;vertical-align: middle;margin-left: 10px;" @click="data.options.defaultValue=0">{{ $t('fm.actions.clear') }}</el-button>
+        <el-rate v-if="data.type === 'rate'" v-model="data.options.defaultValue" style="display:inline-block;vertical-align: middle;" :max="data.options.max" :allow-half="data.options.allowHalf" />
+        <el-button v-if="data.type === 'rate'" type="text" style="display:inline-block;vertical-align: middle;margin-left: 10px;" @click="data.options.defaultValue=0">{{ $t('fm.actions.clear') }}</el-button>
         <el-color-picker
-          v-if="data.type == 'color'"
+          v-if="data.type === 'color'"
           v-model="data.options.defaultValue"
           :show-alpha="data.options.showAlpha"
         />
         <el-switch v-if="data.type=='switch'" v-model="data.options.defaultValue" />
       </el-form-item>
       <!-- 显示类型 -->
-      <template v-if="data.type == 'time' || data.type == 'date'">
-        <el-form-item v-if="data.type == 'date'" :label="$t('fm.config.widget.showType')">
+      <template v-if="data.type === 'time' || data.type === 'date'">
+        <el-form-item v-if="data.type === 'date'" :label="$t('fm.config.widget.showType')">
           <el-select v-model="data.options.type">
             <el-option value="year" />
             <el-option value="month" />
@@ -247,29 +326,29 @@
             <el-option value="daterange" />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="data.type == 'time'" :label="$t('fm.config.widget.isRange')">
+        <el-form-item v-if="data.type === 'time'" :label="$t('fm.config.widget.isRange')">
           <el-switch
             v-model="data.options.isRange"
           />
         </el-form-item>
-        <el-form-item v-if="data.type == 'date'" :label="$t('fm.config.widget.isTimestamp')">
+        <el-form-item v-if="data.type === 'date'" :label="$t('fm.config.widget.isTimestamp')">
           <el-switch
             v-model="data.options.timestamp"
           />
         </el-form-item>
-        <el-form-item v-if="(!data.options.isRange && data.type == 'time') || (data.type != 'time' && data.options.type != 'datetimerange' && data.options.type != 'daterange')" :label="$t('fm.config.widget.placeholder')">
+        <el-form-item v-if="(!data.options.isRange && data.type === 'time') || (data.type !== 'time' && data.options.type !== 'datetimerange' && data.options.type !== 'daterange')" :label="$t('fm.config.widget.placeholder')">
           <el-input v-model="data.options.placeholder" />
         </el-form-item>
-        <el-form-item v-if="(data.options.isRange) || data.options.type=='datetimerange' || data.options.type=='daterange'" :label="$t('fm.config.widget.startPlaceholder')">
+        <el-form-item v-if="(data.options.isRange) || data.options.type==='datetimerange' || data.options.type==='daterange'" :label="$t('fm.config.widget.startPlaceholder')">
           <el-input v-model="data.options.startPlaceholder" />
         </el-form-item>
-        <el-form-item v-if="data.options.isRange || data.options.type=='datetimerange' || data.options.type=='daterange'" :label="$t('fm.config.widget.endPlaceholder')">
+        <el-form-item v-if="data.options.isRange || data.options.type==='datetimerange' || data.options.type==='daterange'" :label="$t('fm.config.widget.endPlaceholder')">
           <el-input v-model="data.options.endPlaceholder" />
         </el-form-item>
         <el-form-item :label="$t('fm.config.widget.format')">
           <el-input v-model="data.options.format" />
         </el-form-item>
-        <el-form-item v-if="data.type=='time' && Object.keys(data.options).indexOf('isRange')>=0" :label="$t('fm.config.widget.defaultValue')">
+        <el-form-item v-if="data.type==='time' && Object.keys(data.options).indexOf('isRange')>=0" :label="$t('fm.config.widget.defaultValue')">
           <el-time-picker
             v-if="!data.options.isRange"
             key="1"
@@ -290,7 +369,7 @@
         </el-form-item>
       </template>
       <!-- 图片上传 -->
-      <template v-if="data.type=='imgupload' || data.type=='file'">
+      <template v-if="data.type==='imgupload' || data.type==='file'">
 
         <el-form-item :label="$t('fm.config.widget.limit')">
           <el-input v-model.number="data.options.length" type="number" />
@@ -476,19 +555,19 @@
           </div>
         </el-form-item>
       </template>
-      <el-form-item v-if="Object.keys(data.options).indexOf('displayVerifiy')>=0" :label="$t('fm.config.widget.displayVerifiy')">
-        <el-radio-group v-model="data.options.displayVerifiy.type">
+      <el-form-item v-if="Object.keys(data.options).indexOf('displayVerify')>=0" :label="$t('fm.config.widget.displayVerify')">
+        <el-radio-group v-model="data.options.displayVerify.type">
           <el-radio label="hide">不校验</el-radio>
           <el-radio label="and">与</el-radio>
           <el-radio label="or">或</el-radio>
         </el-radio-group>
-        <div v-if="data.options.displayVerifiy.type !== 'hide'">
-          <template v-for="(item, index) in data.options.displayVerifiy.list">
+        <div v-if="data.options.displayVerify.type !== 'hide'">
+          <template v-for="(item, index) in data.options.displayVerify.list">
             <div :key="item.model">
-              <el-input v-model="item.model" size="mini" :placeholder="$t('fm.config.widget.displayVerifiyPlaceholderModel')" />
-              <el-input v-model="item.value" size="mini" :placeholder="$t('fm.config.widget.displayVerifiyPlaceholderValue')" />
+              <el-input v-model="item.model" size="mini" :placeholder="$t('fm.config.widget.displayVerifyPlaceholderModel')" />
+              <el-input v-model="item.value" size="mini" :placeholder="$t('fm.config.widget.displayVerifyPlaceholderValue')" />
               <el-button v-if="index > 0" type="text" icon="el-icon-remove-outline" @click="delDisplayVerifiy(index)">删  除</el-button>
-              <hr v-if="data.options.displayVerifiy.list.length > 1" style="background-color: #dcdfe6; border:none; height:1px;">
+              <hr v-if="data.options.displayVerify.list.length > 1" style="background-color: #dcdfe6; border:none; height:1px;">
             </div>
           </template>
           <el-button type="text" icon="el-icon-circle-plus-outline" @click="addDisplayVerifiy">新  增</el-button>
@@ -608,13 +687,13 @@ export default {
   },
   methods: {
     addDisplayVerifiy() {
-      this.data.options.displayVerifiy.list.push({
+      this.data.options.displayVerify.list.push({
         model: (new Date()).valueOf(),
         value: '字段值'
       })
     },
     delDisplayVerifiy(index) {
-      this.data.options.displayVerifiy.list.splice(index, 1)
+      this.data.options.displayVerify.list.splice(index, 1)
     },
     // 级联选择器
     handleAddCascaderTopDialog() {
@@ -767,7 +846,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .custom-tree-node {
     flex: 1;
     display: flex;
@@ -775,5 +854,14 @@ export default {
     justify-content: space-between;
     font-size: 14px;
     padding-right: 8px;
+  }
+  .form-request-method {
+    .form-request-method-title {
+      font-size: 13px;
+      height: 25px;
+    }
+    .form-request-method-content {
+
+    }
   }
 </style>

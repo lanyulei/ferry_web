@@ -14,7 +14,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -36,7 +36,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -60,7 +60,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -103,7 +103,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -143,7 +143,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -208,7 +208,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -228,7 +228,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -262,6 +262,14 @@ export const basicComponents = [
       remote: false,
       filterable: false,
       remoteOptions: [],
+      requestMethod: {
+        url: '',
+        method: 'get',
+        params: '{}',
+        headers: '{}',
+        result: 'data',
+        timeout: 10
+      },
       props: {
         value: 'value',
         label: 'label'
@@ -270,7 +278,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -289,7 +297,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -314,7 +322,7 @@ export const basicComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -336,7 +344,7 @@ export const basicComponents = [
       customClass: '',
       labelWidth: 100,
       labelWidthDisabled: false,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -356,7 +364,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -389,7 +397,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -416,7 +424,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -434,7 +442,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -486,7 +494,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -512,7 +520,7 @@ export const advanceComponents = [
       labelWidth: 100,
       labelWidthDisabled: false,
       labelWidthStatus: true,
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',
@@ -554,7 +562,7 @@ export const layoutComponents = [
       font_family: '', // 字体属性
       direction: 'horizontal', // horizontal / vertical 设置分割线方向
       content_position: 'center', // left / right / center 设置分割线文案的位置
-      displayVerifiy: {
+      displayVerify: {
         type: 'hide',
         list: [{
           model: '字段标识',

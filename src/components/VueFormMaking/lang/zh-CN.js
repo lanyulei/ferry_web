@@ -104,6 +104,7 @@ export default {
         option: '选项',
         staticData: '静态数据',
         remoteData: '远端数据',
+        requestMethod: '请求方法',
         remoteFunc: '远端方法',
         value: '值',
         label: '标签',
@@ -178,9 +179,9 @@ export default {
         validatorType: '格式不正确',
         validatorPattern: '格式不匹配',
         showAllLevels: '完整路径',
-        displayVerifiy: '显示校验',
-        displayVerifiyPlaceholderModel: '请输入字段标识',
-        displayVerifiyPlaceholderValue: '请输入字段值'
+        displayVerify: '显示校验',
+        displayVerifyPlaceholderModel: '请输入字段标识',
+        displayVerifyPlaceholderValue: '请输入字段值'
       }
     },
     upload: {

@@ -1,6 +1,6 @@
 <template>
   <div class="widget-form-container">
-    <div v-if="data.list.length == 0" class="form-empty">{{ $t('fm.description.containerEmpty') }}</div>
+    <div v-if="data.list.length === 0" class="form-empty">{{ $t('fm.description.containerEmpty') }}</div>
     <el-form :size="data.config.size" label-suffix=":" :label-position="data.config.labelPosition" :label-width="data.config.labelWidth + 'px'">
 
       <draggable
@@ -14,13 +14,13 @@
         <transition-group name="fade" tag="div" class="widget-form-list">
           <template v-for="(element, index) in data.list">
             <!-- 珊格 -->
-            <template v-if="element.type == 'grid'">
+            <template v-if="element.type === 'grid'">
               <el-row
                 v-if="element && element.key"
                 :key="element.key"
                 class="widget-col widget-view"
                 type="flex"
-                :class="{active: selectWidget.key == element.key}"
+                :class="{active: selectWidget.key === element.key}"
                 :gutter="element.options.gutter ? element.options.gutter : 0"
                 :justify="element.options.justify"
                 :align="element.options.align"
@@ -52,18 +52,18 @@
 
                   </draggable>
                 </el-col>
-                <div v-if="selectWidget.key == element.key" class="widget-view-action widget-col-action">
+                <div v-if="selectWidget.key === element.key" class="widget-view-action widget-col-action">
 
                   <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)" />
                 </div>
 
-                <div v-if="selectWidget.key == element.key" class="widget-view-drag widget-col-drag">
+                <div v-if="selectWidget.key === element.key" class="widget-view-drag widget-col-drag">
                   <i class="iconfont icon-drag drag-widget" />
                 </div>
               </el-row>
             </template>
             <!-- 子表单 -->
-            <template v-else-if="element.type == 'subform'">
+            <template v-else-if="element.type === 'subform'">
               <el-row
                 v-if="element && element.key"
                 :key="element.key"
@@ -77,7 +77,7 @@
                 >
                   <div
                     type="flex"
-                    :class="{active: selectWidget.key == element.key}"
+                    :class="{active: selectWidget.key === element.key}"
                     :gutter="element.options.gutter ? element.options.gutter : 0"
                     :justify="element.options.justify"
                     :align="element.options.align"
@@ -117,11 +117,11 @@
                       </draggable>
                     </el-col>
 
-                    <div v-if="selectWidget.key == element.key" class="widget-view-action widget-col-action">
+                    <div v-if="selectWidget.key === element.key" class="widget-view-action widget-col-action">
                       <i class="iconfont icon-trash" @click.stop="handleWidgetDelete(index)" />
                     </div>
 
-                    <div v-if="selectWidget.key == element.key" class="widget-view-drag widget-col-drag">
+                    <div v-if="selectWidget.key === element.key" class="widget-view-drag widget-col-drag">
                       <i class="iconfont icon-drag drag-widget" />
                     </div>
                   </div>
@@ -223,6 +223,14 @@ export default {
           ...this.data.list[newIndex],
           columns: this.data.list[newIndex].columns.map(item => ({ ...item }))
         })
+      }
+
+      if (this.data.list[newIndex].options.requestMethod) {
+        this.data.list[newIndex].options.requestMethod = JSON.parse(JSON.stringify(this.data.list[newIndex].options.requestMethod))
+      }
+
+      if (this.data.list[newIndex].options.displayVerify) {
+        this.data.list[newIndex].options.displayVerify = JSON.parse(JSON.stringify(this.data.list[newIndex].options.displayVerify))
       }
 
       this.selectWidget = this.data.list[newIndex]

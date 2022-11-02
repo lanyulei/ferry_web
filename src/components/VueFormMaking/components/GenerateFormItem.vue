@@ -329,6 +329,7 @@
 <script>
 import FmUpload from './Upload'
 import FileUpload from './Upload/file'
+import axios from 'axios'
 
 export default {
   name: 'GenetateFormItem',
@@ -388,7 +389,48 @@ export default {
   },
   created() {
     if (this.widget.type !== 'cascader') {
-      if (this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
+      if (this.widget.options.remote === 99) {
+        let headers = JSON.parse(this.widget.options.requestMethod.headers)
+        headers["content-type"] = "application/json; charset=utf-8"
+
+        let params = JSON.parse(this.widget.options.requestMethod.params)
+
+        let axiosParams = {
+          url: this.widget.options.requestMethod.url,
+          method: this.widget.options.requestMethod.method,
+          headers: headers
+        }
+
+        if (this.widget.options.requestMethod.method === 'get') {
+          axiosParams["params"] = params
+        } else if (this.widget.options.requestMethod.method === 'post') {
+          axiosParams["data"] = params
+        }
+
+        axios(axiosParams).then(resp => {
+          let fields = []
+          if (this.widget.options.requestMethod.result) {
+            fields = this.widget.options.requestMethod.result.split(".")
+          } else {
+            fields = ["data"]
+          }
+
+          let result = resp.data
+          for (let f of fields) {
+            result = result[f]
+          }
+          this.widget.options.remoteOptions = result.map(item => {
+            return {
+              value: item[this.widget.options.props.value],
+              label: item[this.widget.options.props.label],
+            }
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+
+      if (this.widget.options.remote !== 99 && this.widget.options.remote && this.remote[this.widget.options.remoteFunc]) {
         this.remote[this.widget.options.remoteFunc]((data) => {
           if (this.widget.type !== 'cascader') {
             this.widget.options.remoteOptions = data.map(item => {
@@ -443,21 +485,21 @@ export default {
       this.dataModel = files
     },
     handleDisplayVerifiy() {
-      if (Object.keys(this.widget.options).indexOf('displayVerifiy')>=0) {
-        if (this.widget.options.displayVerifiy.type !== 'hide') {
+      if (Object.keys(this.widget.options).indexOf('displayVerify')>=0) {
+        if (this.widget.options.displayVerify.type !== 'hide') {
           var c = 0
-          for (var v of this.widget.options.displayVerifiy.list) {
+          for (var v of this.widget.options.displayVerify.list) {
             if (this.models[v.model].toString() === v.value) {
               c++
             }
           }
-          if (this.widget.options.displayVerifiy.type === 'and') {
-            if (c !== this.widget.options.displayVerifiy.list.length) {
+          if (this.widget.options.displayVerify.type === 'and') {
+            if (c !== this.widget.options.displayVerify.list.length) {
               this.showStatus = false
             } else {
               this.showStatus = true
             }
-          } else if (this.widget.options.displayVerifiy.type === 'or')  {
+          } else if (this.widget.options.displayVerify.type === 'or')  {
             if (c === 0) {
               this.showStatus = false
             } else {

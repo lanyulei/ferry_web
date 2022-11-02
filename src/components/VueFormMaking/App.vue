@@ -9,13 +9,13 @@
       <div class="fm-link">
         <a target="_blank" href="http://form.xiaoyaoji.cn/pricing">{{ $t('header.pricing') }}</a>
         <a target="_blank" href="http://docs.form.xiaoyaoji.cn">{{ $t('header.document') }}</a>
-        <a v-if="$lang == 'zh-CN'" target="_blank" href="http://docs.form.xiaoyaoji.cn/zh/other/course.html">学习课程</a>
+        <a v-if="$lang === 'zh-CN'" target="_blank" href="http://docs.form.xiaoyaoji.cn/zh/other/course.html">学习课程</a>
         <a target="_blank" href="https://github.com/GavinZhuLei/vue-form-making">GitHub</a>
 
         <div class="action-item">
           <el-dropdown trigger="click" @command="handleLangCommand">
             <span class="el-dropdown-link">
-              {{ $route.params.lang == 'zh-CN' ? '简体中文' : 'English' }}<i class="el-icon-arrow-down el-icon--right" />
+              {{ $route.params.lang === 'zh-CN' ? '简体中文' : 'English' }}<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
@@ -25,7 +25,7 @@
         </div>
 
         <a class="ad" href="http://form.xiaoyaoji.cn" target="_blank">{{ $t('header.advanced') }}</a>
-        <a v-if="$lang == 'zh-CN'" class="ad" href="http://www.xiaoyaoji.cn" target="_blank">小幺鸡接口工具</a>
+        <a v-if="$lang === 'zh-CN'" class="ad" href="http://www.xiaoyaoji.cn" target="_blank">小幺鸡接口工具</a>
       </div>
     </div>
     <div class="fm-container"><router-view /></div>

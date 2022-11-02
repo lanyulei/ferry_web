@@ -102,6 +102,7 @@ export default {
         option: 'Option',
         staticData: 'Static Data',
         remoteData: 'Remote Date',
+        requestMethod: 'Request Method',
         remoteFunc: 'Remote Function',
         value: 'Value',
         label: 'Label',
