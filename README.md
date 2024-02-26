@@ -100,10 +100,10 @@ bash build.sh start
 群里只要不说骂人、侮辱人之类人身攻击的话，您就可以畅所欲言，有bug我及时修改，使用中有不懂的，我会及时回复，感谢。
 
 <p>
-  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2022/10/1667027272-WechatIMG201.jpeg">
+  <img width="300" src="https://www.fdevops.com/wp-content/uploads/2024/02/1708914069-WechatIMG84.jpg">
 </p>
 
-QQ群 4：493389089
+QQ群 4：361011819
 
 [兰玉磊的技术博客](https://www.fdevops.com/)
 
