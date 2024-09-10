@@ -61,7 +61,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "numericjs": "^1.2.6",
-    "path-to-regexp": "2.4.0",
+    "path-to-regexp": "8.0.0",
     "qiniu-js": "^3.4.1",
     "screenfull": "4.2.0",
     "showdown": "^1.9.1",
