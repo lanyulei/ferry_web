@@ -15,8 +15,6 @@ const name = defaultSettings.title || 'ferry' // page title
 // port = 9527 npm run dev OR npm run dev --port = 9527
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
-const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
-
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -41,7 +39,6 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new MonacoWebpackPlugin()
     ],
     name: name,
     resolve: {
