@@ -21,7 +21,7 @@ importers:
         specifier: 0.4.0
         version: 0.4.0(vue@2.7.16)
       ace-builds:
-        specifier: ^1.36.5
+        specifier: ^1.39.0
         version: 1.39.0
       axios:
         specifier: 1.8.3
@@ -102,7 +102,7 @@ importers:
         specifier: 1.8.4
         version: 1.8.4
       viewerjs:
-        specifier: ^1.11.6
+        specifier: ^1.11.7
         version: 1.11.7
       vue:
         specifier: ^2.7.16
@@ -154,10 +154,10 @@ importers:
         version: 0.18.5
     devDependencies:
       '@babel/core':
-        specifier: ^7.26.0
+        specifier: ^7.26.10
         version: 7.26.10
       '@babel/preset-env':
-        specifier: ^7.26.0
+        specifier: ^7.26.9
         version: 7.26.9(@babel/core@7.26.10)
       '@babel/register':
         specifier: ^7.25.9
@@ -238,7 +238,7 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       postcss:
-        specifier: ^8.4.49
+        specifier: ^8.5.3
         version: 8.5.3
       postcss-loader:
         specifier: ^4.3.0
