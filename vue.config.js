@@ -56,6 +56,12 @@ module.exports = {
       .rule('svg')
       .exclude.add(resolve('src/icons'))
       .end()
+      .test(/\.svg$/)
+      .use('file-loader')
+      .loader('file-loader')
+      .options({
+        esModule: false // 关键：关闭ES模块模式
+      })
     config.module
       .rule('icons')
       .test(/\.svg$/)
