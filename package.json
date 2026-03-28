@@ -60,7 +60,7 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "numericjs": "^1.2.6",
-    "path-to-regexp": "^8.2.0",
+    "path-to-regexp": "^8.4.0",
     "qiniu-js": "^3.4.2",
     "regenerator-runtime": "^0.14.1",
     "screenfull": "4.2.0",
